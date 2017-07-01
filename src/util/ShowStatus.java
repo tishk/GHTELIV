@@ -10,9 +10,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class showStatus {
+public class ShowStatus {
 
-    public showStatus() throws InterruptedException {
+    public ShowStatus () throws InterruptedException {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future future = executorService.submit(new Runnable() {
             public void run() {
@@ -36,7 +36,7 @@ public class showStatus {
 
 
     }
-    private static showStatus server;
+    private static ShowStatus server;
     private static PersianDateTime PDT=new PersianDateTime();
     public static boolean ResultOfRunning=false;
 
