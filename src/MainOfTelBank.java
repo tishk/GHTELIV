@@ -1,8 +1,7 @@
-import org.apache.commons.io.FileUtils;
 import util.FreshAsterisk;
 import util.PersianDateTime;
 import util.Util;
-import util.showStatus;
+import util.ShowStatus;
 
 import java.io.*;
 import java.util.concurrent.ExecutionException;
@@ -48,7 +47,7 @@ public class MainOfTelBank {
         new util.FaxListener();
     }
     private static void    startMessagePrinter() throws ExecutionException, InterruptedException {
-        new showStatus();
+        new ShowStatus ();
     }
     private static void    startAsteriskFrechCheck(){
         new FreshAsterisk();
