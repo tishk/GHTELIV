@@ -185,7 +185,7 @@ public class ServiceAccount {
         call.getPlayVoiceTools().mibashad();
     }
 
-    private void faxReport(){
+    private void faxReport() throws Exception {
         new ServiceFaxReport(call).execute();
     }
 
