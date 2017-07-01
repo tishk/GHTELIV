@@ -607,6 +607,12 @@ public class Voices extends BaseAgiScript {
     public String  enterAccountPassword() throws Exception {
         return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "002" , 5).trim();
     }
+    public String  enterStartDate() throws Exception {
+        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "P032" , 5).trim();
+    }
+    public String  enterEndDate() throws Exception {
+        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "P033" , 5).trim();
+    }
     public  boolean passNotValid() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E003", "0.25").trim().equals("")) return true;
         else return false;
@@ -667,6 +673,10 @@ public class Voices extends BaseAgiScript {
     }
     public  boolean khataDarErtebatBaServer() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E011", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean dateNotValid() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E016", "0.25").trim().equals("")) return true;
         else return false;
     }
     // _______________________Ghavamin____Messages__________________________________

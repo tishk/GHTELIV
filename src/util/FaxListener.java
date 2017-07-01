@@ -49,7 +49,7 @@ public class FaxListener {
 
 
     }
-    private static Util.PersianDateTime PDT=new Util.PersianDateTime();
+    private static PersianDateTime PDT=new PersianDateTime();
     public static boolean ResultOfRunning=false;
 
     private ServerSocket serverSocket;

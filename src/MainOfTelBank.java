@@ -1,5 +1,6 @@
 import org.apache.commons.io.FileUtils;
 import util.FreshAsterisk;
+import util.PersianDateTime;
 import util.Util;
 import util.showStatus;
 
@@ -11,7 +12,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class MainOfTelBank {
     public  static Util util = new Util();
-    private static Util.PersianDateTime PDT = new Util.PersianDateTime();
+    private static PersianDateTime PDT = new PersianDateTime();
 
     public  static void    main(String args[]) throws Exception {
        startOperations();
