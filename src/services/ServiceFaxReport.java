@@ -1,6 +1,7 @@
 package services;
 
 import model.Call;
+import model.Transaction;
 import org.asteriskjava.fastagi.AgiChannel;
 import org.asteriskjava.fastagi.AgiException;
 import org.asteriskjava.fastagi.AgiRequest;
@@ -10,8 +11,11 @@ import util.PersianDateTime;
 import util.Util;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -57,9 +61,6 @@ public class ServiceFaxReport extends BaseAgiScript{
     public   void sayMainMenu() throws Exception {
 
         String Choice=null;
-
-
-
         while ((MainMenuCount<3)) {
 
             if (firstChoice.equals("")) Choice = call.getPlayVoiceTools().sayMenu(faxMainMenu,"007_");
@@ -230,20 +231,35 @@ public class ServiceFaxReport extends BaseAgiScript{
         call.getAccountFacade ().getTransactions (call.getAccount ());
     }
 
+    private String getTypeOfReport(){
+        if (faxType==1){
+           return "صورتحساب 30گردش آخر";
+        }else if (faxType==2){
+           return "صورتحساب یک ماهه";
+        }else if (faxType==3){
+           return "صورتحساب بازه زمانی مشخص";
+        }else{
+            return "صورتحساب 30گردش آخر";
+        }
+    }
+    private String getِDateTimeOfReport(){
+       return persianDateTime.getIranianDate ()+" "+persianDateTime.getNowTime ();
+    }
+
     public  String   createHTMLFaxFile() throws IOException {
 
-    /*    ArrayList<String> Temp = new ArrayList<String>();
-        statementListMessage=transaction.getResultFromCM();
-        int countOfTrans=Integer.valueOf(statementListMessage.getTransCount());
-        statementMessage=new StatementMessage[countOfTrans];
+        ArrayList<String> Temp = new ArrayList<String>();
+        List<Transaction> transactions=call.getAccount ().getTransactions ();
+
+
+        int countOfTrans=transactions.size ();
+
         Writer out = null;
         for (int i=countOfTrans-1;i>=0;i--){
-            //for (int i=0;i<countOfTrans;i++){
 
-            statementMessage[i]=statementListMessage.getStatementMessage(i);
-            if (is30Transaction){
-                if (i==0) endDate=persianDateTime.getShamsi_Date_ForFax(statementMessage[i].getTransDate());
-                if (i==countOfTrans-1) startDate=persianDateTime.getShamsi_Date_ForFax(statementMessage[i].getTransDate());
+            if (faxCount==30){
+                if (i==0) endDate=persianDateTime.getShamsiDateForFax (transactions.get (i).getDate ());
+                if (i==countOfTrans-1) startDate=persianDateTime.getShamsiDateForFax (transactions.get (i).getDate ());
             }
         }
         String line;
@@ -261,12 +277,12 @@ public class ServiceFaxReport extends BaseAgiScript{
                 out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileDir), "UTF8"));
 
                 while ((line = br.readLine()) != null) {
-                    if (line.contains("a1"))  {T=line.replace("a1","تاریخ");}
-                    else if (line.contains("a2"))  {T=line.replace("a2","شماره حساب");}
-                    else if (line.contains("a3"))  {T=line.replace("a3","شعبه");}
-                    else if (line.contains("a4"))  {T=line.replace("a4","نام و نام خانوادگی");}
-                    else if (line.contains("a5"))  {T=line.replace("a5","تا تاریخ");}
-                    else if (line.contains("a6"))  {T=line.replace("a6","از تاریخ");}
+                    if (line.contains("a1"))  {T=line.replace("a1","سيستم تلفنبانک بانک قوامين");}
+                    else if (line.contains("a2"))  {T=line.replace("a2","«مبالغ به ريال مي باشد»");}
+                    else if (line.contains("a3"))  {T=line.replace("a3",":نوع گزارش");}
+                    else if (line.contains("a4"))  {T=line.replace("a4",getTypeOfReport());}
+                    else if (line.contains("a5"))  {T=line.replace("a5","تاریخ گزارش");}
+                    else if (line.contains("a6"))  {T=line.replace("a6",getِDateTimeOfReport ());}
                     else if (line.contains("a7"))  {T=line.replace("a7","مانده حساب");}
                     else if (line.contains("a8"))  {T=line.replace("a8","بدهکار");}
                     else if (line.contains("a9"))  {T=line.replace("a9","بستانکار");}
@@ -343,7 +359,7 @@ public class ServiceFaxReport extends BaseAgiScript{
 
         try
         {
-          *//* Util.printMessage(Util.FaxFile+call.getCallerID()+"-"+call.getUniQID()+".html",false);
+           Util.printMessage(Util.FaxFile+call.getCallerID()+"-"+call.getUniQID()+".html",false);
             File fileDir = new File(Util.FaxFile+call.getCallerID()+"-"+call.getUniQID()+".html");
              out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileDir), "UTF8"));
             int j=0;
@@ -353,13 +369,13 @@ public class ServiceFaxReport extends BaseAgiScript{
             }
             out.flush();
             out.close();
-            Util.printMessage("file creted...",false);*//*
+            Util.printMessage("file creted...",false);
 
             return Util.FaxFile_Base+call.getCallerID()+"-"+call.getUniQID();
         }catch (Exception e){
             Util.printMessage("e1"+e.toString(),false);
             return null;
-        }*/
+        }
         return null;
     }
 

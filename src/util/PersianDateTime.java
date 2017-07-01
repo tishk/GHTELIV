@@ -399,4 +399,25 @@ public  class PersianDateTime {
                 calendar.get(Calendar.DAY_OF_MONTH));
         return irMonth;
     }
+    public  String  getShamsiDateForFax(String date) {
+
+        try{
+            date=date.substring(2);
+            date=date.substring(0,2)+"/"+date.substring(2,4)+"/"+date.substring(4,6);
+        }catch (Exception e){
+
+        }
+
+        return date;
+    }
+    public  String  getNowTime(){
+
+        Date  Time=new Date();
+        SimpleDateFormat DateFormat =
+                //new SimpleDateFormat ("hh:mm:ss a");
+                new SimpleDateFormat ("HH:mm:ss");
+        String Now=DateFormat.format(Time);
+        return Now;
+
+    }
 }
