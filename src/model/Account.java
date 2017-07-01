@@ -29,7 +29,7 @@ public class Account {
    private String mobileNumber="";
    private String kindOfPOSTransaction="";
    private String chequeNumber="";
-   private String familyName="";
+   private String nameAndFamily ="";
    private String ShetabNumber="";
    private List<Transaction> transactions;
    private List<TransactionPOS> transactionsPOS;
@@ -238,12 +238,12 @@ public class Account {
         this.chequeNumber = chequeNumber;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getNameAndFamily () {
+        return nameAndFamily;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setNameAndFamily (String nameAndFamily) {
+        this.nameAndFamily = nameAndFamily;
     }
 
     public String getShetabNumber() {

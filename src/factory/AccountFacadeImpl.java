@@ -336,7 +336,7 @@ public class AccountFacadeImpl implements AccountFacade {
         }
     }
     private void doSuccessOperationOfTransactions(Account account, Tokenize tokenize) {
-        account.setFamilyName(tokenize.tokenizeResponse());
+        account.setNameAndFamily (tokenize.tokenizeResponse());
         account.setShetabNumber(tokenize.tokenizeResponse());
         List<Transaction> transactions=new ArrayList<Transaction>();
         Transaction transaction;

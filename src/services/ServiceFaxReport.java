@@ -210,6 +210,8 @@ public class ServiceFaxReport extends BaseAgiScript{
     }
     private  void    startSendFax() throws Exception {
 
+        call.getPlayVoiceTools ().pleaseWait ();
+
         initAndSendTransactionRequest ();
 
         String actionCode=call.getAccount ().getActionCode ();
@@ -220,6 +222,7 @@ public class ServiceFaxReport extends BaseAgiScript{
             }
         }else{
             call.getPlayVoiceTools ().playActionCode (actionCode);
+            call.getPlayVoiceTools ().baArzePoozesh ();
         }
     }
 
@@ -272,8 +275,8 @@ public class ServiceFaxReport extends BaseAgiScript{
 
             try
             {
-
-                fileDir = new File(Util.FaxFile_Base+call.getCallerID()+"-"+call.getUniQID()+".html");
+                String fileName=Util.FaxFile_Base+call.getCallerID()+"-"+call.getUniQID()+".html";
+                fileDir = new File(fileName);
                 out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileDir), "UTF8"));
 
                 while ((line = br.readLine()) != null) {
@@ -283,20 +286,25 @@ public class ServiceFaxReport extends BaseAgiScript{
                     else if (line.contains("a4"))  {T=line.replace("a4",getTypeOfReport());}
                     else if (line.contains("a5"))  {T=line.replace("a5","تاریخ گزارش");}
                     else if (line.contains("a6"))  {T=line.replace("a6",getِDateTimeOfReport ());}
-                    else if (line.contains("a7"))  {T=line.replace("a7","مانده حساب");}
-                    else if (line.contains("a8"))  {T=line.replace("a8","بدهکار");}
-                    else if (line.contains("a9"))  {T=line.replace("a9","بستانکار");}
-                    else if (line.contains("b1")) {T=line.replace("b1","شعبه عامل");}
-                    else if (line.contains("b2")) {T=line.replace("b2","شرح سند");}
-                    else if (line.contains("b3")) {T=line.replace("b3","شماره سند");}
-                    else if (line.contains("b4")) {T=line.replace("b4","تاریخ سند");}
-                    else if (line.contains("b5")) {T=line.replace("b5","ردیف");}
-                    else if (line.contains("d1")) {T=line.replace("d1",persianDateTime.getShamsiDateForFax());}
-                    else if (line.contains("acc")) {T=line.replace("acc",call.getAccount());}
-                    else if (line.contains("c1")) {T=line.replace("c1",call.getBranch());}
-                    else if (line.contains("c2")) {T=line.replace("c2",call.getNameAndFamily());}
-                    else if (line.contains("c3")) {T=line.replace("c3",endDate);}
-                    else if (line.contains("c4")) {T=line.replace("c4",startDate);}
+                    else if (line.contains("a7"))  {T=line.replace("a7","نام صاحب حساب");}
+                    else if (line.contains("a8"))  {T=line.replace("a8",call.getAccount ().getNameAndFamily ());}
+                    else if (line.contains("a9"))  {T=line.replace("a9","شماره حساب");}
+                    else if (line.contains("b1")) {T=line.replace("b1",call.getAccount ().getAccountNumber ());}
+                    else if (line.contains("b2")) {T=line.replace("b2","شماره کارت");}
+                    else if (line.contains("b3")) {T=line.replace("b3"," ");}
+                    else if (line.contains("b4")) {T=line.replace("b4","مانده کنوني");}
+                    else if (line.contains("b5")) {T=line.replace("b5",call.getAccount ().getBalance ());}
+                    else if (line.contains("b6")) {T=line.replace("b6","شماره شبا");}
+                    else if (line.contains("b7")) {T=line.replace("b7",call.getAccount ().getShetabNumber ());}
+                    else if (line.contains("b8")) {T=line.replace("b8","مانده");}
+                    else if (line.contains("b9")) {T=line.replace("b9","واريز به حساب");}
+                    else if (line.contains("c1")) {T=line.replace("c1","برداشت از حساب");}
+                    else if (line.contains("c2")) {T=line.replace("c2","شرح عمليات");}
+                    else if (line.contains("c3")) {T=line.replace("c3","کد عمليات");}
+                    else if (line.contains("c4")) {T=line.replace("c4","مرکز پرداخت");}
+                    else if (line.contains("c5")) {T=line.replace("c5","تاريخ");}
+                    else if (line.contains("c6")) {T=line.replace("c6","رديف");}
+                    else if (line.contains("c7")) {T=line.replace("c7",".اين صورت حساب صرفاً جنبه اطلاع رساني داشته و فاقد هرگونه ارزش قانوني مي باشد");}
                     else T=line;
                     out.append(T);
                 }
@@ -306,45 +314,68 @@ public class ServiceFaxReport extends BaseAgiScript{
             int j=countOfTrans-1;
             String credit="";
             String debit="";
-            String tblHTmlCmdPart1="<td class=\"style2\"><div align=\"center\" NoWrap=\"NoWrap\">&nbsp;" ;
-            String tblHTmlCmdPart2="</div></td>";
+            String tableHTMLColumn1="<td width=\"14%\" bgcolor=\"#FFFFFF\"><div align=\"center\"> " ;
+            String tableHTMLColumn2="<td width=\"12%\" bgcolor=\"#FFFFFF\"><div align=\"center\"> " ;
+            String tableHTMLColumn3="<td width=\"12%\" bgcolor=\"#FFFFFF\"><div align=\"center\"> " ;
+            String tableHTMLColumn4="<td width=\"24%\" bgcolor=\"#FFFFFF\"><div align=\"center\"> " ;
+            String tableHTMLColumn5="<td width=\"6%\" bgcolor=\"#FFFFFF\"><div align=\"center\"> " ;
+            String tableHTMLColumn6="<td width=\"14%\" bgcolor=\"#FFFFFF\"><div align=\"center\"> " ;
+            String tableHTMLColumn7="<td width=\"15%\" bgcolor=\"#FFFFFF\"><div align=\"center\"> " ;
+            String tableHTMLColumn8="<td width=\"3%\" bgcolor=\"#FFFFFF\"><div align=\"center\"> " ;
+            String tableHTMLEndOfColumn="</div></td>";
             int rowCount=1;
+            String tempAmount="";
+            String correctedAmount="";
             while (j>=0)
             {
-                credit="";
-                debit="";
-                if (statementMessage[j].getCreditDebit().equals("C")) credit=statementMessage[j].getAmount();
-                else if (statementMessage[j].getCreditDebit().equals("D")) debit=statementMessage[j].getAmount();
-
+                tempAmount=transactions.get (j).getAmount ();
+                if (isNumber (tempAmount)){
+                    correctedAmount=tempAmount.replace ('-',' ').trim ();
+                    if (Long.valueOf (tempAmount) > 0) {
+                       credit=correctedAmount;
+                       debit="";
+                    }else{
+                       debit=correctedAmount;
+                       credit="";
+                    }
+                }
                 out.append("<tr>");
-                out.append(tblHTmlCmdPart1+ fixLenNumber(statementMessage[j].getLastAmount()) + tblHTmlCmdPart2);
-                out.append(tblHTmlCmdPart1+ fixLenNumber(debit) +tblHTmlCmdPart2 );
-                out.append(tblHTmlCmdPart1+ fixLenNumber(credit) + tblHTmlCmdPart2);
-                out.append(tblHTmlCmdPart1+ statementMessage[j].getBranchName() + tblHTmlCmdPart2);
-                out.append(tblHTmlCmdPart1+ statementMessage[j].getShpInf() + tblHTmlCmdPart2);
-                out.append(tblHTmlCmdPart1+ statementMessage[j].getTransDocNo()+ tblHTmlCmdPart2);
-                out.append(tblHTmlCmdPart1+ persianDateTime.getShamsi_Date_ForFax(statementMessage[j].getTransDate()) +tblHTmlCmdPart2);
-                out.append(tblHTmlCmdPart1+ String.valueOf(rowCount) +tblHTmlCmdPart2);
-                out.append("<tr>"+"\n");
+                out.append(tableHTMLColumn1+ fixLenNumber(transactions.get (j).getBalance ()) + tableHTMLEndOfColumn);
+                out.append(tableHTMLColumn2+ fixLenNumber(credit) +tableHTMLEndOfColumn );
+                out.append(tableHTMLColumn3+ fixLenNumber(debit) + tableHTMLEndOfColumn);
+                out.append(tableHTMLColumn4+ transactions.get (j).getDescription () + tableHTMLEndOfColumn);
+                out.append(tableHTMLColumn5+ transactions.get (j).getDocumentType ()+ tableHTMLEndOfColumn);
+                out.append(tableHTMLColumn6+ transactions.get (j).getBranchCode ()+ tableHTMLEndOfColumn);
+                out.append(tableHTMLColumn7+ transactions.get (j).getDate ()+" "+transactions.get (j).getTime () +tableHTMLEndOfColumn);
+                out.append(tableHTMLColumn8+ String.valueOf(rowCount) +tableHTMLEndOfColumn);
+                out.append("</tr>"+"\n");
                 j--;
                 rowCount++;
 
             }
 
-            out.append("<tr>");
-            out.append(" <td class=\"style6\"><div align=\"right\" >  </div></td>");
-            out.append("<td class=\"style6\"><div align=\"right\" >" + call.getBalance() + "</div></td>");
-            out.append("<td class=\"style6\"><div align=\"right\" >" + "موجودی" + "</div></td>");
-            out.append("<tr>"+"\n");
+            String endOfFile="</table>\n" +
+                    "</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td colspan=\"4\">\n" +
+                    "<table width=\"449\"  border=\"0\" align=\"right\" cellpadding=\"5\" cellspacing=\"0\">\n" +
+                    "\n" +
+                    "</table>\n" +
+                    "</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                    "<td colspan=\"4\">&nbsp;</td>\n" +
+                    "</tr>\n" +
+                    "</table>\n" +
+                    "</th>\n" +
+                    "</tr>\n" +
+                    "</table>\n" +
+                    "<p style=\"font-size:22px; text-align:center; font-family:B Nazanin; font-weight: bold; \"> c7 </P>\n" +
+                    "</body>\n" +
+                    "</html>";
+            out.append(endOfFile);
 
-
-            out.append("</table>"+"\n");
-            out.append("</td>"+"\n");
-            out.append("</tr>"+"\n");
-            out.append("</table>"+"\n");
-            out.append("</font>"+"\n");
-            out.append("</bodsy>"+"\n");
-            out.append("</html>"+"\n");
             out.flush();
             out.close();
 
@@ -359,24 +390,13 @@ public class ServiceFaxReport extends BaseAgiScript{
 
         try
         {
-           Util.printMessage(Util.FaxFile+call.getCallerID()+"-"+call.getUniQID()+".html",false);
-            File fileDir = new File(Util.FaxFile+call.getCallerID()+"-"+call.getUniQID()+".html");
-             out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileDir), "UTF8"));
-            int j=0;
-            while (j<Temp.size()){
-                out.append(Temp.get(j)).append("\r\n");
-                j++;
-            }
-            out.flush();
-            out.close();
-            Util.printMessage("file creted...",false);
-
             return Util.FaxFile_Base+call.getCallerID()+"-"+call.getUniQID();
+
         }catch (Exception e){
             Util.printMessage("e1"+e.toString(),false);
             return null;
         }
-        return null;
+
     }
 
     public  String   CreatePDFFile(String FaxFile) throws IOException {
@@ -437,6 +457,13 @@ public class ServiceFaxReport extends BaseAgiScript{
             return path+"/";
         }
 
+    }
+    private  String   fixLenNumber(String no){
+        try{
+            return String.valueOf(Long.valueOf(no));
+        }catch (Exception e){
+            return "-";
+        }
     }
     @Override
     public void service (AgiRequest agiRequest, AgiChannel agiChannel) throws AgiException {

@@ -721,6 +721,14 @@ public class Voices extends BaseAgiScript {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH23", "0.25").trim().equals("")) return true;
         else return false;
     }
+    public  boolean pleaseWait() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "P019", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean baArzePoozesh() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E011", "0.25").trim().equals("")) return true;
+        else return false;
+    }
 
     // _______________________Ghavamin____Messages__________________________________
 
