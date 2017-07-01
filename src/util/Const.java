@@ -61,6 +61,7 @@ public class Const {
     public static final String BILL_PAYMENT="F";
     public static final String BEAN_OF_PAN="639599";
     public static final String   NEGATIVE_SIGN="-";
+    public static final String   ASTERISK_PARK_COMMAND="Park";
     public static final int   MIN_ACCOUNT_PASS_LEN=4;
     public static final int   MAX_ACCOUNT_PASS_LEN=8;
     public static final int   MIN_PAN_PASS_LEN=5;

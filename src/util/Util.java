@@ -326,27 +326,23 @@ public class Util {
         }
 
     }
-    public static synchronized final void  sendFax(String FAXFile) throws IOException {
+    public static synchronized final void  sendFax(String faxFile) throws IOException {
 
         Socket socket = null;
-        try {
-            socket = new Socket(IP,Integer.valueOf (Util.faxPort));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         PrintWriter out =null;
         try {
+            socket = new Socket(IP,Integer.valueOf (Util.faxPort));
             out = new PrintWriter(socket.getOutputStream(), true);
-            out.print(FAXFile);
+            out.print(faxFile);
             out.flush();
             Thread.sleep(100);
-            out=null;
+
+        } catch (Exception e) {
+            out.close ();
             socket.close();
-        } catch (IOException ioe) {
-            out=null;
-            socket.close();
-        } catch (InterruptedException e) {
-            out=null;
+        }finally {
+            out.close ();
             socket.close();
         }
     }

@@ -613,6 +613,16 @@ public class Voices extends BaseAgiScript {
     public String  enterEndDate() throws Exception {
         return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "P033" , 5).trim();
     }
+    public String  enterDestinationAccount() throws Exception {
+        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh10p" , 5).trim();
+    }
+    public String  lotfanMablaghRaVaredNamaeid() throws Exception {
+        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "SH11p" , 5).trim();
+    }
+    public String  ifCorrectPress5() throws Exception {
+            return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh46" , 5).trim();
+        }
+
     public  boolean passNotValid() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E003", "0.25").trim().equals("")) return true;
         else return false;
@@ -679,6 +689,39 @@ public class Voices extends BaseAgiScript {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E016", "0.25").trim().equals("")) return true;
         else return false;
     }
+    public  boolean rial() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "P027", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean bardashVaBeHesabe() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh44", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean varizKhahadShod() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh45", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean montaghelKhahadshod() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh14", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean zemnanShomarePeygirieshoma() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH21", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean dastresiBeMaghsadMaghdorNist() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E053", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean saghfePardakhtPorAst() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH35", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean hesabSabtNashodeAst() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH23", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+
     // _______________________Ghavamin____Messages__________________________________
 
 

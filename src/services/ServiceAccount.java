@@ -17,6 +17,8 @@ public class ServiceAccount {
     private Set mainMenu = new HashSet();
     private int    MainMenuCount=0;
     private String firstChoice="";
+    private String destinationAccount="";
+    private String transferAmount="";
 
     public ServiceAccount(Call call) {
         this.call=call;
@@ -90,7 +92,7 @@ public class ServiceAccount {
                 break;
             case "3":faxReport();
                 break;
-            case "4":
+            case "4":fundTransfer ();
                 break;
             case "5":
                 break;
@@ -189,6 +191,123 @@ public class ServiceAccount {
         new ServiceFaxReport(call).execute();
     }
 
+    private  void    fundTransfer() throws Exception {
+        if (getDestinationAccountIsOK ()){
+            if (getAmountIsOK ()){
+                if (confirmFundTransferIsOK ()){
+                    doFundTransfer ();
+                }
+            }
+        }
+    }
+
+    private void doFundTransfer () throws Exception {
+        sendRequestToServer ();
+        sayResponseToCustomer ();
+    }
+
+    private void sendRequestToServer () {
+        call.getAccount ().setDestinationAccount (destinationAccount);
+        call.getAccount ().setAmountOfTransfer (transferAmount);
+        call.getAccount ().setTransferType (Const.FUND_TRANSFER);
+        call.getAccountFacade ().fundTransfer (call.getAccount ());
+    }
+
+    private void sayResponseToCustomer () throws Exception {
+        int acCode=Integer.valueOf (call.getAccount ().getActionCode ());
+        switch (acCode){
+
+            case 0:successOperations ();
+                break;
+            case 9001 :destinationAccountNotAvailable ();
+                break;
+            case 9008:destinationAccountNotAvailable ();
+                break;
+            case 9010:maxPaymentIsFull ();
+                break;
+            case 9300:accountNotRegistered ();
+                break;
+            case 939://TODO
+                break;
+            default://TODO
+
+        }
+    }
+
+    private void accountNotRegistered () throws Exception {
+        call.getPlayVoiceTools ().hesabSabtNashodeAst ();
+    }
+
+    private void maxPaymentIsFull () throws Exception {
+        call.getPlayVoiceTools ().saghfePardakhtPorAst ();
+    }
+
+    private void destinationAccountNotAvailable () throws Exception {
+        call.getPlayVoiceTools ().dastresiBeMaghsadMaghdorNist ();
+    }
+
+    private void successOperations () throws Exception {
+        call.getPlayVoiceTools ().mablaghe ();
+        call.getPlayVoiceTools ().sayPersianDigit (call.getAccount ().getAmountOfTransfer ());
+        call.getPlayVoiceTools ().rial ();
+        call.getPlayVoiceTools ().montaghelKhahadshod ();
+        call.getPlayVoiceTools ().zemnanShomarePeygirieshoma ();
+        call.getPlayVoiceTools ().sayPersianDigitsSeparate (call.getAccount ().getReferenceCode ());
+        call.getPlayVoiceTools ().mibashad ();
+    }
+
+    private  boolean getDestinationAccountIsOK() throws Exception {
+        int countOfGetAcc=0;
+        boolean accEntered=false;
+        while (!accEntered && countOfGetAcc<2){
+            destinationAccount=call.getPlayVoiceTools ().enterDestinationAccount();
+            if (destinationAccount.length()==0){
+                call.getPlayVoiceTools ().notClear ();
+                countOfGetAcc++;
+            }else{
+                if (isNumber (destinationAccount)){
+                    accEntered=true;
+                }else{
+                    call.getPlayVoiceTools ().accountEntryInvalid ();
+                    countOfGetAcc++;
+                }
+            }
+        }
+        return accEntered;
+    }
+    private  boolean getAmountIsOK() throws Exception {
+        int countOfGetAmount=0;
+        boolean amountEntred=false;
+        while (!amountEntred && countOfGetAmount<2){
+            transferAmount=call.getPlayVoiceTools ().lotfanMablaghRaVaredNamaeid ();
+            if (transferAmount.trim().length()==0){
+                call.getPlayVoiceTools ().notClear ();
+                countOfGetAmount++;
+            }else{
+                if (isNumber (transferAmount)){
+                    amountEntred=true;
+                }else{
+                    call.getPlayVoiceTools ().notClear ();
+                    countOfGetAmount++;
+                }
+            }
+        }
+        return amountEntred;
+    }
+    private  boolean confirmFundTransferIsOK() throws Exception {
+        String confirmation="";
+        call.getPlayVoiceTools().mablaghe();
+        call.getPlayVoiceTools().sayPersianDigit (transferAmount);
+        call.getPlayVoiceTools().rial();
+        call.getPlayVoiceTools().bardashVaBeHesabe();
+        call.getPlayVoiceTools().sayPersianDigitsSeparate (destinationAccount);
+        call.getPlayVoiceTools().varizKhahadShod();
+        confirmation=call.getPlayVoiceTools().ifCorrectPress5();
+
+        if (confirmation.trim().equals("5")) return true;
+        else return false;
+    }
+
 
     private String correctNumberForPlay(String number, int i) {
         return String.valueOf(convertToNumber(number));
@@ -200,6 +319,15 @@ public class ServiceAccount {
          return longNumber;
         }catch (Exception e){
             return -1L;
+        }
+    }
+
+    private  boolean isNumber(String entrance){
+        try{
+            Long.parseLong(entrance);
+            return true;
+        }catch (Exception e){
+            return false;
         }
     }
 

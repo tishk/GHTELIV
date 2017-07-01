@@ -404,7 +404,7 @@ public class ServiceFaxReport extends BaseAgiScript{
     }
     public  boolean  SendFax(String FaxFile) throws AgiException, InterruptedException, SQLException, IOException {
 
-        exec("Park");
+        exec(Const.ASTERISK_PARK_COMMAND);
         Util.sendFax(FaxFile);
         return true;
 
