@@ -330,7 +330,7 @@ public class Util {
 
         Socket socket = null;
         try {
-            socket = new Socket(IP,1301);
+            socket = new Socket(IP,Integer.valueOf (Util.faxPort));
         } catch (IOException e) {
             e.printStackTrace();
         }
