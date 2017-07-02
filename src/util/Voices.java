@@ -634,6 +634,9 @@ public class Voices extends BaseAgiScript {
     public String  mablagheGhestRaVaredNamaeid () throws Exception {
        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh01T" , 5).trim();
     }
+    public String  shomareMobileRaVaredKonid () throws Exception {
+       return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "menu71condition1part3T" , 5).trim();
+    }
 
     public  boolean passNotValid() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E003", "0.25").trim().equals("")) return true;
@@ -771,6 +774,14 @@ public class Voices extends BaseAgiScript {
     }
     public  boolean mandeBedehiShoma() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh05", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean mobileDorostNist() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "menu71condition1part4", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean baMovafaghiatSabtShod() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SuccessfulRegisterMobile", "0.25").trim().equals("")) return true;
         else return false;
     }
 

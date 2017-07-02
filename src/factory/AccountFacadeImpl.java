@@ -127,9 +127,9 @@ public class AccountFacadeImpl implements AccountFacade {
     @Override
     public void smsAlarmRegister(Account account) {
         sendSMSCommand(account,Const.SMS_ALERTING_REGISTER_SIGN);
-        if (account.getResponseFromSwitch()!=null){
+        /*if (account.getResponseFromSwitch()!=null){
             account.setActionCode(account.getResponseFromSwitch());
-        }
+        }*/
     }
 
     @Override
@@ -236,8 +236,10 @@ public class AccountFacadeImpl implements AccountFacade {
         Tokenize tokenize=new Tokenize(account.getResponseFromSwitch());
         if (tokenize.tokenizeResponse()==account.getMessageSequence()){
            account.setResponseFromSwitch(tokenize.getOriginalString());
-           account.setActionCode("0000");
-       }
+           account.setActionCode(Const.SUCCESS);
+        }else {
+            account.setActionCode(Const.NETWORK_ERROR);
+        }
     }
 
     private void sendSMSRequest(Account account, String command) {

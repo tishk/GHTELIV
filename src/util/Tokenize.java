@@ -17,15 +17,21 @@ public class Tokenize {
 
 
     public   String  tokenizeResponse(){
+        try {
 
-        for (int i = 0; i <originalString.length() ; i++) {
-            if (originalString.charAt(i)==getToken()){
-                result=originalString.substring(0,i);
-                originalString=originalString.substring(i+1);
-                return result;
+            for (int i = 0; i <originalString.length() ; i++) {
+                if (originalString.charAt(i)==getToken()){
+                    result=originalString.substring(0,i);
+                    originalString=originalString.substring(i+1);
+                    return result;
+                }
             }
+            return null;
+        }catch (Exception e){
+
+            return null
+                    ;
         }
-        return "";
     }
 
 

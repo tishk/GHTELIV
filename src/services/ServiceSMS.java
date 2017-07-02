@@ -15,6 +15,7 @@ public class ServiceSMS {
     private Set smsMenu = new HashSet ();
     private int smsMenuCount =0;
     private String firstChoice;
+    private String mobileNumber="";
 
     public ServiceSMS(Call call) {
         this.call=call;
@@ -96,13 +97,43 @@ public class ServiceSMS {
     }
 
     private void registerMobileNumber() throws Exception {
-
-        if (deleteMobileNumber ()){
-
+        if (accountRegistered ()){
+            if (deleteMobileNumber ()){
+                doRegister ();
+            }else{
+                errorOnOperations ();
+            }
         }else{
-            errorOnOperations ();
+            doRegister ();
         }
 
+    }
+
+    private void doRegister () throws Exception {
+        int getMobileCount=0;
+        boolean mobileEnteredIsCorrect=false;
+        while (!mobileEnteredIsCorrect && getMobileCount<3){
+            mobileNumber=call.getPlayVoiceTools ().shomareMobileRaVaredKonid ();
+            if (mobileIsCorrect (mobileNumber)){
+                mobileEnteredIsCorrect=true;
+            }else{
+                mobileNotValid ();
+                getMobileCount++;
+            }
+        }
+        if (mobileEnteredIsCorrect){
+            call.getAccount ().setMobileNumber (mobileNumber);
+            call.getAccountFacade ().smsAlarmRegister (call.getAccount ());
+            if (call.getAccount ().getActionCode ().equals (Const.SUCCESS)){
+                call.getPlayVoiceTools ().baMovafaghiatSabtShod ();
+            }else{
+                errorOnOperations ();
+            }
+        }
+    }
+
+    private void mobileNotValid () throws Exception {
+        call.getPlayVoiceTools ().mobileDorostNist ();
     }
 
     private boolean errorOnOperations () throws Exception {
@@ -128,6 +159,7 @@ public class ServiceSMS {
         }
     }
     private boolean accountRegistered(){
+
         return isNumber (call.getAccount ().getMobileNumber ());
     }
     private  boolean isNumber(String entrance){
@@ -139,6 +171,14 @@ public class ServiceSMS {
         }
     }
 
+    private boolean  mobileIsCorrect(String mobileNumber){
+        if (isNumber (mobileNumber)){
+            if (mobileNumber.length ()==11){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
