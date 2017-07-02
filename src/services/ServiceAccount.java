@@ -81,7 +81,7 @@ public class ServiceAccount {
             }
             MainMenuCount++;
         }
-        call.getPlayVoiceTools().byAndHangup();
+        exit ();
     }
 
     private  void selectSubMenu(String Choice) throws Exception {
@@ -99,11 +99,11 @@ public class ServiceAccount {
                 break;
             case "6":loanPayment ();
                 break;
-            case "7":
+            case "7":smsOperations ();
                 break;
-            case "9":
+            case "9":exit ();
                 break;
-            case "0":
+            case "0":exit ();
                 break;
             case "-1":call.getPlayVoiceTools().notClear();
                 break;
@@ -111,6 +111,10 @@ public class ServiceAccount {
                 break;
 
         }
+    }
+
+    private void exit () throws Exception {
+        call.getPlayVoiceTools ().byAndHangup ();
     }
 
 
@@ -257,77 +261,6 @@ public class ServiceAccount {
         call.getPlayVoiceTools ().mibashad ();
     }
 
-    private  boolean getDestinationAccountIsOK() throws Exception {
-        int countOfGetAcc=0;
-        boolean accEntered=false;
-        while (!accEntered && countOfGetAcc<2){
-            destinationAccount=call.getPlayVoiceTools ().shomareHesabeMaghsadRaVaredNamaeid ();
-            if (destinationAccount.length()==0){
-                call.getPlayVoiceTools ().notClear ();
-                countOfGetAcc++;
-            }else{
-                if (isNumber (destinationAccount)){
-                    accEntered=true;
-                }else{
-                    call.getPlayVoiceTools ().accountEntryInvalid ();
-                    countOfGetAcc++;
-                }
-            }
-        }
-        return accEntered;
-    }
-    private  boolean getAmountIsOK() throws Exception {
-        int countOfGetAmount=0;
-        boolean amountEntred=false;
-        while (!amountEntred && countOfGetAmount<2){
-            transferAmount=call.getPlayVoiceTools ().lotfanMablaghRaVaredNamaeid ();
-            if (transferAmount.trim().length()==0){
-                call.getPlayVoiceTools ().notClear ();
-                countOfGetAmount++;
-            }else{
-                if (isNumber (transferAmount)){
-                    amountEntred=true;
-                }else{
-                    call.getPlayVoiceTools ().notClear ();
-                    countOfGetAmount++;
-                }
-            }
-        }
-        return amountEntred;
-    }
-    private  boolean confirmFundTransferIsOK() throws Exception {
-        String confirmation="";
-        call.getPlayVoiceTools().mablaghe();
-        call.getPlayVoiceTools().sayPersianDigit (transferAmount);
-        call.getPlayVoiceTools().rial();
-        call.getPlayVoiceTools().bardashVaBeHesabe();
-        call.getPlayVoiceTools().sayPersianDigitsSeparate (destinationAccount);
-        call.getPlayVoiceTools().varizKhahadShod();
-        confirmation=call.getPlayVoiceTools().agarSahihAstAdade5 ();
-
-        if (confirmation.trim().equals("5")) return true;
-        else return false;
-    }
-    private String correctNumberForPlay(String number) {
-        return String.valueOf(convertToNumber(number));
-    }
-    private Long   convertToNumber(String number){
-        try{
-         Long longNumber=Long.valueOf(number);
-         return longNumber;
-        }catch (Exception e){
-            return -1L;
-        }
-    }
-    private  boolean isNumber(String entrance){
-        try{
-            Long.parseLong(entrance);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
     private void changePin() throws Exception {
        if (getNewPinIsOk ()){
            sendChangePinRequestToServer ();
@@ -357,6 +290,23 @@ public class ServiceAccount {
     private void sendChangePinRequestToServer () {
         call.getAccount ().setNewPin (newPin);
         call.getAccountFacade ().changePin (call.getAccount ());
+    }
+
+    private void loanPayment() throws Exception {
+        new ServiceLoanPayment (call).execute ();
+    }
+
+    private void smsOperations () throws Exception {
+        new ServiceSMS (call).execute ();
+    }
+
+    private  boolean isNumber(String entrance){
+        try{
+            Long.parseLong(entrance);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     private  boolean getNewPinIsOk () throws Exception {
@@ -395,8 +345,71 @@ public class ServiceAccount {
 
     }
 
-    private void loanPayment() throws Exception {
-        new ServiceLoanPayment (call).execute ();
+    private  boolean getDestinationAccountIsOK() throws Exception {
+        int countOfGetAcc=0;
+        boolean accEntered=false;
+        while (!accEntered && countOfGetAcc<2){
+            destinationAccount=call.getPlayVoiceTools ().shomareHesabeMaghsadRaVaredNamaeid ();
+            if (destinationAccount.length()==0){
+                call.getPlayVoiceTools ().notClear ();
+                countOfGetAcc++;
+            }else{
+                if (isNumber (destinationAccount)){
+                    accEntered=true;
+                }else{
+                    call.getPlayVoiceTools ().accountEntryInvalid ();
+                    countOfGetAcc++;
+                }
+            }
+        }
+        return accEntered;
+    }
+
+    private  boolean getAmountIsOK() throws Exception {
+        int countOfGetAmount=0;
+        boolean amountEntred=false;
+        while (!amountEntred && countOfGetAmount<2){
+            transferAmount=call.getPlayVoiceTools ().lotfanMablaghRaVaredNamaeid ();
+            if (transferAmount.trim().length()==0){
+                call.getPlayVoiceTools ().notClear ();
+                countOfGetAmount++;
+            }else{
+                if (isNumber (transferAmount)){
+                    amountEntred=true;
+                }else{
+                    call.getPlayVoiceTools ().notClear ();
+                    countOfGetAmount++;
+                }
+            }
+        }
+        return amountEntred;
+    }
+
+    private  boolean confirmFundTransferIsOK() throws Exception {
+        String confirmation="";
+        call.getPlayVoiceTools().mablaghe();
+        call.getPlayVoiceTools().sayPersianDigit (transferAmount);
+        call.getPlayVoiceTools().rial();
+        call.getPlayVoiceTools().bardashVaBeHesabe();
+        call.getPlayVoiceTools().sayPersianDigitsSeparate (destinationAccount);
+        call.getPlayVoiceTools().varizKhahadShod();
+        confirmation=call.getPlayVoiceTools().agarSahihAstAdade5 ();
+
+        if (confirmation.trim().equals("5")) return true;
+        else return false;
+    }
+
+    private  String correctNumberForPlay(String number) {
+        return String.valueOf(convertToNumber(number));
+    }
+
+    private  Long   convertToNumber(String number){
+        try{
+            Long longNumber=Long.valueOf(number);
+            return longNumber;
+        }catch (Exception e){
+            return -1L;
+        }
     }
 
 

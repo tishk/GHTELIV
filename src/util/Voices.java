@@ -745,6 +745,10 @@ public class Voices extends BaseAgiScript {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E011", "0.25").trim().equals("")) return true;
         else return false;
     }
+    public  boolean error() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "error", "0.25").trim().equals("")) return true;
+        else return false;
+    }
     public  boolean inDoShomareMotabeghatNadarad() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH30", "0.25").trim().equals("")) return true;
         else return false;

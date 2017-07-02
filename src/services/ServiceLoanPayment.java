@@ -59,11 +59,11 @@ public class ServiceLoanPayment {
                 selectSubMenu(Choice);
             }
             else{
-                call.getPlayVoiceTools().notClear();
+               inputError ();
             }
             MainMenuCount++;
         }
-        call.getPlayVoiceTools().byAndHangup();
+       exit ();
     }
 
     private  void selectSubMenu(String Choice) throws Exception {
@@ -73,16 +73,54 @@ public class ServiceLoanPayment {
                 break;
             case "2":paymentLoan ();
                 break;
-            case "9":call.getServiceAccount ().sayMainMenu ();
+            case "9":goToBackMenu ();
                 break;
-            case "0":call.getPlayVoiceTools ().byAndHangup ();
+            case "0":exit ();
                 break;
-            case "-1":call.getPlayVoiceTools().notClear();
+            case "-1":inputError ();
                 break;
-            default:call.getPlayVoiceTools().notClear();
+            default:inputError ();
                 break;
 
         }
+    }
+
+    private void goToBackMenu () throws Exception {
+        call.getServiceAccount ().sayMainMenu ();
+    }
+
+    private  boolean getAmountOfLoanIsOK () throws Exception {
+        int countOfGetAmount=0;
+        boolean amountEntred=false;
+        while (!amountEntred && countOfGetAmount<2){
+            amountOfLoan=call.getPlayVoiceTools ().mablagheGhestRaVaredNamaeid ();
+            if (amountOfLoan.trim().length()==0){
+                call.getPlayVoiceTools ().notClear ();
+                countOfGetAmount++;
+            }else{
+                if (isNumber (amountOfLoan)){
+                    amountEntred=true;
+                }else{
+                    call.getPlayVoiceTools ().notClear ();
+                    countOfGetAmount++;
+                }
+            }
+        }
+        return amountEntred;
+    }
+
+    private  boolean confirmLoanPaymentIsOK () throws Exception {
+        String confirmation="";
+        call.getPlayVoiceTools().mablaghe();
+        call.getPlayVoiceTools().sayPersianDigit (amountOfLoan);
+        call.getPlayVoiceTools().rial();
+        call.getPlayVoiceTools().bardashVaBeHesabe();
+        call.getPlayVoiceTools().sayPersianDigitsSeparate (destinationLoanAccount);
+        call.getPlayVoiceTools().varizKhahadShod();
+        confirmation=call.getPlayVoiceTools().agarSahihAstAdade5 ();
+
+        if (confirmation.trim().equals("5")) return true;
+        else return false;
     }
 
     private  boolean getDestinationLoanAccountIsOK() throws Exception {
@@ -104,26 +142,8 @@ public class ServiceLoanPayment {
         }
         return accEntered;
     }
-    private  boolean isNumber(String entrance){
-        try{
-            Long.parseLong(entrance);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-    private String correctNumberForPlay(String number) {
-        return String.valueOf(convertToNumber(number));
-    }
-    private Long   convertToNumber(String number){
-        try{
-            Long longNumber=Long.valueOf(number);
-            return longNumber;
-        }catch (Exception e){
-            return -1L;
-        }
-    }
-    private  void    getLoanStatus() throws Exception {
+
+    private  void getLoanStatus() throws Exception {
         call.getAccountFacade ().getLoanStatus (call.getAccount ());
         int acCode=Integer.valueOf (call.getAccount ().getActionCode ());
         switch (acCode){
@@ -143,11 +163,11 @@ public class ServiceLoanPayment {
         }
     }
 
-    private void serverNotAvailable () throws Exception {
+    private  void serverNotAvailable () throws Exception {
         call.getPlayVoiceTools ().baArzePoozesh ();
     }
 
-    private void playLoanStatus () throws Exception {
+    private  void playLoanStatus () throws Exception {
         call.getPlayVoiceTools ().mablagheGhesteInDore ();
         call.getPlayVoiceTools ().sayPersianDigit (call.getAccount ().getLoanAmount ());
         call.getPlayVoiceTools ().rial ();
@@ -156,7 +176,7 @@ public class ServiceLoanPayment {
         call.getPlayVoiceTools ().rialMibashad ();
     }
 
-    private  void    paymentLoan() throws Exception {
+    private  void paymentLoan() throws Exception {
 
        if (getAmountOfLoanIsOK ()){
           if (confirmLoanPaymentIsOK ()){
@@ -165,51 +185,20 @@ public class ServiceLoanPayment {
        }
 
     }
-    private  boolean getAmountOfLoanIsOK () throws Exception {
-        int countOfGetAmount=0;
-        boolean amountEntred=false;
-        while (!amountEntred && countOfGetAmount<2){
-            amountOfLoan=call.getPlayVoiceTools ().mablagheGhestRaVaredNamaeid ();
-            if (amountOfLoan.trim().length()==0){
-                call.getPlayVoiceTools ().notClear ();
-                countOfGetAmount++;
-            }else{
-                if (isNumber (amountOfLoan)){
-                    amountEntred=true;
-                }else{
-                    call.getPlayVoiceTools ().notClear ();
-                    countOfGetAmount++;
-                }
-            }
-        }
-        return amountEntred;
-    }
-    private  boolean confirmLoanPaymentIsOK () throws Exception {
-        String confirmation="";
-        call.getPlayVoiceTools().mablaghe();
-        call.getPlayVoiceTools().sayPersianDigit (amountOfLoan);
-        call.getPlayVoiceTools().rial();
-        call.getPlayVoiceTools().bardashVaBeHesabe();
-        call.getPlayVoiceTools().sayPersianDigitsSeparate (destinationLoanAccount);
-        call.getPlayVoiceTools().varizKhahadShod();
-        confirmation=call.getPlayVoiceTools().agarSahihAstAdade5 ();
 
-        if (confirmation.trim().equals("5")) return true;
-        else return false;
-    }
-    private void doLoanPayment () throws Exception {
+    private  void doLoanPayment () throws Exception {
         sendRequestToServer ();
         sayResponseToCustomer ();
     }
 
-    private void sendRequestToServer () {
+    private  void sendRequestToServer () {
         call.getAccount ().setDestinationAccount (destinationLoanAccount);
         call.getAccount ().setAmountOfTransfer (amountOfLoan);
         call.getAccount ().setTransferType (Const.LOAN_PAYMENT);
         call.getAccountFacade ().fundTransfer (call.getAccount ());
     }
 
-    private void sayResponseToCustomer () throws Exception {
+    private  void sayResponseToCustomer () throws Exception {
         int acCode=Integer.valueOf (call.getAccount ().getActionCode ());
         switch (acCode){
 
@@ -230,19 +219,20 @@ public class ServiceLoanPayment {
         }
 
     }
-    private void accountNotRegistered () throws Exception {
+
+    private  void accountNotRegistered () throws Exception {
         call.getPlayVoiceTools ().hesabSabtNashodeAst ();
     }
 
-    private void maxPaymentIsFull () throws Exception {
+    private  void maxPaymentIsFull () throws Exception {
         call.getPlayVoiceTools ().saghfePardakhtPorAst ();
     }
 
-    private void destinationAccountNotAvailable () throws Exception {
+    private  void destinationAccountNotAvailable () throws Exception {
         call.getPlayVoiceTools ().dastresiBeMaghsadMaghdorNist ();
     }
 
-    private void successOperations () throws Exception {
+    private  void successOperations () throws Exception {
         call.getPlayVoiceTools ().mablaghe ();
         call.getPlayVoiceTools ().sayPersianDigit (call.getAccount ().getAmountOfTransfer ());
         call.getPlayVoiceTools ().rial ();
@@ -252,6 +242,35 @@ public class ServiceLoanPayment {
         call.getPlayVoiceTools ().mibashad ();
     }
 
+    private  boolean isNumber(String entrance){
+        try{
+            Long.parseLong(entrance);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    private  String  correctNumberForPlay(String number) {
+        return String.valueOf(convertToNumber(number));
+    }
+
+    private  Long    convertToNumber(String number){
+        try{
+            Long longNumber=Long.valueOf(number);
+            return longNumber;
+        }catch (Exception e){
+            return -1L;
+        }
+    }
+
+    private void inputError () throws Exception {
+        call.getPlayVoiceTools().notClear();
+    }
+
+    private void exit () throws Exception {
+        call.getPlayVoiceTools ().byAndHangup ();
+    }
 
 
 }
