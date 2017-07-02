@@ -97,7 +97,7 @@ public class ServiceAccount {
                 break;
             case "5":changePin ();
                 break;
-            case "6":
+            case "6":loanPayment ();
                 break;
             case "7":
                 break;
@@ -393,6 +393,10 @@ public class ServiceAccount {
         }
         return getPinIsOk;
 
+    }
+
+    private void loanPayment() throws Exception {
+        new ServiceLoanPayment (call).execute ();
     }
 
 

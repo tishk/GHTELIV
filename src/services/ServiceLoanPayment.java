@@ -17,8 +17,10 @@ public class ServiceLoanPayment {
     public ServiceLoanPayment (Call call) {
         this.call=call;
     }
-    public void execute(){
+    public void execute() throws Exception {
         call.setServiceLoanPayment (this);
+        createMainMenu ();
+        sayMainMenu ();
     }
 
     private  void createMainMenu(){
