@@ -174,7 +174,7 @@ public class ServiceSMS {
 
     private boolean  mobileIsCorrect(String mobileNumber){
         if (isNumber (mobileNumber)){
-            if (mobileNumber.length ()==11){
+            if (mobileNumber.length ()==Const.MOBILE_NUMBER_LEN){
                 return true;
             }
         }

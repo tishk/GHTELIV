@@ -72,6 +72,7 @@ public class Const {
     public static final int   MAX_ACCOUNT_LEN=15;
     public static final int   PREFIX_ACTION_CODE=5000;
     public static final int   MAX_TEL_BANK_MENU_COUNT=3;
+    public static final int   MOBILE_NUMBER_LEN=11;
     public static final int   ZERO=0;
 
 
