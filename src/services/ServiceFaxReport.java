@@ -234,7 +234,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         call.getAccountFacade ().getTransactions (call.getAccount ());
     }
 
-    private String getTypeOfReport(){
+    private  String   getTypeOfReport(){
         if (faxType==1){
            return "صورتحساب 30گردش آخر";
         }else if (faxType==2){
@@ -245,11 +245,10 @@ public class ServiceFaxReport extends BaseAgiScript{
             return "صورتحساب 30گردش آخر";
         }
     }
-    private String getِDateTimeOfReport(){
+    private  String   getِDateTimeOfReport(){
        return persianDateTime.getIranianDate ()+" "+persianDateTime.getNowTime ();
     }
-
-    public  String   createHTMLFaxFile() throws IOException {
+    private  String   createHTMLFaxFile() throws IOException {
 
         ArrayList<String> Temp = new ArrayList<String>();
         List<Transaction> transactions=call.getAccount ().getTransactions ();
@@ -398,8 +397,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         }
 
     }
-
-    public  String   CreatePDFFile(String FaxFile) throws IOException {
+    private  String   CreatePDFFile(String FaxFile) throws IOException {
 
         String faxFile_PDF=getMainPathOfFaxFile()+call.getCallerID()+"-"+call.getUniQID()+".pdf";
         String faxFile_HTML=FaxFile+".html";
@@ -432,21 +430,19 @@ public class ServiceFaxReport extends BaseAgiScript{
         }
         else return null;
     }
-
-    public  boolean  clearFootPrint(String faxfile){
+    private  boolean  clearFootPrint(String faxfile){
         File file=new File(faxfile);
         return file.delete();
 
     }
-    public  boolean  SendFax(String FaxFile) throws AgiException, InterruptedException, SQLException, IOException {
+    private  boolean  SendFax(String FaxFile) throws AgiException, InterruptedException, SQLException, IOException {
 
         exec(Const.ASTERISK_PARK_COMMAND);
         Util.sendFax(FaxFile);
         return true;
 
     }
-
-    public  String   getMainPathOfFaxFile(){
+    private  String   getMainPathOfFaxFile(){
 
         String path=Util.FaxFile+getTodayDate();
         File file=new File(path);
@@ -465,6 +461,7 @@ public class ServiceFaxReport extends BaseAgiScript{
             return "-";
         }
     }
+
     @Override
     public void service (AgiRequest agiRequest, AgiChannel agiChannel) throws AgiException {
 

@@ -622,6 +622,12 @@ public class Voices extends BaseAgiScript {
     public String  ifCorrectPress5() throws Exception {
             return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh46" , 5).trim();
         }
+    public String  enterNewPassword() throws Exception {
+       return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "P023T" , 5).trim();
+    }
+    public String  reEnterNewPassword() throws Exception {
+       return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "P024T" , 5).trim();
+    }
 
     public  boolean passNotValid() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E003", "0.25").trim().equals("")) return true;
@@ -727,6 +733,22 @@ public class Voices extends BaseAgiScript {
     }
     public  boolean baArzePoozesh() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E011", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean inDoShomareMotabeghatNadarad() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH30", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean shomareOboreMotabarNist() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E007", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean ramzTaghirKard() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH28", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean ramzTaghirNakard() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH29", "0.25").trim().equals("")) return true;
         else return false;
     }
 

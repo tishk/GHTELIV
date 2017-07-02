@@ -19,6 +19,7 @@ public class ServiceAccount {
     private String firstChoice="";
     private String destinationAccount="";
     private String transferAmount="";
+    private String newPin ="";
 
     public ServiceAccount(Call call) {
         this.call=call;
@@ -94,7 +95,7 @@ public class ServiceAccount {
                 break;
             case "4":fundTransfer ();
                 break;
-            case "5":
+            case "5":changePin ();
                 break;
             case "6":
                 break;
@@ -191,7 +192,7 @@ public class ServiceAccount {
         new ServiceFaxReport(call).execute();
     }
 
-    private  void    fundTransfer() throws Exception {
+    private void fundTransfer() throws Exception {
         if (getDestinationAccountIsOK ()){
             if (getAmountIsOK ()){
                 if (confirmFundTransferIsOK ()){
@@ -217,9 +218,9 @@ public class ServiceAccount {
         int acCode=Integer.valueOf (call.getAccount ().getActionCode ());
         switch (acCode){
 
-            case 0:successOperations ();
+            case    0: successOperations ();
                 break;
-            case 9001 :destinationAccountNotAvailable ();
+            case 9001:destinationAccountNotAvailable ();
                 break;
             case 9008:destinationAccountNotAvailable ();
                 break;
@@ -307,12 +308,9 @@ public class ServiceAccount {
         if (confirmation.trim().equals("5")) return true;
         else return false;
     }
-
-
     private String correctNumberForPlay(String number, int i) {
         return String.valueOf(convertToNumber(number));
     }
-
     private Long   convertToNumber(String number){
         try{
          Long longNumber=Long.valueOf(number);
@@ -321,7 +319,6 @@ public class ServiceAccount {
             return -1L;
         }
     }
-
     private  boolean isNumber(String entrance){
         try{
             Long.parseLong(entrance);
@@ -330,6 +327,74 @@ public class ServiceAccount {
             return false;
         }
     }
+
+    private void changePin() throws Exception {
+       if (getNewPinIsOk ()){
+           sendChangePinRequestToServer ();
+           processResponseOfChangePin ();
+       }
+    }
+
+    private void processResponseOfChangePin () throws Exception {
+
+        int acCode=Integer.valueOf (call.getAccount ().getActionCode ());
+        switch (acCode){
+            case    0:call.getPlayVoiceTools ().ramzTaghirKard ();
+                break;
+            case 9001:call.getPlayVoiceTools ().accountEntryInvalid ();
+                break;
+            case 9010:call.getPlayVoiceTools ().ramzTaghirNakard ();
+                break;
+            case 9999:call.getPlayVoiceTools ().baArzePoozesh ();
+                break;
+            case 5999:call.getPlayVoiceTools ().baArzePoozesh ();
+                break;
+            default://TODO
+
+        }
+    }
+
+    private void sendChangePinRequestToServer () {
+        call.getAccount ().setNewPin (newPin);
+        call.getAccountFacade ().changePin (call.getAccount ());
+    }
+
+    private  boolean getNewPinIsOk () throws Exception {
+        int getPinCount=0;
+        boolean getPinIsOk=false;
+        String newPinRet="";
+        while (!getPinIsOk && getPinCount<2){
+            newPinRet=call.getPlayVoiceTools ().enterNewPassword ();
+            if (newPinRet.length()!=4){
+                if (newPinRet.length ()==0){
+                    call.getPlayVoiceTools ().notClear ();
+                }else{
+                    call.getPlayVoiceTools ().shomareOboreMotabarNist ();
+                }
+                getPinCount++;
+            }else{
+                newPin= call.getPlayVoiceTools ().reEnterNewPassword ();
+                if (newPin.length()!=4){
+                    if (newPin.length ()==0){
+                        call.getPlayVoiceTools ().notClear ();
+                    }else{
+                        call.getPlayVoiceTools ().shomareOboreMotabarNist ();
+                    }
+                    getPinCount++;
+                }else{
+                    if (newPin.equals(newPinRet)){
+                        getPinIsOk=true;
+                    }else{
+                        call.getPlayVoiceTools ().inDoShomareMotabeghatNadarad ();
+                        getPinCount++;
+                    }
+                }
+            }
+        }
+        return getPinIsOk;
+
+    }
+
 
 
 }
