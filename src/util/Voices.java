@@ -601,32 +601,38 @@ public class Voices extends BaseAgiScript {
 
     }
 
-    public String  enterPanPassword() throws Exception {
+    public String  ramzeCardRaVaredNamaeid () throws Exception {
         return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "009" , 5).trim();
     }
-    public String  enterAccountPassword() throws Exception {
+    public String  ramzeHesabRaVaredNamaeid () throws Exception {
         return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "002" , 5).trim();
     }
-    public String  enterStartDate() throws Exception {
+    public String  tarikheShoroRaVaredNamaeid () throws Exception {
         return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "P032" , 5).trim();
     }
-    public String  enterEndDate() throws Exception {
+    public String  tarikheEntehaRaVaredNamaeid () throws Exception {
         return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "P033" , 5).trim();
     }
-    public String  enterDestinationAccount() throws Exception {
+    public String  shomareHesabeMaghsadRaVaredNamaeid () throws Exception {
         return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh10p" , 5).trim();
+    }
+    public String  shomareHesabePardakhteGhestRaVaredNamaeid () throws Exception {
+        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh51p" , 5).trim();
     }
     public String  lotfanMablaghRaVaredNamaeid() throws Exception {
         return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "SH11p" , 5).trim();
     }
-    public String  ifCorrectPress5() throws Exception {
+    public String  agarSahihAstAdade5 () throws Exception {
             return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh46" , 5).trim();
         }
-    public String  enterNewPassword() throws Exception {
+    public String  ramzeJadidRaVaredNamaeid () throws Exception {
        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "P023T" , 5).trim();
     }
-    public String  reEnterNewPassword() throws Exception {
+    public String  ramzeJadidRaMojadadanVaredNamaeid () throws Exception {
        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "P024T" , 5).trim();
+    }
+    public String  mablagheGhestRaVaredNamaeid () throws Exception {
+       return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh01T" , 5).trim();
     }
 
     public  boolean passNotValid() throws Exception {
@@ -699,6 +705,10 @@ public class Voices extends BaseAgiScript {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "P027", "0.25").trim().equals("")) return true;
         else return false;
     }
+    public  boolean rialMibashad() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "sh12", "0.25").trim().equals("")) return true;
+        else return false;
+    }
     public  boolean bardashVaBeHesabe() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh44", "0.25").trim().equals("")) return true;
         else return false;
@@ -749,6 +759,14 @@ public class Voices extends BaseAgiScript {
     }
     public  boolean ramzTaghirNakard() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH29", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean mablagheGhesteInDore() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH04", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean mandeBedehiShoma() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh05", "0.25").trim().equals("")) return true;
         else return false;
     }
 

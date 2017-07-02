@@ -181,7 +181,7 @@ public class ServiceAccount {
             call.getPlayVoiceTools().bardashte();
         }
         call.getPlayVoiceTools().mablaghe();
-        call.getPlayVoiceTools().sayPersianDigit(correctNumberForPlay(transactions.get(i).getAmount(), i));
+        call.getPlayVoiceTools().sayPersianDigit(correctNumberForPlay(transactions.get(i).getAmount()));
         call.getPlayVoiceTools().sayCurrency("0");
         call.getPlayVoiceTools().beTarikhe();
         call.getPlayVoiceTools().sayDate(transactions.get(i).getfDescription());
@@ -261,7 +261,7 @@ public class ServiceAccount {
         int countOfGetAcc=0;
         boolean accEntered=false;
         while (!accEntered && countOfGetAcc<2){
-            destinationAccount=call.getPlayVoiceTools ().enterDestinationAccount();
+            destinationAccount=call.getPlayVoiceTools ().shomareHesabeMaghsadRaVaredNamaeid ();
             if (destinationAccount.length()==0){
                 call.getPlayVoiceTools ().notClear ();
                 countOfGetAcc++;
@@ -303,12 +303,12 @@ public class ServiceAccount {
         call.getPlayVoiceTools().bardashVaBeHesabe();
         call.getPlayVoiceTools().sayPersianDigitsSeparate (destinationAccount);
         call.getPlayVoiceTools().varizKhahadShod();
-        confirmation=call.getPlayVoiceTools().ifCorrectPress5();
+        confirmation=call.getPlayVoiceTools().agarSahihAstAdade5 ();
 
         if (confirmation.trim().equals("5")) return true;
         else return false;
     }
-    private String correctNumberForPlay(String number, int i) {
+    private String correctNumberForPlay(String number) {
         return String.valueOf(convertToNumber(number));
     }
     private Long   convertToNumber(String number){
@@ -364,7 +364,7 @@ public class ServiceAccount {
         boolean getPinIsOk=false;
         String newPinRet="";
         while (!getPinIsOk && getPinCount<2){
-            newPinRet=call.getPlayVoiceTools ().enterNewPassword ();
+            newPinRet=call.getPlayVoiceTools ().ramzeJadidRaVaredNamaeid ();
             if (newPinRet.length()!=4){
                 if (newPinRet.length ()==0){
                     call.getPlayVoiceTools ().notClear ();
@@ -373,7 +373,7 @@ public class ServiceAccount {
                 }
                 getPinCount++;
             }else{
-                newPin= call.getPlayVoiceTools ().reEnterNewPassword ();
+                newPin= call.getPlayVoiceTools ().ramzeJadidRaMojadadanVaredNamaeid ();
                 if (newPin.length()!=4){
                     if (newPin.length ()==0){
                         call.getPlayVoiceTools ().notClear ();

@@ -260,7 +260,15 @@ public class AccountFacadeImpl implements AccountFacade {
 
     private void processLoanStatusResponse (Account account) {
         String response=stringUtils.rightString(account.getResponseFromSwitch(),account.getResponseFromSwitch().length()-15);
-        account.setInstallmentStatus(stringUtils.rightString(response,response.length()));
+        Tokenize tokenize=new Tokenize(response);
+        account.setActionCode (tokenize.tokenizeResponse ());
+        if (account.getActionCode ().equals (Const.SUCCESS)){
+
+            account.setLoanAmount (tokenize.tokenizeResponse ());
+            account.setBalanceOfLoanDebt (tokenize.tokenizeResponse ());
+            account.setLoanDate   (tokenize.tokenizeResponse ());
+        }
+
     }
 
     private void sendLoanGetStatusRequest (Account account) {

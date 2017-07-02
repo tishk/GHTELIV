@@ -168,7 +168,7 @@ public class ServiceTelBank {
         }
     }
     private boolean authenticateOfPanISOK() throws Exception {
-        panPass=call.getPlayVoiceTools().enterAccountPassword();
+        panPass=call.getPlayVoiceTools().ramzeHesabRaVaredNamaeid ();
         if (panPass.length()<Const.MIN_PAN_PASS_LEN && panPass.length()>Const.MAX_PAN_PASS_LEN){
             call.getPlayVoiceTools().passNotValid();
             return false;
@@ -202,7 +202,7 @@ public class ServiceTelBank {
     }
     private boolean authenticateOfAccountISOK() throws Exception {
 
-        accountPass=call.getPlayVoiceTools().enterPanPassword();
+        accountPass=call.getPlayVoiceTools().ramzeCardRaVaredNamaeid ();
         if (accountPass.length()<Const.MIN_ACCOUNT_PASS_LEN && accountPass.length()>Const.MAX_ACCOUNT_PASS_LEN){
             call.getPlayVoiceTools().passNotValid();
             return false;

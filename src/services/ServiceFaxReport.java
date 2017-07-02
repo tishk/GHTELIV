@@ -149,7 +149,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         boolean getStartDateIsOK=false;
         boolean getEndDateIsOK=false;
         while ((!getStartDateIsOK) && (getDateCount<2)){
-            startDate=call.getPlayVoiceTools ().enterStartDate();
+            startDate=call.getPlayVoiceTools ().tarikheShoroRaVaredNamaeid ();
             if (isNumber(startDate)){
                 if (startDate.length()!=0) {
                     if (startDate.length()==6) {
@@ -166,7 +166,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         if (getStartDateIsOK){
             getDateCount=0;
             while ((!getEndDateIsOK) && (getDateCount<2)){
-                endDate=call.getPlayVoiceTools ().enterEndDate().trim();
+                endDate=call.getPlayVoiceTools ().tarikheEntehaRaVaredNamaeid ().trim();
                 if (isNumber(endDate)) {
                     if (endDate.length() != 0) {
                         if (endDate.length() == 6) {

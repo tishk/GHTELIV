@@ -24,7 +24,9 @@ public class Account {
    private String amountOfTransfer="";
    private String transferType="";
    private String referenceCode="";
-   private String installmentStatus="";
+   private String balanceOfLoanDebt ="";
+   private String loanAmount ="";
+   private String loanDate ="";
    private String finalResult="";
    private String mobileNumber="";
    private String kindOfPOSTransaction="";
@@ -198,12 +200,12 @@ public class Account {
         this.finalResult = finalResult;
     }
 
-    public String getInstallmentStatus() {
-        return installmentStatus;
+    public String getBalanceOfLoanDebt () {
+        return balanceOfLoanDebt;
     }
 
-    public void setInstallmentStatus(String installmentStatus) {
-        this.installmentStatus = installmentStatus;
+    public void setBalanceOfLoanDebt (String balanceOfLoanDebt) {
+        this.balanceOfLoanDebt = balanceOfLoanDebt;
     }
 
     public String getMobileNumber() {
@@ -260,5 +262,21 @@ public class Account {
 
     public void setIBAN(String IBAN) {
         this.IBAN = IBAN;
+    }
+
+    public String getLoanAmount () {
+        return loanAmount;
+    }
+
+    public void setLoanAmount (String loanAmount) {
+        this.loanAmount = loanAmount;
+    }
+
+    public String getLoanDate () {
+        return loanDate;
+    }
+
+    public void setLoanDate (String loanDate) {
+        this.loanDate = loanDate;
     }
 }

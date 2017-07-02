@@ -59,6 +59,7 @@ public class Const {
     public static final String TWO_ZERO ="01";
     public static final String FUND_TRANSFER ="E";
     public static final String BILL_PAYMENT="F";
+    public static final String LOAN_PAYMENT ="F";
     public static final String BEAN_OF_PAN="639599";
     public static final String   NEGATIVE_SIGN="-";
     public static final String   ASTERISK_PARK_COMMAND="Park";
