@@ -24,7 +24,7 @@ public  class Call  {
     private ServiceBillPayment serviceBillPayment;
     private ServiceCheque serviceCheque;
     private ServiceFaxReport serviceFaxReport;
-    private ServiceInstallment serviceInstallment;
+    private ServiceLoanPayment serviceLoanPayment;
     private ServicePan servicePan;
     private ServiceShebaAndBranches serviceShebaAndBranches;
     private ServiceSMS serviceSMS;
@@ -144,12 +144,12 @@ public  class Call  {
         this.serviceFaxReport = serviceFaxReport;
     }
 
-    public ServiceInstallment getServiceInstallment() {
-        return serviceInstallment;
+    public ServiceLoanPayment getServiceLoanPayment () {
+        return serviceLoanPayment;
     }
 
-    public void setServiceInstallment(ServiceInstallment serviceInstallment) {
-        this.serviceInstallment = serviceInstallment;
+    public void setServiceLoanPayment (ServiceLoanPayment serviceLoanPayment) {
+        this.serviceLoanPayment = serviceLoanPayment;
     }
 
     public ServicePan getServicePan() {

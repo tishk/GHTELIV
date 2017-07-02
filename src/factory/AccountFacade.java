@@ -15,7 +15,7 @@ public interface AccountFacade {
 
     public void changePin(Account account);
 
-    public void getInstallmentStatus(Account account);
+    public void getLoanStatus (Account account);
 
     public void smsAlarmSelect(Account account);
 

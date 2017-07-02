@@ -104,11 +104,11 @@ public class AccountFacadeImpl implements AccountFacade {
     }
 
     @Override
-    public void getInstallmentStatus(Account account) {
+    public void getLoanStatus (Account account) {
 
-        sendInstallmentGetStatusRequest(account);
+        sendLoanGetStatusRequest (account);
         if (account.getResponseFromSwitch()!=null){
-            processInstallmentStatusResponse(account);
+            processLoanStatusResponse (account);
         }else {
             account.setActionCode(Const.NETWORK_ERROR);
         }
@@ -258,12 +258,12 @@ public class AccountFacadeImpl implements AccountFacade {
         account.setResponseFromSwitch(requestToSwitch.send(message));
     }
 
-    private void processInstallmentStatusResponse(Account account) {
+    private void processLoanStatusResponse (Account account) {
         String response=stringUtils.rightString(account.getResponseFromSwitch(),account.getResponseFromSwitch().length()-15);
         account.setInstallmentStatus(stringUtils.rightString(response,response.length()));
     }
 
-    private void sendInstallmentGetStatusRequest(Account account) {
+    private void sendLoanGetStatusRequest (Account account) {
         String messageSequence=getMessageSequence();
         String message=messageSequence+
                 Const.ACCOUNT_SIGN+
