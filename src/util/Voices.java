@@ -784,6 +784,10 @@ public class Voices extends BaseAgiScript {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SuccessfulRegisterMobile", "0.25").trim().equals("")) return true;
         else return false;
     }
+    public  boolean baMovafaghiatHazfShod() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SuccessfulDeleteMobile", "0.25").trim().equals("")) return true;
+        else return false;
+    }
 
     // _______________________Ghavamin____Messages__________________________________
 

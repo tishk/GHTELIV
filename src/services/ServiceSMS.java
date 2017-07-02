@@ -21,7 +21,7 @@ public class ServiceSMS {
         this.call=call;
     }
 
-    public void execute() throws Exception {
+    public  void execute() throws Exception {
        call.setServiceSMS(this);
        if (getAccountStatusIsSuccessful ()){
            createMainMenu ();
@@ -29,7 +29,7 @@ public class ServiceSMS {
        }
     }
 
-    private  void createMainMenu(){
+    private void createMainMenu(){
         /*
             first say balance
             1:register mobile number
@@ -44,7 +44,7 @@ public class ServiceSMS {
 
     }
 
-    public   void sayMainMenu() throws Exception {
+    public  void sayMainMenu() throws Exception {
 
         String Choice="";
         while ((smsMenuCount <3)) {
@@ -65,7 +65,7 @@ public class ServiceSMS {
         exit ();
     }
 
-    private  void selectSubMenu(String Choice) throws Exception {
+    private void selectSubMenu(String Choice) throws Exception {
 
         switch (Choice){
             case  "1":registerMobileNumber ();
@@ -98,7 +98,7 @@ public class ServiceSMS {
 
     private void registerMobileNumber() throws Exception {
         if (accountRegistered ()){
-            if (deleteMobileNumber ()){
+            if (deleteMobileHappened ()){
                 doRegister ();
             }else{
                 errorOnOperations ();
@@ -136,16 +136,15 @@ public class ServiceSMS {
         call.getPlayVoiceTools ().mobileDorostNist ();
     }
 
-    private boolean errorOnOperations () throws Exception {
-        return call.getPlayVoiceTools ().error ();
+    private void errorOnOperations () throws Exception {
+         call.getPlayVoiceTools ().error ();
     }
 
-    private boolean deleteMobileNumber(){
-        call.getAccountFacade ().smsAlarmDelete (call.getAccount ());
-        if (call.getAccount ().getActionCode ().equals (Const.SUCCESS)){
-            return true;
+    private void deleteMobileNumber() throws Exception {
+        if (deleteMobileHappened ()){
+            call.getPlayVoiceTools ().baMovafaghiatHazfShod ();
         }else{
-            return false;
+            errorOnOperations ();
         }
     }
 
@@ -158,11 +157,13 @@ public class ServiceSMS {
             return false;
         }
     }
+
     private boolean accountRegistered(){
 
         return isNumber (call.getAccount ().getMobileNumber ());
     }
-    private  boolean isNumber(String entrance){
+
+    private boolean isNumber(String entrance){
         try{
             Long.parseLong(entrance);
             return true;
@@ -180,6 +181,14 @@ public class ServiceSMS {
         return false;
     }
 
+    private boolean deleteMobileHappened(){
+        call.getAccountFacade ().smsAlarmDelete (call.getAccount ());
+        if (call.getAccount ().getActionCode ().equals (Const.SUCCESS)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 
