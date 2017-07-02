@@ -77,7 +77,7 @@ public class ServiceAccount {
                 selectSubMenu(Choice);
             }
             else{
-                call.getPlayVoiceTools().notClear();
+                entryNotClear();
             }
             MainMenuCount++;
         }
@@ -105,18 +105,21 @@ public class ServiceAccount {
                 break;
             case "0":exit ();
                 break;
-            case "-1":call.getPlayVoiceTools().notClear();
+            case "-1":entryNotClear();
                 break;
-            default:call.getPlayVoiceTools().notClear();
+            default  :entryNotClear();
                 break;
 
         }
     }
 
+    private void entryNotClear() throws Exception {
+        call.getPlayVoiceTools().notClear();
+    }
+
     private void exit () throws Exception {
         call.getPlayVoiceTools ().byAndHangup ();
     }
-
 
     private void correctAccountLenWithZero() {
         call.getAccount().setAccountNumber(call.getStrUtils().fixLengthWithZero(call.getAccount().getAccountNumber(), Const.MAX_ACCOUNT_LEN));
@@ -317,7 +320,7 @@ public class ServiceAccount {
             newPinRet=call.getPlayVoiceTools ().ramzeJadidRaVaredNamaeid ();
             if (newPinRet.length()!=4){
                 if (newPinRet.length ()==0){
-                    call.getPlayVoiceTools ().notClear ();
+                    entryNotClear();
                 }else{
                     call.getPlayVoiceTools ().shomareOboreMotabarNist ();
                 }
@@ -326,7 +329,7 @@ public class ServiceAccount {
                 newPin= call.getPlayVoiceTools ().ramzeJadidRaMojadadanVaredNamaeid ();
                 if (newPin.length()!=4){
                     if (newPin.length ()==0){
-                        call.getPlayVoiceTools ().notClear ();
+                        entryNotClear();
                     }else{
                         call.getPlayVoiceTools ().shomareOboreMotabarNist ();
                     }
@@ -351,7 +354,7 @@ public class ServiceAccount {
         while (!accEntered && countOfGetAcc<2){
             destinationAccount=call.getPlayVoiceTools ().shomareHesabeMaghsadRaVaredNamaeid ();
             if (destinationAccount.length()==0){
-                call.getPlayVoiceTools ().notClear ();
+                entryNotClear();
                 countOfGetAcc++;
             }else{
                 if (isNumber (destinationAccount)){
@@ -371,13 +374,13 @@ public class ServiceAccount {
         while (!amountEntred && countOfGetAmount<2){
             transferAmount=call.getPlayVoiceTools ().lotfanMablaghRaVaredNamaeid ();
             if (transferAmount.trim().length()==0){
-                call.getPlayVoiceTools ().notClear ();
+                entryNotClear();
                 countOfGetAmount++;
             }else{
                 if (isNumber (transferAmount)){
                     amountEntred=true;
                 }else{
-                    call.getPlayVoiceTools ().notClear ();
+                    entryNotClear();
                     countOfGetAmount++;
                 }
             }
