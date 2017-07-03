@@ -22,7 +22,7 @@ public  class Call  {
     private ServiceTelBank serviceTelBank;
     private ServiceAccount serviceAccount;
     private ServiceBillPayment serviceBillPayment;
-    private ServiceCheque serviceCheque;
+    private ServicePOSTransactionAndCheque servicePOSTransactionAndCheque;
     private ServiceFaxReport serviceFaxReport;
     private ServiceLoanPayment serviceLoanPayment;
     private ServicePan servicePan;
@@ -32,7 +32,7 @@ public  class Call  {
     private Pan pan;
     public AccountFacadeImpl accountFacade=new AccountFacadeImpl();
     public PanFacadeImpl panFacade=new PanFacadeImpl();
-    public Voices playVoiceTools =new Voices();
+    public Voices playVoiceTool =new Voices();
 
 
     public StringUtils getStrUtils() {
@@ -128,12 +128,12 @@ public  class Call  {
         this.serviceBillPayment = serviceBillPayment;
     }
 
-    public ServiceCheque getServiceCheque() {
-        return serviceCheque;
+    public ServicePOSTransactionAndCheque getServicePOSTransactionAndCheque () {
+        return servicePOSTransactionAndCheque;
     }
 
-    public void setServiceCheque(ServiceCheque serviceCheque) {
-        this.serviceCheque = serviceCheque;
+    public void setServicePOSTransactionAndCheque (ServicePOSTransactionAndCheque servicePOSTransactionAndCheque) {
+        this.servicePOSTransactionAndCheque = servicePOSTransactionAndCheque;
     }
 
     public ServiceFaxReport getServiceFaxReport() {
@@ -176,12 +176,12 @@ public  class Call  {
         this.serviceSMS = serviceSMS;
     }
 
-    public Voices getPlayVoiceTools() {
-        return playVoiceTools;
+    public Voices getPlayVoiceTool () {
+        return playVoiceTool;
     }
 
-    public void setPlayVoiceTools(Voices playVoiceTools) {
-        this.playVoiceTools = playVoiceTools;
+    public void setPlayVoiceTool (Voices playVoiceTool) {
+        this.playVoiceTool = playVoiceTool;
     }
 
     public Account getAccount() {

@@ -68,7 +68,7 @@ public class ServiceAccount {
 
         while ((MainMenuCount<3)) {
 
-            if (firstChoice.equals("")) Choice = call.getPlayVoiceTools().sayMenu(mainMenu,"AccMenu_");
+            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(mainMenu,"AccMenu_");
             else {
                 Choice=firstChoice;
                 firstChoice="";
@@ -114,11 +114,11 @@ public class ServiceAccount {
     }
 
     private void entryNotClear() throws Exception {
-        call.getPlayVoiceTools().notClear();
+        call.getPlayVoiceTool ().notClear();
     }
 
     private void exit () throws Exception {
-        call.getPlayVoiceTools ().byAndHangup ();
+        call.getPlayVoiceTool ().byAndHangup ();
     }
 
     private void correctAccountLenWithZero() {
@@ -137,20 +137,20 @@ public class ServiceAccount {
     }
 
     private void sayBedehkarBalance() throws Exception {
-        call.getPlayVoiceTools().mojodieHesabeShoma();
+        call.getPlayVoiceTool ().mojodieHesabeShoma();
         String balance="";
         balance=call.getAccount().getBalance();
-        call.getPlayVoiceTools().sayPersianDigit(balance);
-        call.getPlayVoiceTools().mibashad();
+        call.getPlayVoiceTool ().sayPersianDigit(balance);
+        call.getPlayVoiceTool ().mibashad();
     }
 
     private void sayBestankarBalance() throws Exception {
-        call.getPlayVoiceTools().mojodieHesabeShoma();
+        call.getPlayVoiceTool ().mojodieHesabeShoma();
         String balance="";
         balance=call.getStrUtils().rightString(call.getAccount().getBalance(),call.getAccount().getBalance().length()-1);
-        call.getPlayVoiceTools().sayPersianDigit(balance);
-        call.getPlayVoiceTools().sayCurrency("0");
-        call.getPlayVoiceTools().bedehkarMibashad();
+        call.getPlayVoiceTool ().sayPersianDigit(balance);
+        call.getPlayVoiceTool ().sayCurrency("0");
+        call.getPlayVoiceTool ().bedehkarMibashad();
     }
 
     private void sayLast5Transactions() throws Exception {
@@ -160,7 +160,7 @@ public class ServiceAccount {
         if (call.getAccount().getActionCode().equals(Const.SUCCESS)){
             doSuccessTransactionOperations();
         }else{
-            call.getPlayVoiceTools().khataDarErtebatBaServer();
+            call.getPlayVoiceTool ().khataDarErtebatBaServer();
         }
 
     }
@@ -176,23 +176,23 @@ public class ServiceAccount {
                 i--;
             }
        }else{
-            call.getPlayVoiceTools().gardeshiMojodNist();
+            call.getPlayVoiceTool ().gardeshiMojodNist();
        }
     }
 
     private void sayTransaction(List<Transaction> transactions, int i) throws Exception {
-        call.getPlayVoiceTools().gardesheHesabeShoma();
+        call.getPlayVoiceTool ().gardesheHesabeShoma();
         if (convertToNumber(transactions.get(i).getAmount())>=0){
-            call.getPlayVoiceTools().varize();
+            call.getPlayVoiceTool ().varize();
         }else{
-            call.getPlayVoiceTools().bardashte();
+            call.getPlayVoiceTool ().bardashte();
         }
-        call.getPlayVoiceTools().mablaghe();
-        call.getPlayVoiceTools().sayPersianDigit(correctNumberForPlay(transactions.get(i).getAmount()));
-        call.getPlayVoiceTools().sayCurrency("0");
-        call.getPlayVoiceTools().beTarikhe();
-        call.getPlayVoiceTools().sayDate(transactions.get(i).getfDescription());
-        call.getPlayVoiceTools().mibashad();
+        call.getPlayVoiceTool ().mablaghe();
+        call.getPlayVoiceTool ().sayPersianDigit(correctNumberForPlay(transactions.get(i).getAmount()));
+        call.getPlayVoiceTool ().sayCurrency("0");
+        call.getPlayVoiceTool ().beTarikhe();
+        call.getPlayVoiceTool ().sayDate(transactions.get(i).getfDescription());
+        call.getPlayVoiceTool ().mibashad();
     }
 
     private void faxReport() throws Exception {
@@ -243,25 +243,25 @@ public class ServiceAccount {
     }
 
     private void accountNotRegistered () throws Exception {
-        call.getPlayVoiceTools ().hesabSabtNashodeAst ();
+        call.getPlayVoiceTool ().hesabSabtNashodeAst ();
     }
 
     private void maxPaymentIsFull () throws Exception {
-        call.getPlayVoiceTools ().saghfePardakhtPorAst ();
+        call.getPlayVoiceTool ().saghfePardakhtPorAst ();
     }
 
     private void destinationAccountNotAvailable () throws Exception {
-        call.getPlayVoiceTools ().dastresiBeMaghsadMaghdorNist ();
+        call.getPlayVoiceTool ().dastresiBeMaghsadMaghdorNist ();
     }
 
     private void successOperations () throws Exception {
-        call.getPlayVoiceTools ().mablaghe ();
-        call.getPlayVoiceTools ().sayPersianDigit (call.getAccount ().getAmountOfTransfer ());
-        call.getPlayVoiceTools ().rial ();
-        call.getPlayVoiceTools ().montaghelKhahadshod ();
-        call.getPlayVoiceTools ().zemnanShomarePeygirieshoma ();
-        call.getPlayVoiceTools ().sayPersianDigitsSeparate (call.getAccount ().getReferenceCode ());
-        call.getPlayVoiceTools ().mibashad ();
+        call.getPlayVoiceTool ().mablaghe ();
+        call.getPlayVoiceTool ().sayPersianDigit (call.getAccount ().getAmountOfTransfer ());
+        call.getPlayVoiceTool ().rial ();
+        call.getPlayVoiceTool ().montaghelKhahadshod ();
+        call.getPlayVoiceTool ().zemnanShomarePeygirieshoma ();
+        call.getPlayVoiceTool ().sayPersianDigitsSeparate (call.getAccount ().getReferenceCode ());
+        call.getPlayVoiceTool ().mibashad ();
     }
 
     private void changePin() throws Exception {
@@ -275,15 +275,15 @@ public class ServiceAccount {
 
         int acCode=Integer.valueOf (call.getAccount ().getActionCode ());
         switch (acCode){
-            case    0:call.getPlayVoiceTools ().ramzTaghirKard ();
+            case    0:call.getPlayVoiceTool ().ramzTaghirKard ();
                 break;
-            case 9001:call.getPlayVoiceTools ().accountEntryInvalid ();
+            case 9001:call.getPlayVoiceTool ().accountEntryInvalid ();
                 break;
-            case 9010:call.getPlayVoiceTools ().ramzTaghirNakard ();
+            case 9010:call.getPlayVoiceTool ().ramzTaghirNakard ();
                 break;
-            case 9999:call.getPlayVoiceTools ().baArzePoozesh ();
+            case 9999:call.getPlayVoiceTool ().baArzePoozesh ();
                 break;
-            case 5999:call.getPlayVoiceTools ().baArzePoozesh ();
+            case 5999:call.getPlayVoiceTool ().baArzePoozesh ();
                 break;
             default://TODO
 
@@ -317,28 +317,28 @@ public class ServiceAccount {
         boolean getPinIsOk=false;
         String newPinRet="";
         while (!getPinIsOk && getPinCount<2){
-            newPinRet=call.getPlayVoiceTools ().ramzeJadidRaVaredNamaeid ();
+            newPinRet=call.getPlayVoiceTool ().ramzeJadidRaVaredNamaeid ();
             if (newPinRet.length()!=4){
                 if (newPinRet.length ()==0){
                     entryNotClear();
                 }else{
-                    call.getPlayVoiceTools ().shomareOboreMotabarNist ();
+                    call.getPlayVoiceTool ().shomareOboreMotabarNist ();
                 }
                 getPinCount++;
             }else{
-                newPin= call.getPlayVoiceTools ().ramzeJadidRaMojadadanVaredNamaeid ();
+                newPin= call.getPlayVoiceTool ().ramzeJadidRaMojadadanVaredNamaeid ();
                 if (newPin.length()!=4){
                     if (newPin.length ()==0){
                         entryNotClear();
                     }else{
-                        call.getPlayVoiceTools ().shomareOboreMotabarNist ();
+                        call.getPlayVoiceTool ().shomareOboreMotabarNist ();
                     }
                     getPinCount++;
                 }else{
                     if (newPin.equals(newPinRet)){
                         getPinIsOk=true;
                     }else{
-                        call.getPlayVoiceTools ().inDoShomareMotabeghatNadarad ();
+                        call.getPlayVoiceTool ().inDoShomareMotabeghatNadarad ();
                         getPinCount++;
                     }
                 }
@@ -352,7 +352,7 @@ public class ServiceAccount {
         int countOfGetAcc=0;
         boolean accEntered=false;
         while (!accEntered && countOfGetAcc<2){
-            destinationAccount=call.getPlayVoiceTools ().shomareHesabeMaghsadRaVaredNamaeid ();
+            destinationAccount=call.getPlayVoiceTool ().shomareHesabeMaghsadRaVaredNamaeid ();
             if (destinationAccount.length()==0){
                 entryNotClear();
                 countOfGetAcc++;
@@ -360,7 +360,7 @@ public class ServiceAccount {
                 if (isNumber (destinationAccount)){
                     accEntered=true;
                 }else{
-                    call.getPlayVoiceTools ().accountEntryInvalid ();
+                    call.getPlayVoiceTool ().accountEntryInvalid ();
                     countOfGetAcc++;
                 }
             }
@@ -372,7 +372,7 @@ public class ServiceAccount {
         int countOfGetAmount=0;
         boolean amountEntred=false;
         while (!amountEntred && countOfGetAmount<2){
-            transferAmount=call.getPlayVoiceTools ().lotfanMablaghRaVaredNamaeid ();
+            transferAmount=call.getPlayVoiceTool ().lotfanMablaghRaVaredNamaeid ();
             if (transferAmount.trim().length()==0){
                 entryNotClear();
                 countOfGetAmount++;
@@ -390,13 +390,13 @@ public class ServiceAccount {
 
     private  boolean confirmFundTransferIsOK() throws Exception {
         String confirmation="";
-        call.getPlayVoiceTools().mablaghe();
-        call.getPlayVoiceTools().sayPersianDigit (transferAmount);
-        call.getPlayVoiceTools().rial();
-        call.getPlayVoiceTools().bardashVaBeHesabe();
-        call.getPlayVoiceTools().sayPersianDigitsSeparate (destinationAccount);
-        call.getPlayVoiceTools().varizKhahadShod();
-        confirmation=call.getPlayVoiceTools().agarSahihAstAdade5 ();
+        call.getPlayVoiceTool ().mablaghe();
+        call.getPlayVoiceTool ().sayPersianDigit (transferAmount);
+        call.getPlayVoiceTool ().rial();
+        call.getPlayVoiceTool ().bardashVaBeHesabe();
+        call.getPlayVoiceTool ().sayPersianDigitsSeparate (destinationAccount);
+        call.getPlayVoiceTool ().varizKhahadShod();
+        confirmation=call.getPlayVoiceTool ().agarSahihAstAdade5 ();
 
         if (confirmation.trim().equals("5")) return true;
         else return false;

@@ -63,7 +63,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         String Choice=null;
         while ((MainMenuCount<3)) {
 
-            if (firstChoice.equals("")) Choice = call.getPlayVoiceTools().sayMenu(faxMainMenu,"007_");
+            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(faxMainMenu,"007_");
             else {
                 Choice=firstChoice;
                 firstChoice="";
@@ -72,11 +72,11 @@ public class ServiceFaxReport extends BaseAgiScript{
                 selectSubMenu(Choice);
             }
             else{
-                call.getPlayVoiceTools().notClear();
+                call.getPlayVoiceTool ().notClear();
             }
             MainMenuCount++;
         }
-        call.getPlayVoiceTools().byAndHangup();
+        call.getPlayVoiceTool ().byAndHangup();
     }
 
     private  void selectSubMenu(String Choice) throws Exception {
@@ -88,13 +88,13 @@ public class ServiceFaxReport extends BaseAgiScript{
                 break;
             case "3":faxDateToDate ();
                 break;
-            case "9":call.getPlayVoiceTools ().byAndHangup ();
+            case "9":call.getPlayVoiceTool ().byAndHangup ();
                 break;
-            case "0":call.getPlayVoiceTools ().byAndHangup ();
+            case "0":call.getPlayVoiceTool ().byAndHangup ();
                 break;
-            case "-1":call.getPlayVoiceTools().notClear();
+            case "-1":call.getPlayVoiceTool ().notClear();
                 break;
-            default:call.getPlayVoiceTools().notClear();
+            default:call.getPlayVoiceTool ().notClear();
                 break;
 
         }
@@ -149,7 +149,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         boolean getStartDateIsOK=false;
         boolean getEndDateIsOK=false;
         while ((!getStartDateIsOK) && (getDateCount<2)){
-            startDate=call.getPlayVoiceTools ().tarikheShoroRaVaredNamaeid ();
+            startDate=call.getPlayVoiceTool ().tarikheShoroRaVaredNamaeid ();
             if (isNumber(startDate)){
                 if (startDate.length()!=0) {
                     if (startDate.length()==6) {
@@ -159,14 +159,14 @@ public class ServiceFaxReport extends BaseAgiScript{
                     }
                 }
             }else {
-                call.getPlayVoiceTools ().dateNotValid();
+                call.getPlayVoiceTool ().dateNotValid();
                 getDateCount++;
             }
         }
         if (getStartDateIsOK){
             getDateCount=0;
             while ((!getEndDateIsOK) && (getDateCount<2)){
-                endDate=call.getPlayVoiceTools ().tarikheEntehaRaVaredNamaeid ().trim();
+                endDate=call.getPlayVoiceTool ().tarikheEntehaRaVaredNamaeid ().trim();
                 if (isNumber(endDate)) {
                     if (endDate.length() != 0) {
                         if (endDate.length() == 6) {
@@ -176,7 +176,7 @@ public class ServiceFaxReport extends BaseAgiScript{
                         }
                     }
                 }else {
-                    call.getPlayVoiceTools ().dateNotValid();
+                    call.getPlayVoiceTool ().dateNotValid();
                     getDateCount++;
                 }
             }
@@ -210,7 +210,7 @@ public class ServiceFaxReport extends BaseAgiScript{
     }
     private  void    startSendFax() throws Exception {
 
-        call.getPlayVoiceTools ().pleaseWait ();
+        call.getPlayVoiceTool ().pleaseWait ();
 
         initAndSendTransactionRequest ();
 
@@ -221,8 +221,8 @@ public class ServiceFaxReport extends BaseAgiScript{
                 boolean resultOfSendFax=SendFax(FaxFile);
             }
         }else{
-            call.getPlayVoiceTools ().playActionCode (actionCode);
-            call.getPlayVoiceTools ().baArzePoozesh ();
+            call.getPlayVoiceTool ().playActionCode (actionCode);
+            call.getPlayVoiceTool ().baArzePoozesh ();
         }
     }
 

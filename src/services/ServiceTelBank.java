@@ -54,7 +54,7 @@ public class ServiceTelBank {
     }
 
     private void enterAccountOrPan() throws Exception {
-        entrance=call.getPlayVoiceTools().enterAccountOrPanNumber();
+        entrance=call.getPlayVoiceTool ().enterAccountOrPanNumber();
         call.setUserEntrance(entrance);
     }
 
@@ -76,7 +76,7 @@ public class ServiceTelBank {
     }
     private boolean doPanOperationsResult() throws Exception {
         if (authenticateOfPanISOK()){
-            call.getPlayVoiceTools().advertisement();
+            call.getPlayVoiceTool ().advertisement();
             servicePan=new ServicePan(call);
             servicePan.execute();
             return true;
@@ -86,7 +86,7 @@ public class ServiceTelBank {
     }
     private boolean doAccountOperationsResult() throws Exception {
         if (authenticateOfAccountISOK()){
-            call.getPlayVoiceTools().advertisement();
+            call.getPlayVoiceTool ().advertisement();
             serviceAccount=new ServiceAccount(call);
             serviceAccount.execute();
             return true;
@@ -97,13 +97,13 @@ public class ServiceTelBank {
 
     private void doIncorrectEntranceOperations() throws Exception {
         if (beanNotOK){
-            call.getPlayVoiceTools().panEntryInvalid();
+            call.getPlayVoiceTool ().panEntryInvalid();
         }else {
-            call.getPlayVoiceTools().accountEntryInvalid();
+            call.getPlayVoiceTool ().accountEntryInvalid();
         }
     }
     private void doNotClearOperations() throws Exception {
-        call.getPlayVoiceTools().notClear();
+        call.getPlayVoiceTool ().notClear();
     }
     private void setKindOfEntrance() throws IOException {
 
@@ -168,15 +168,15 @@ public class ServiceTelBank {
         }
     }
     private boolean authenticateOfPanISOK() throws Exception {
-        panPass=call.getPlayVoiceTools().ramzeHesabRaVaredNamaeid ();
+        panPass=call.getPlayVoiceTool ().ramzeHesabRaVaredNamaeid ();
         if (panPass.length()<Const.MIN_PAN_PASS_LEN && panPass.length()>Const.MAX_PAN_PASS_LEN){
-            call.getPlayVoiceTools().passNotValid();
+            call.getPlayVoiceTool ().passNotValid();
             return false;
         }else{
             if (isNumber(panPass)){
                 return getResultOfPanAuthenticateRequestToServer();
             }else{
-                call.getPlayVoiceTools().passNotValid();
+                call.getPlayVoiceTool ().passNotValid();
                 return false;
             }
         }
@@ -195,22 +195,22 @@ public class ServiceTelBank {
                 int actCode=Const.PREFIX_ACTION_CODE+Integer.valueOf(pan.getActionCode());
                 pan.setActionCode(String.valueOf(actCode));
             }
-            call.getPlayVoiceTools().playActionCode(pan.getActionCode());
+            call.getPlayVoiceTool ().playActionCode(pan.getActionCode());
             return false;
         }
 
     }
     private boolean authenticateOfAccountISOK() throws Exception {
 
-        accountPass=call.getPlayVoiceTools().ramzeCardRaVaredNamaeid ();
+        accountPass=call.getPlayVoiceTool ().ramzeCardRaVaredNamaeid ();
         if (accountPass.length()<Const.MIN_ACCOUNT_PASS_LEN && accountPass.length()>Const.MAX_ACCOUNT_PASS_LEN){
-            call.getPlayVoiceTools().passNotValid();
+            call.getPlayVoiceTool ().passNotValid();
             return false;
         }else{
             if (isNumber(accountPass)){
                 return getResultOfAccountAuthenticateRequestToServer();
             }else{
-                call.getPlayVoiceTools().passNotValid();
+                call.getPlayVoiceTool ().passNotValid();
                 return false;
             }
         }
@@ -230,7 +230,7 @@ public class ServiceTelBank {
                 int actCode=Const.PREFIX_ACTION_CODE+Integer.valueOf(account.getActionCode());
                 account.setActionCode(String.valueOf(actCode));
             }
-            call.getPlayVoiceTools().playActionCode(account.getActionCode());
+            call.getPlayVoiceTool ().playActionCode(account.getActionCode());
             return false;
         }
 

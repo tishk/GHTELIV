@@ -49,7 +49,7 @@ public class ServiceSMS {
         String Choice="";
         while ((smsMenuCount <3)) {
 
-            if (firstChoice.equals("")) Choice = call.getPlayVoiceTools().sayMenu(smsMenu,"sms_");
+            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(smsMenu,"sms_");
             else {
                 Choice=firstChoice;
                 firstChoice="";
@@ -85,11 +85,11 @@ public class ServiceSMS {
     }
 
     private void inputError () throws Exception {
-        call.getPlayVoiceTools().notClear();
+        call.getPlayVoiceTool ().notClear();
     }
 
     private void exit () throws Exception {
-        call.getPlayVoiceTools ().byAndHangup ();
+        call.getPlayVoiceTool ().byAndHangup ();
     }
 
     private void goToBackMenu () throws Exception {
@@ -113,7 +113,7 @@ public class ServiceSMS {
         int getMobileCount=0;
         boolean mobileEnteredIsCorrect=false;
         while (!mobileEnteredIsCorrect && getMobileCount<3){
-            mobileNumber=call.getPlayVoiceTools ().shomareMobileRaVaredKonid ();
+            mobileNumber=call.getPlayVoiceTool ().shomareMobileRaVaredKonid ();
             if (mobileIsCorrect (mobileNumber)){
                 mobileEnteredIsCorrect=true;
             }else{
@@ -125,7 +125,7 @@ public class ServiceSMS {
             call.getAccount ().setMobileNumber (mobileNumber);
             call.getAccountFacade ().smsAlarmRegister (call.getAccount ());
             if (call.getAccount ().getActionCode ().equals (Const.SUCCESS)){
-                call.getPlayVoiceTools ().baMovafaghiatSabtShod ();
+                call.getPlayVoiceTool ().baMovafaghiatSabtShod ();
             }else{
                 errorOnOperations ();
             }
@@ -133,16 +133,16 @@ public class ServiceSMS {
     }
 
     private void mobileNotValid () throws Exception {
-        call.getPlayVoiceTools ().mobileDorostNist ();
+        call.getPlayVoiceTool ().mobileDorostNist ();
     }
 
     private void errorOnOperations () throws Exception {
-         call.getPlayVoiceTools ().error ();
+         call.getPlayVoiceTool ().error ();
     }
 
     private void deleteMobileNumber() throws Exception {
         if (deleteMobileHappened ()){
-            call.getPlayVoiceTools ().baMovafaghiatHazfShod ();
+            call.getPlayVoiceTool ().baMovafaghiatHazfShod ();
         }else{
             errorOnOperations ();
         }
