@@ -368,6 +368,7 @@ public class Util {
     public static final String ivrPath= prob.getPath();
     public static final String FaxFile= ivrPath+"Fax/sent/";
     public static final String FaxFile_Base= ivrPath+"Fax/Fax";
+    public static final String FaxFile_Base_POS= ivrPath+"Fax/Faxpos";
     public static final String FaxFile_Need= ivrPath+"Fax/";
     public static final String FaxFileBill= "/ivr/Fax/FaxBill";
     public static final String VoicePath= "PERSIAN/";

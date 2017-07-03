@@ -244,7 +244,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         }else if (faxType==2){
            return "صورتحساب یک ماهه";
         }else if (faxType==3){
-           return "صورتحساب بازه زمانی مشخص";
+           return "صورتحساب در بازه زمانی مشخص";
         }else{
             return "صورتحساب 30گردش آخر";
         }
