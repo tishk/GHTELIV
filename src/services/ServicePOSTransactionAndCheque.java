@@ -31,7 +31,9 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
     private String startDate="";
     private String endDate="";
     private String faxType="";
+    private String chequeSerialNumber ="";
     private int faxCount;
+
 
     public ServicePOSTransactionAndCheque (Call call) {
         this.call=call;
@@ -125,8 +127,60 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
         }
     }
 
-    private void getChequeStatus(){
+    private void getChequeStatus() throws Exception {
 
+       if (getSerialNumberOfChequeOK ()){
+           sendChequeStatusRequest ();
+          if (isSuccessChequeStatus ()){
+              playStatus ();
+          }else{
+              playChequeNumberIsIncorrect ();
+          }
+       }
+
+    }
+
+    private boolean isSuccessChequeStatus () {
+        return call.getAccount ().getActionCode ().equals (Const.SUCCESS);
+    }
+
+    private void playStatus () throws Exception {
+        call.getPlayVoiceTool ().chekeShomare ();
+        call.getPlayVoiceTool ().sayPersianDigitsSeparate (call.getAccount ().getChequeSerialNumber ());
+        call.getPlayVoiceTool ().darTarikhe ();
+        call.getPlayVoiceTool ().sayDate (correctDateForPlay (call.getAccount ().getChequeDate ()));
+        call.getPlayVoiceTool ().chequeBaMablaghe ();
+        call.getPlayVoiceTool ().sayPersianDigit (correctNumberForPlay (call.getAccount ().getChequeAmount ()));
+        call.getPlayVoiceTool ().rial ();
+        call.getPlayVoiceTool ().sayChequeStatus (call.getAccount ().getChequeStatusCodeChar ());
+    }
+
+    private void sendChequeStatusRequest () {
+        call.getAccount ().setChequeSerialNumber (chequeSerialNumber);
+        call.getAccountFacade ().getChequeStatus (call.getAccount ());
+    }
+
+    private void playChequeNumberIsIncorrect () throws Exception {
+        call.getPlayVoiceTool ().chekeMoredeNazarEshtebahAst ();
+    }
+
+    private boolean getSerialNumberOfChequeOK () throws Exception {
+        int count=0;
+        boolean serialNumberEntered=false;
+        while (!serialNumberEntered && count<3){
+            getSerialNumberFromCustomer ();
+            if (chequeSerialNumber.length ()>0){
+                serialNumberEntered=true;
+            }else{
+                inputError ();
+                count++;
+            }
+        }
+        return serialNumberEntered;
+    }
+
+    private void getSerialNumberFromCustomer () throws Exception {
+        chequeSerialNumber =call.getPlayVoiceTool ().shomareSerialChekRaVaredKonid ();
     }
 
     private void startSendFax() throws Exception {
@@ -490,6 +544,21 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
             return String.valueOf(Long.valueOf(no));
         }catch (Exception e){
             return "-";
+        }
+    }
+
+    private  String  correctNumberForPlay(String number) {
+        return String.valueOf(convertToNumber(number));
+    }
+    private  String  correctDateForPlay(String date) {
+        return date.replace ("/","");
+    }
+    private  Long   convertToNumber(String number){
+        try{
+            Long longNumber=Long.valueOf(number);
+            return longNumber;
+        }catch (Exception e){
+            return -1L;
         }
     }
 

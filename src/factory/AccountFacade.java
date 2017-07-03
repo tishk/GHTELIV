@@ -25,7 +25,7 @@ public interface AccountFacade {
 
     public void getTransactionOfPOS(Account account);
 
-    public void getTransactionOfCheque(Account account);
+    public void getChequeStatus (Account account);
 
     public void getIBAN(Account account);
 

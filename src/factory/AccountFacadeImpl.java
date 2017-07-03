@@ -148,7 +148,7 @@ public class AccountFacadeImpl implements AccountFacade {
     }
 
     @Override
-    public void getTransactionOfCheque(Account account) {
+    public void getChequeStatus (Account account) {
 
         sendChequeStatusRequest(account);
         if (account.getResponseFromSwitch()!=null){
@@ -197,12 +197,21 @@ public class AccountFacadeImpl implements AccountFacade {
     }
 
     private void processChequeStatusResponse(Account account) {
-        Tokenize tokenize=new Tokenize(account.getResponseFromSwitch());
-        if (tokenize.tokenizeResponse()==account.getMessageSequence()){
-            account.setActionCode(stringUtils.leftString(tokenize.getOriginalString(),4));
-            if (account.getActionCode().equals("0000")){
-                account.setResponseFromSwitch(tokenize.getOriginalString());
-            }
+        String response=account.getRequestToSwitch ();
+        if (stringUtils.leftString(response,15)==account.getMessageSequence()){
+            response=stringUtils.rightString (response,response.length ()-15);
+            account.setActionCode(stringUtils.leftString(response,4));
+            if (account.getActionCode().equals(Const.SUCCESS)){
+                response=stringUtils.rightString (response,response.length ()-4);
+                Tokenize tokenize=new Tokenize(response);
+                account.setChequeSerialNumber (tokenize.tokenizeResponse ());
+                account.setChequeStatus (tokenize.tokenizeResponse ());
+                account.setChequeDate (tokenize.tokenizeResponse ());
+                account.setChequeAmount (tokenize.tokenizeResponse ());
+                account.setChequeBenifit (tokenize.tokenizeResponse ());
+                account.setChequeStatus (tokenize.getOriginalString ());
+                account.setChequeStatusCodeChar (account.getChequeStatus ().charAt (0));
+               }
         }
     }
 
@@ -213,7 +222,7 @@ public class AccountFacadeImpl implements AccountFacade {
                 Const.CHEQUE_STATUS_SIGN +
                 correctLen(Const.ACCOUNT_CORRECTION_ZERO+account.getAccountNumber(),Const.ACCOUNT_CORRECTION_ZERO.length())+
                 Const.PARAM1_NUMBER+
-                correctLen(Const.CHEQUE_NUMBER_CORRECTION_ZERO+account.getChequeNumber(),Const.CHEQUE_NUMBER_CORRECTION_ZERO.length())+
+                correctLen(Const.CHEQUE_NUMBER_CORRECTION_ZERO+account.getChequeSerialNumber (),Const.CHEQUE_NUMBER_CORRECTION_ZERO.length())+
                 Const.CHEQUE_STATUS_KEYWORD+
                 account.getTransferType()+
                 correctLen(Const.CALLER_ID_CORRECTION_ZERO+account.getCallerID(),Const.CALLER_ID_CORRECTION_ZERO.length());

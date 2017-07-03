@@ -101,6 +101,8 @@ public class ServiceAccount {
                 break;
             case "7":smsOperations ();
                 break;
+            case "8":posAndChequeServices();
+                break;
             case "9":exit ();
                 break;
             case "0":exit ();
@@ -301,6 +303,10 @@ public class ServiceAccount {
 
     private void smsOperations () throws Exception {
         new ServiceSMS (call).execute ();
+    }
+
+    private void posAndChequeServices() throws Exception {
+        new  ServicePOSTransactionAndCheque (call).execute ();
     }
 
     private  boolean isNumber(String entrance){

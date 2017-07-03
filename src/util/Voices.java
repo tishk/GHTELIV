@@ -637,6 +637,9 @@ public class Voices extends BaseAgiScript {
     public String  shomareMobileRaVaredKonid () throws Exception {
        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "menu71condition1part3T" , 5).trim();
     }
+    public String  shomareSerialChekRaVaredKonid () throws Exception {
+       return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh209T" , 5).trim();
+    }
 
     public  boolean passNotValid() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E003", "0.25").trim().equals("")) return true;
@@ -786,6 +789,26 @@ public class Voices extends BaseAgiScript {
     }
     public  boolean baMovafaghiatHazfShod() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SuccessfulDeleteMobile", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean chekeMoredeNazarEshtebahAst() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh200", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean chekeShomare() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "nChqShomare", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean darTarikhe() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "sh1080", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean chequeBaMablaghe() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "nChqBaMablagh", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean sayChequeStatus(char status) throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "ChequeStatus_"+status, "0.25").trim().equals("")) return true;
         else return false;
     }
 

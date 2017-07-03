@@ -30,7 +30,14 @@ public class Account {
    private String finalResult="";
    private String mobileNumber="";
    private String kindOfPOSTransaction="";
-   private String chequeNumber="";
+   private String chequeSerialNumber ="";
+   private String chequeStatus ="";
+   private String chequeDate ="";
+   private String chequeAmount ="";
+   private String chequeBenifit ="";
+   private String chequeStatusCode ="";
+   private char   chequeStatusCodeChar ;
+
    private String nameAndFamily ="";
    private String ShetabNumber="";
    private List<Transaction> transactions;
@@ -232,12 +239,60 @@ public class Account {
         this.kindOfPOSTransaction = kindOfPOSTransaction;
     }
 
-    public String getChequeNumber() {
-        return chequeNumber;
+    public String getChequeSerialNumber () {
+        return chequeSerialNumber;
     }
 
-    public void setChequeNumber(String chequeNumber) {
-        this.chequeNumber = chequeNumber;
+    public void setChequeSerialNumber (String chequeSerialNumber) {
+        this.chequeSerialNumber = chequeSerialNumber;
+    }
+
+    public String getChequeStatus () {
+        return chequeStatus;
+    }
+
+    public void setChequeStatus (String chequeStatus) {
+        this.chequeStatus = chequeStatus;
+    }
+
+    public String getChequeDate () {
+        return chequeDate;
+    }
+
+    public void setChequeDate (String chequeDate) {
+        this.chequeDate = chequeDate;
+    }
+
+    public String getChequeAmount () {
+        return chequeAmount;
+    }
+
+    public void setChequeAmount (String chequeAmount) {
+        this.chequeAmount = chequeAmount;
+    }
+
+    public String getChequeBenifit () {
+        return chequeBenifit;
+    }
+
+    public void setChequeBenifit (String chequeBenifit) {
+        this.chequeBenifit = chequeBenifit;
+    }
+
+    public String getChequeStatusCode () {
+        return chequeStatusCode;
+    }
+
+    public void setChequeStatusCode (String chequeStatusCode) {
+        this.chequeStatusCode = chequeStatusCode;
+    }
+
+    public char getChequeStatusCodeChar () {
+        return chequeStatusCodeChar;
+    }
+
+    public void setChequeStatusCodeChar (char chequeStatusCodeChar) {
+        this.chequeStatusCodeChar = chequeStatusCodeChar;
     }
 
     public String getNameAndFamily () {
