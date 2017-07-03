@@ -16,6 +16,7 @@ public class ServiceSMS {
     private int smsMenuCount =0;
     private String firstChoice;
     private String mobileNumber="";
+    private boolean isPan=false;
 
     public ServiceSMS(Call call) {
         this.call=call;
@@ -23,7 +24,8 @@ public class ServiceSMS {
 
     public  void execute() throws Exception {
        call.setServiceSMS(this);
-       if (getAccountStatusIsSuccessful ()){
+       if (call.getPan()!=null) isPan=true;
+       if (customerIsRegistered()){
            createMainMenu ();
            sayMainMenu ();
        }
@@ -93,23 +95,71 @@ public class ServiceSMS {
     }
 
     private void goToBackMenu () throws Exception {
-        call.getServiceAccount ().sayMainMenu ();
+        if (isPan){
+            call.getServicePan().sayMainMenu();
+        }else{
+            call.getServiceAccount ().sayMainMenu ();
+        }
     }
 
     private void registerMobileNumber() throws Exception {
-        if (accountRegistered ()){
-            if (deleteMobileHappened ()){
-                doRegister ();
-            }else{
-                errorOnOperations ();
-            }
+
+        if (isPan){
+            registerPan();
         }else{
-            doRegister ();
+            registerAccount();
         }
 
     }
 
-    private void doRegister () throws Exception {
+    private void registerAccount() throws Exception {
+        if (accountRegistered ()){
+            if (deleteMobileHappened()){
+                doRegisterAccount();
+            }else{
+                errorOnOperations ();
+            }
+        }else{
+            doRegisterAccount();
+        }
+    }
+
+    private void registerPan() throws Exception {
+        if (panRegistered ()){
+            if (deletePanMobileHappened()){
+                doRegisterPan();
+            }else{
+                errorOnOperations ();
+            }
+        }else{
+            doRegisterPan();
+        }
+    }
+
+    private void doRegisterAccount() throws Exception {
+        int getMobileCount=0;
+        boolean mobileEnteredIsCorrect=false;
+        while (!mobileEnteredIsCorrect && getMobileCount<3){
+            mobileNumber=call.getPlayVoiceTool ().shomareMobileRaVaredKonid ();
+            if (mobileIsCorrect (mobileNumber)){
+                mobileEnteredIsCorrect=true;
+            }else{
+                mobileNotValid ();
+                getMobileCount++;
+            }
+        }
+        if (mobileEnteredIsCorrect){
+            call.getPan ().setMobileNumber (mobileNumber);
+            call.getPanFacade ().smsAlarmRegister (call.getPan());
+            if (call.getPan().getActionCode ().equals (Const.SUCCESS)){
+                call.getPlayVoiceTool ().baMovafaghiatSabtShod ();
+            }else{
+                errorOnOperations ();
+            }
+        }
+    }
+
+    private void doRegisterPan () throws Exception {
         int getMobileCount=0;
         boolean mobileEnteredIsCorrect=false;
         while (!mobileEnteredIsCorrect && getMobileCount<3){
@@ -141,17 +191,34 @@ public class ServiceSMS {
     }
 
     private void deleteMobileNumber() throws Exception {
-        if (deleteMobileHappened ()){
+        if (deleteMobileHappened()){
             call.getPlayVoiceTool ().baMovafaghiatHazfShod ();
         }else{
             errorOnOperations ();
         }
     }
 
-    private boolean getAccountStatusIsSuccessful (){
+    private boolean customerIsRegistered(){
 
+        if (isPan){
+            return checkPanRegister();
+        }else{
+            return checkAccountRegister();
+        }
+    }
+
+    private boolean checkAccountRegister() {
         call.getAccountFacade ().smsAlarmSelect (call.getAccount ());
         if (call.getAccount ().getActionCode ().equals (Const.SUCCESS)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean checkPanRegister() {
+        call.getPanFacade ().smsAlarmSelect (call.getPan());
+        if (call.getPan ().getActionCode ().equals (Const.SUCCESS)){
             return true;
         }else{
             return false;
@@ -161,6 +228,11 @@ public class ServiceSMS {
     private boolean accountRegistered(){
 
         return isNumber (call.getAccount ().getMobileNumber ());
+    }
+
+    private boolean panRegistered(){
+
+        return isNumber (call.getPan ().getMobileNumber ());
     }
 
     private boolean isNumber(String entrance){
@@ -182,8 +254,25 @@ public class ServiceSMS {
     }
 
     private boolean deleteMobileHappened(){
+       if (isPan){
+           return deleteAccountMobileHappened();
+       }else{
+           return deletePanMobileHappened();
+       }
+    }
+
+    private boolean deleteAccountMobileHappened(){
         call.getAccountFacade ().smsAlarmDelete (call.getAccount ());
         if (call.getAccount ().getActionCode ().equals (Const.SUCCESS)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean deletePanMobileHappened(){
+        call.getPanFacade ().smsAlarmDelete (call.getPan ());
+        if (call.getPan ().getActionCode ().equals (Const.SUCCESS)){
             return true;
         }else{
             return false;

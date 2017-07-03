@@ -640,6 +640,9 @@ public class Voices extends BaseAgiScript {
     public String  shomareSerialChekRaVaredKonid () throws Exception {
        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "Sh209T" , 5).trim();
     }
+    public String  cardGheyreFaalMishavadAddade5 () throws Exception {
+       return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "SH80T" , 5).trim();
+    }
 
     public  boolean passNotValid() throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E003", "0.25").trim().equals("")) return true;
@@ -809,6 +812,14 @@ public class Voices extends BaseAgiScript {
     }
     public  boolean sayChequeStatus(char status) throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "ChequeStatus_"+status, "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean cardMasdodNashod() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh62", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean cardMasdodShod() throws Exception {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh61", "0.25").trim().equals("")) return true;
         else return false;
     }
 

@@ -25,7 +25,7 @@ public class Pan {
     private String endDateOfFax;
     private String nameAndFamily;
     private String ShebaNumber;
-    private String mobileNo;
+    private String mobileNumber;
     private String mobileOperator;
     private String mobileChargeValue;
 
@@ -204,12 +204,12 @@ public class Pan {
         this.mobileOperator = mobileOperator;
     }
 
-    public String getMobileNo() {
-        return mobileNo;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getMobileChargeValue() {

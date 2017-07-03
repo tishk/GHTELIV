@@ -15,6 +15,12 @@ public interface PanFacade {
 
     public void hotCard(Pan pan);
 
+    public void smsAlarmSelect(Pan pan);
+
+    public void smsAlarmRegister(Pan pan);
+
+    public void smsAlarmDelete(Pan pan);
+
     public void billPayment(Pan pan);
 
     public void followUp(Pan pan);

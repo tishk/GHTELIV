@@ -1,5 +1,6 @@
 package services;
 
+
 import model.Call;
 import model.Transaction;
 import util.Const;
@@ -81,9 +82,9 @@ public class ServicePan {
                 break;
             case "3":faxReport();
                 break;
-            case "4":
+            case "4":hotCard();
                 break;
-            case "7":
+            case "7":smsOperations();
                 break;
             case "9":exit ();
                 break;
@@ -171,6 +172,42 @@ public class ServicePan {
         new ServiceFaxReport(call).execute();
     }
 
+    private void hotCard() throws Exception {
+
+        String choice=call.getPlayVoiceTool().cardGheyreFaalMishavadAddade5();
+        if (choice.equals("5")){
+           call.getPanFacade().hotCard(call.getPan());
+           String actionCode=call.getPan().getActionCode();
+            switch (actionCode){
+                case Const.SUCCESS:hotCardSuccess();
+                    break;
+                case Const.NETWORK_ERROR:outOfService();
+                    break;
+                case Const.SERVER_CONNECTION_ERROR:outOfService();
+                    break;
+                default:hotCardFailed();
+            }
+
+        }else{
+            hotCardFailed();
+        }
+    }
+
+    private void outOfService() throws Exception {
+        call.getPlayVoiceTool().baArzePoozesh();
+    }
+
+    private void hotCardSuccess() throws Exception {
+        call.getPlayVoiceTool().cardMasdodShod();
+    }
+
+    private void hotCardFailed() throws Exception {
+        call.getPlayVoiceTool().cardMasdodNashod();
+    }
+
+    private void smsOperations () throws Exception {
+        new ServiceSMS (call).execute ();
+    }
 
     private void entryNotClear() throws Exception {
         call.getPlayVoiceTool ().notClear();
