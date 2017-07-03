@@ -137,11 +137,12 @@ public class ServiceFaxReport extends BaseAgiScript{
         faxCount=100;
     }
 
-    private String getTodayDate(){
-         return persianDateTime.getShamsiDateWithoutSeperator ();
-    }
     private String getLastMonthsDate(){
         return persianDateTime.getPreviousDay (30);
+    }
+
+    private String getTodayDate(){
+        return persianDateTime.getShamsiDateWithoutSeperator ();
     }
 
     private  boolean getDateISOK() throws Exception {
@@ -184,6 +185,7 @@ public class ServiceFaxReport extends BaseAgiScript{
 
         return getStartDateIsOK&&getEndDateIsOK;
     }
+
     private  boolean isNumber(String entrance){
         try{
             Long.parseLong(entrance);
@@ -192,6 +194,7 @@ public class ServiceFaxReport extends BaseAgiScript{
             return false;
         }
     }
+
     private  boolean entranceDateIsOK(String date){
 
         int yy=0;int mm=0;int dd=0;
@@ -208,6 +211,7 @@ public class ServiceFaxReport extends BaseAgiScript{
             return false;
         }
     }
+
     private  void    startSendFax() throws Exception {
 
         call.getPlayVoiceTool ().pleaseWait ();
@@ -245,9 +249,11 @@ public class ServiceFaxReport extends BaseAgiScript{
             return "صورتحساب 30گردش آخر";
         }
     }
+
     private  String   getِDateTimeOfReport(){
        return persianDateTime.getIranianDate ()+" "+persianDateTime.getNowTime ();
     }
+
     private  String   createHTMLFaxFile() throws IOException {
 
         ArrayList<String> Temp = new ArrayList<String>();
@@ -397,6 +403,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         }
 
     }
+
     private  String   CreatePDFFile(String FaxFile) throws IOException {
 
         String faxFile_PDF=getMainPathOfFaxFile()+call.getCallerID()+"-"+call.getUniQID()+".pdf";
@@ -430,11 +437,13 @@ public class ServiceFaxReport extends BaseAgiScript{
         }
         else return null;
     }
+
     private  boolean  clearFootPrint(String faxfile){
         File file=new File(faxfile);
         return file.delete();
 
     }
+
     private  boolean  SendFax(String FaxFile) throws AgiException, InterruptedException, SQLException, IOException {
 
         exec(Const.ASTERISK_PARK_COMMAND);
@@ -442,6 +451,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         return true;
 
     }
+
     private  String   getMainPathOfFaxFile(){
 
         String path=Util.FaxFile+getTodayDate();
@@ -454,6 +464,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         }
 
     }
+
     private  String   fixLenNumber(String no){
         try{
             return String.valueOf(Long.valueOf(no));
@@ -461,6 +472,7 @@ public class ServiceFaxReport extends BaseAgiScript{
             return "-";
         }
     }
+
 
     @Override
     public void service (AgiRequest agiRequest, AgiChannel agiChannel) throws AgiException {

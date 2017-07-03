@@ -1,7 +1,6 @@
 package dao;
 
 import model.Account;
-import model.Transaction;
 import model.TransactionPOS;
 import util.StringUtils;
 import util.Util;
@@ -97,7 +96,7 @@ public class TransactionDaoImpl implements TransactionDao {
 
     private String makeQueryOfTransactions(Account account) {
         String param="";
-        if (account.getKindOfPOSTransaction().equals("2")) param=getDataBaeFromatDateTime(account);
+        if (account.getKindOfPOSTransaction().equals("2")) param= getDataBaseFromatDateTime (account);
         String query="select top 30 proccess_type, reference_code, amount_shaparak, terminal_type, " +
                       "deposite_circle_number, deposite_date, local_time, local_date, trace_code, " +
                       "terminal_code from tblTransactionPOS where right(IBAN, 15) = "+
@@ -106,7 +105,7 @@ public class TransactionDaoImpl implements TransactionDao {
         return query;
     }
 
-    private String getDataBaeFromatDateTime(Account account) {
+    private String getDataBaseFromatDateTime (Account account) {
 
         String startDate=stringUtils.leftString(account.getStartDateOfFax(),4)+"/"+
                 stringUtils.midString(account.getStartDateOfFax(),5,2)+"/"+
