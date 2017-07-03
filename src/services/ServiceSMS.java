@@ -136,7 +136,7 @@ public class ServiceSMS {
         }
     }
 
-    private void doRegisterAccount() throws Exception {
+    private void doRegisterPan() throws Exception {
         int getMobileCount=0;
         boolean mobileEnteredIsCorrect=false;
         while (!mobileEnteredIsCorrect && getMobileCount<3){
@@ -159,7 +159,7 @@ public class ServiceSMS {
         }
     }
 
-    private void doRegisterPan () throws Exception {
+    private void doRegisterAccount () throws Exception {
         int getMobileCount=0;
         boolean mobileEnteredIsCorrect=false;
         while (!mobileEnteredIsCorrect && getMobileCount<3){
@@ -255,9 +255,9 @@ public class ServiceSMS {
 
     private boolean deleteMobileHappened(){
        if (isPan){
-           return deleteAccountMobileHappened();
-       }else{
            return deletePanMobileHappened();
+       }else{
+           return deleteAccountMobileHappened();
        }
     }
 
