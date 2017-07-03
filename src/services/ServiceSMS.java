@@ -47,14 +47,14 @@ public class ServiceSMS {
     public  void sayMainMenu() throws Exception {
 
         String Choice="";
-        while ((smsMenuCount <3)) {
+        while ((smsMenuCount <Const.MAX_TEL_BANK_MENU_COUNT)) {
 
             if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(smsMenu,"sms_");
             else {
                 Choice=firstChoice;
                 firstChoice="";
             }
-            if (!Choice.equals("-1")){
+            if (!Choice.equals(Const.INVALID_ENTRY_MENU)){
                 selectSubMenu(Choice);
             }
             else{

@@ -64,16 +64,14 @@ public class ServiceAccount {
 
         String Choice=null;
 
-
-
-        while ((MainMenuCount<3)) {
+        while ((MainMenuCount<Const.MAX_TEL_BANK_MENU_COUNT)) {
 
             if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(mainMenu,"AccMenu_");
             else {
                 Choice=firstChoice;
                 firstChoice="";
             }
-            if (!Choice.equals("-1")){
+            if (!Choice.equals(Const.INVALID_ENTRY_MENU)){
                 selectSubMenu(Choice);
             }
             else{

@@ -77,6 +77,7 @@ public class ServiceTelBank {
     private boolean doPanOperationsResult() throws Exception {
         if (authenticateOfPanISOK()){
             call.getPlayVoiceTool ().advertisement();
+            call.setAccount(null);
             servicePan=new ServicePan(call);
             servicePan.execute();
             return true;
@@ -87,6 +88,7 @@ public class ServiceTelBank {
     private boolean doAccountOperationsResult() throws Exception {
         if (authenticateOfAccountISOK()){
             call.getPlayVoiceTool ().advertisement();
+            call.setPan(null);
             serviceAccount=new ServiceAccount(call);
             serviceAccount.execute();
             return true;

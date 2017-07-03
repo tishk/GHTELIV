@@ -28,8 +28,8 @@ public  class Call  {
     private ServicePan servicePan;
     private ServiceShebaAndBranches serviceShebaAndBranches;
     private ServiceSMS serviceSMS;
-    private Account account;
-    private Pan pan;
+    private Account account=null;
+    private Pan pan=null;
     public AccountFacadeImpl accountFacade=new AccountFacadeImpl();
     public PanFacadeImpl panFacade=new PanFacadeImpl();
     public Voices playVoiceTool =new Voices();

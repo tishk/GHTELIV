@@ -65,14 +65,14 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
     public  void sayMainMenu() throws Exception {
 
         String Choice="";
-        while ((posAndChequeMenuCount <3)) {
+        while ((posAndChequeMenuCount <Const.MAX_TEL_BANK_MENU_COUNT)) {
 
             if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(posAndChequeMenu,"pos_");
             else {
                 Choice=firstChoice;
                 firstChoice="";
             }
-            if (!Choice.equals("-1")){
+            if (!Choice.equals(Const.INVALID_ENTRY_MENU)){
                 selectSubMenu(Choice);
             }
             else{
@@ -367,7 +367,7 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
                     else if (line.contains("a9"))  {T=line.replace("a9","شماره حساب");}
                     else if (line.contains("b1")) {T=line.replace("b1",call.getAccount ().getAccountNumber ());}
                     else if (line.contains("b6")) {T=line.replace("b6","شماره شبا");}
-                    else if (line.contains("b7")) {T=line.replace("b7",call.getAccount ().getShetabNumber ());}
+                    else if (line.contains("b7")) {T=line.replace("b7",call.getAccount ().getShebaNumber());}
                     else if (line.contains("b8")) {T=line.replace("b8","شناسه پايانه ");}
                     else if (line.contains("b9")) {T=line.replace("b9","چرخه واريز ");}
                     else if (line.contains("c1")) {T=line.replace("c1","تاريخ واريز ");}

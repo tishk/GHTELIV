@@ -48,14 +48,14 @@ public class ServiceLoanPayment {
     public   void sayMainMenu() throws Exception {
 
         String Choice="";
-        while ((MainMenuCount<3)) {
+        while ((MainMenuCount<Const.MAX_TEL_BANK_MENU_COUNT)) {
 
             if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(installmentMenu,"PB_");
             else {
                 Choice=firstChoice;
                 firstChoice="";
             }
-            if (!Choice.equals("-1")){
+            if (!Choice.equals(Const.INVALID_ENTRY_MENU)){
                 selectSubMenu(Choice);
             }
             else{

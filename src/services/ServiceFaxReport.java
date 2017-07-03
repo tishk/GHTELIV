@@ -31,6 +31,7 @@ public class ServiceFaxReport extends BaseAgiScript{
     private String startDate;
     private int    faxType;
     private int    faxCount;
+    private boolean isPan=false;
     private PersianDateTime persianDateTime=new PersianDateTime ();
 
     public ServiceFaxReport(Call call) {
@@ -38,6 +39,7 @@ public class ServiceFaxReport extends BaseAgiScript{
     }
     public void execute() throws Exception {
         call.setServiceFaxReport(this);
+        if (call.getPan()!=null) isPan=true;
         createMainMenu();
         sayMainMenu();
     }
@@ -61,14 +63,14 @@ public class ServiceFaxReport extends BaseAgiScript{
     public   void sayMainMenu() throws Exception {
 
         String Choice=null;
-        while ((MainMenuCount<3)) {
+        while ((MainMenuCount<Const.MAX_TEL_BANK_MENU_COUNT)) {
 
             if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(faxMainMenu,"007_");
             else {
                 Choice=firstChoice;
                 firstChoice="";
             }
-            if (!Choice.equals("-1")){
+            if (!Choice.equals(Const.INVALID_ENTRY_MENU)){
                 selectSubMenu(Choice);
             }
             else{
@@ -218,7 +220,13 @@ public class ServiceFaxReport extends BaseAgiScript{
 
         initAndSendTransactionRequest ();
 
-        String actionCode=call.getAccount ().getActionCode ();
+        String actionCode="";
+        if (isPan) {
+            actionCode=call.getPan().getActionCode ();
+        }else{
+            actionCode=call.getAccount ().getActionCode ();
+        }
+
         if (actionCode.equals(Const.SUCCESS)){
             String FaxFile=CreatePDFFile(createHTMLFaxFile());
             if (FaxFile!=null){
@@ -231,11 +239,26 @@ public class ServiceFaxReport extends BaseAgiScript{
     }
 
     private void initAndSendTransactionRequest () {
+        if (isPan) {
+            initPanRequest();
+        }else{
+            initAccountRequest();
+        }
+    }
+
+    private void initAccountRequest() {
         call.getAccount ().setFaxCount (faxCount);
         call.getAccount ().setStartDateOfFax (startDate);
         call.getAccount ().setEndDateOfFax (endDate);
         call.getAccount ().setKindOfFax (faxType);
         call.getAccountFacade ().getTransactions (call.getAccount ());
+    }
+    private void initPanRequest() {
+        call.getPan ().setFaxCount (String.valueOf(faxCount));
+        call.getPan ().setStartDateOfFax (startDate);
+        call.getPan ().setEndDateOfFax (endDate);
+        call.getPan ().setKindOfFax (faxType);
+        call.getPanFacade ().getTransactions (call.getPan ());
     }
 
     private  String   getTypeOfReport(){
@@ -256,8 +279,27 @@ public class ServiceFaxReport extends BaseAgiScript{
 
     private  String   createHTMLFaxFile() throws IOException {
 
-        ArrayList<String> Temp = new ArrayList<String>();
-        List<Transaction> transactions=call.getAccount ().getTransactions ();
+        List<Transaction> transactions=null;
+        String nameAndFamily="";
+        String accountNumber="";
+        String panNumber="";
+        String balance="";
+        String shebaNumber="";
+        if (isPan){
+            transactions=call.getPan ().getTransactions ();
+            nameAndFamily=call.getPan().getNameAndFamily();
+            accountNumber="";
+            panNumber=call.getPan().getPanNumber();
+            balance=call.getPan().getBalance();
+            shebaNumber=call.getPan().getShebaNumber();
+        }else{
+            transactions=call.getAccount ().getTransactions ();
+            nameAndFamily=call.getAccount().getNameAndFamily();
+            accountNumber=call.getAccount().getAccountNumber();
+            panNumber="";
+            balance=call.getAccount().getBalance();
+            shebaNumber=call.getAccount().getShebaNumber();
+        }
 
 
         int countOfTrans=transactions.size ();
@@ -292,15 +334,15 @@ public class ServiceFaxReport extends BaseAgiScript{
                     else if (line.contains("a5"))  {T=line.replace("a5","تاریخ گزارش");}
                     else if (line.contains("a6"))  {T=line.replace("a6",getِDateTimeOfReport ());}
                     else if (line.contains("a7"))  {T=line.replace("a7","نام صاحب حساب");}
-                    else if (line.contains("a8"))  {T=line.replace("a8",call.getAccount ().getNameAndFamily ());}
+                    else if (line.contains("a8"))  {T=line.replace("a8",nameAndFamily);}
                     else if (line.contains("a9"))  {T=line.replace("a9","شماره حساب");}
-                    else if (line.contains("b1")) {T=line.replace("b1",call.getAccount ().getAccountNumber ());}
+                    else if (line.contains("b1")) {T=line.replace("b1",accountNumber);}
                     else if (line.contains("b2")) {T=line.replace("b2","شماره کارت");}
-                    else if (line.contains("b3")) {T=line.replace("b3"," ");}
+                    else if (line.contains("b3")) {T=line.replace("b3",panNumber);}
                     else if (line.contains("b4")) {T=line.replace("b4","مانده کنوني");}
-                    else if (line.contains("b5")) {T=line.replace("b5",call.getAccount ().getBalance ());}
+                    else if (line.contains("b5")) {T=line.replace("b5",balance);}
                     else if (line.contains("b6")) {T=line.replace("b6","شماره شبا");}
-                    else if (line.contains("b7")) {T=line.replace("b7",call.getAccount ().getShetabNumber ());}
+                    else if (line.contains("b7")) {T=line.replace("b7",shebaNumber);}
                     else if (line.contains("b8")) {T=line.replace("b8","مانده");}
                     else if (line.contains("b9")) {T=line.replace("b9","واريز به حساب");}
                     else if (line.contains("c1")) {T=line.replace("c1","برداشت از حساب");}

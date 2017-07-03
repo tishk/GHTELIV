@@ -23,8 +23,8 @@ public class Pan {
     private String faxCount;
     private String startDateOfFax;
     private String endDateOfFax;
-    private String familyName;
-    private String ShetabNumber;
+    private String nameAndFamily;
+    private String ShebaNumber;
     private String mobileNo;
     private String mobileOperator;
     private String mobileChargeValue;
@@ -148,20 +148,20 @@ public class Pan {
         this.kindOfFax = kindOfFax;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getNameAndFamily() {
+        return nameAndFamily;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setNameAndFamily(String nameAndFamily) {
+        this.nameAndFamily = nameAndFamily;
     }
 
-    public String getShetabNumber() {
-        return ShetabNumber;
+    public String getShebaNumber() {
+        return ShebaNumber;
     }
 
-    public void setShetabNumber(String shetabNumber) {
-        ShetabNumber = shetabNumber;
+    public void setShebaNumber(String shebaNumber) {
+        ShebaNumber = shebaNumber;
     }
 
     public String getBillID() {

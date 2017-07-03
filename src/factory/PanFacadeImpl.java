@@ -290,8 +290,8 @@ public class PanFacadeImpl implements PanFacade {
     }
 
     private void doSuccessOperationOfTransactions(Pan pan, Tokenize tokenize) {
-        pan.setFamilyName(tokenize.tokenizeResponse());
-        pan.setShetabNumber(tokenize.tokenizeResponse());
+        pan.setNameAndFamily(tokenize.tokenizeResponse());
+        pan.setShebaNumber(tokenize.tokenizeResponse());
         List<Transaction> transactions=new ArrayList<Transaction>();
         Transaction transaction;
         int row=1;
@@ -331,7 +331,7 @@ public class PanFacadeImpl implements PanFacade {
                 correctLen(Const.FAX_COUNT_CORRECTION_ZERO+pan.getFaxCount(),3)+
                 correctLen(Const.FAX_START_DATE_CORRECTION_ZERO+pan.getStartDateOfFax(),8)+
                 correctLen(Const.FAX_END_DATE_CORRECTION_ZERO+pan.getEndDateOfFax(),8)+
-                pan;
+                pan.getPanNumber();
         pan.setMessageSequence(messageSequence);
         pan.setRequestToSwitch(message);
         pan.setResponseFromSwitch(requestToSwitch.send(message));

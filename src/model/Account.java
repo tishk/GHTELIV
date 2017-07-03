@@ -39,7 +39,7 @@ public class Account {
    private char   chequeStatusCodeChar ;
 
    private String nameAndFamily ="";
-   private String ShetabNumber="";
+   private String ShebaNumber ="";
    private List<Transaction> transactions;
    private List<TransactionPOS> transactionsPOS;
    private int kindOfFax;
@@ -303,12 +303,12 @@ public class Account {
         this.nameAndFamily = nameAndFamily;
     }
 
-    public String getShetabNumber() {
-        return ShetabNumber;
+    public String getShebaNumber() {
+        return ShebaNumber;
     }
 
-    public void setShetabNumber(String shetabNumber) {
-        ShetabNumber = shetabNumber;
+    public void setShebaNumber(String shebaNumber) {
+        ShebaNumber = shebaNumber;
     }
 
     public String getIBAN() {
