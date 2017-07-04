@@ -47,6 +47,7 @@ public class Const {
     public static final String SUCCESS="0000";
     public static final String NETWORK_ERROR="5999";
     public static final String SERVER_CONNECTION_ERROR="9999";
+    public static final String SERVER_CONNECTION_ERROR2="7777";
     public static final String TRANSACTION_KEYWORD="Trans-";
     public static final String BALANCE_KEYWORD="GetBalance";
     public static final String FUND_TRANSFER_KEYWORD="GetAmountTransfer-";

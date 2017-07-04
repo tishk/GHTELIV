@@ -2,8 +2,10 @@ package services;
 
 import model.Call;
 import model.Pan;
+import org.asteriskjava.fastagi.AgiException;
 import util.Const;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -180,13 +182,13 @@ public class ServiceBillPayment {
     private void doBillPayment() throws Exception {
         if (getPanNumberIsOK ()){
             if(getPinOfPanIsOK ()){
-                initAndSendRequest ();
-                processResponse();
+                initAndSendBillPaymentRequest ();
+                processBillPaymentResponse ();
             }
         }
     }
 
-    private void processResponse () throws Exception {
+    private void processBillPaymentResponse () throws Exception {
 
         sayResultToCustomer ();
         subMenuOperations ();
@@ -203,23 +205,21 @@ public class ServiceBillPayment {
                 break;
             case 5055:playActionCode ();
                 break;
-            case 9014:serverConnectionError ();
+            case 9014:
+                serverConnectionFailed ();
                 break;
-            case 9999:serverConnectionError ();
+            case 9999:
+                serverConnectionFailed ();
                 break;
             default:playActionCode ();
         }
-    }
-
-    private void serverConnectionError () throws Exception {
-        call.getPlayVoiceTool ().khataDarErtebatBaServer ();
     }
 
     private void playActionCode () throws Exception {
         call.getPlayVoiceTool ().playActionCode (call.getPan ().getActionCode ());
     }
 
-    private void initAndSendRequest () {
+    private void initAndSendBillPaymentRequest () {
         call.setPan (new Pan ());
         call.getPan ().setCallerID (call.getCallerID ());
         call.getPan ().setPanNumber (panNumber);
@@ -230,9 +230,61 @@ public class ServiceBillPayment {
         call.getPanFacade ().billPayment (call.getPan ());
     }
 
-    private void followUp(){
+    private void followUp() throws Exception {
+
+        if(getBillIDIsOK ()){
+            if (getPaymentIDIsOK ()){
+                doFollowup();
+            }
+        }
+    }
+
+    private void doFollowup () throws Exception {
+
+        initAndSendFollowupRequest ();
+
+        sayFollowUpResult ();
 
     }
+
+    private void sayFollowUpResult () throws Exception {
+
+       switch (call.getPan ().getActionCode ()){
+           case Const.SUCCESS: playSuccessResponseOfFollowup ();
+                break;
+           case Const.SERVER_CONNECTION_ERROR:serverConnectionFailed ();
+               break;
+           case Const.SERVER_CONNECTION_ERROR2:serverConnectionFailed ();
+               break;
+           default:dataNotFound ();
+
+       }
+    }
+
+    private void dataNotFound () throws IOException, AgiException {
+        call.getPlayVoiceTool ().etelaatYaftNashod ();
+    }
+
+    private void serverConnectionFailed () throws Exception {
+        call.getPlayVoiceTool ().khataDarErtebatBaServer ();
+    }
+
+    private void playSuccessResponseOfFollowup () throws Exception {
+        call.getPlayVoiceTool ().darTarikhe ();
+        call.getPlayVoiceTool ().sayDate (call.getPan ().getPaymentDate ());
+        call.getPlayVoiceTool ().vaBaShomarePeygirie();
+        String refCode = correctNumberForPlay (call.getPan ().getReferenceCode ());
+        call.getPlayVoiceTool ().sayPersianDigitsSeparate (refCode);
+        call.getPlayVoiceTool ().padakhtShodeAst();
+    }
+
+    private void initAndSendFollowupRequest () {
+        call.getPan ().setCallerID (call.getCallerID ());
+        call.getPan ().setBillID (billID);
+        call.getPan ().setPaymentID (payID);
+        call.getPanFacade ().followUp (call.getPan ());
+    }
+
 
     private void topUp(){
 

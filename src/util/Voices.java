@@ -904,9 +904,20 @@ public class Voices extends BaseAgiScript {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "SH32", "0.25").trim().equals("")) return true;
         else return false;
     }
+    public  boolean vaBaShomarePeygirie () throws IOException, AgiException {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "sh109", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean padakhtShodeAst () throws IOException, AgiException {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "sh110", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean etelaatYaftNashod () throws IOException, AgiException {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "GhabzNotFound", "0.25").trim().equals("")) return true;
+        else return false;
+    }
 
     // _______________________Ghavamin____Messages__________________________________
-
 
     //---------------Tejarat---------------------------------
     @Override

@@ -236,7 +236,9 @@ public class PanFacadeImpl implements PanFacade {
         pan.setActionCode(stringUtils.leftString(response,4));
         if (pan.getActionCode().equals(Const.SUCCESS)){
            response=stringUtils.rightString(response,response.length()-4);
-           pan.setReferenceCode(response);
+           String correctedResponse= correctResponseSlash (response);
+           pan.setPaymentDate (stringUtils.leftString (response,10));
+           pan.setReferenceCode(stringUtils.rightString (response,6));
         }
     }
 
@@ -396,6 +398,10 @@ public class PanFacadeImpl implements PanFacade {
         pan.setRequestToSwitch(message);
         pan.setResponseFromSwitch(requestToSwitch.send(message));
         String response=requestToSwitch.send(message);
+    }
+
+    private  String correctResponseSlash (String date) {
+        return date.replace ("/","");
     }
 
     private Transaction[] initializeTransactions(String responseFromeServer){

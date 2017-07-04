@@ -17,6 +17,7 @@ public class Pan {
     private String PaymentID;
     private String amountOfBill;
     private String referenceCode;
+    private String paymentDate;
     private String callerID;
     private String requestToSwitch;
     private String responseFromSwitch;
@@ -194,6 +195,14 @@ public class Pan {
 
     public void setReferenceCode(String referenceCode) {
         this.referenceCode = referenceCode;
+    }
+
+    public String getPaymentDate () {
+        return paymentDate;
+    }
+
+    public void setPaymentDate (String paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
     public String getMobileOperator() {
