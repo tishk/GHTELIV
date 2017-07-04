@@ -5,8 +5,6 @@ package util;
  */
 public class Const {
 
-    public static final int RANDOM_RANGE_MAX_VALUE=999999999;
-    public static final int RANDOM_RANGE_MIN_VALUE=1;
     public static final String ACCOUNT_CORRECTION_ZERO="000000000000000";
     public static final String ACCOUNT_AMOUNT_CORRECTION_ZERO="000000000000000";
     public static final String PIN_CORRECTION_ZERO="000000000000";
@@ -76,26 +74,29 @@ public class Const {
     public static final String MENU_PREFIX_POS_TRANSACTION="pos_";
     public static final String MENU_PREFIX_FAX="007_";
     public static final String MENU_PREFIX_LOAN_PAYMENT="PB_";
-    public static final String MENU_PREFIX_BILL_PAYMENT="0";
-    public static final int   MIN_ACCOUNT_PASS_LEN=4;
-    public static final int   MAX_ACCOUNT_PASS_LEN=8;
-    public static final int   MIN_PAN_PASS_LEN=5;
-    public static final int   MAX_PAN_PASS_LEN=12;
-    public static final int   MIN_PAN_LEN=16;
-    public static final int   MIN_ACCOUNT_LEN=14;
-    public static final int   MAX_ACCOUNT_LEN=15;
-    public static final int   PREFIX_ACTION_CODE=5000;
-    public static final int   MAX_TEL_BANK_MENU_COUNT=3;
-    public static final int   MOBILE_NUMBER_LEN=11;
-    public static final int   ZERO=0;
-    public static final int   SAY_TRANSACTION_COUNT=4;
-    public static final int   FAX_TYPE_ONE=1;
-    public static final int   FAX_TYPE_TWO=2;
-    public static final int   FAX_TYPE_THREE=3;
-    public static final int   FAX_COUNT_30=30;
-    public static final int   FAX_COUNT_MAX=100;
-    public static final int   MAX_DATE_LEN=6;
-    public static final int   MAX_GET_DTMF_MENU_COUNT=2;
+    public static final String MENU_PREFIX_BILL_PAYMENT="MnGhabz_";
+    public static final int    RANDOM_RANGE_MAX_VALUE=999999999;
+    public static final int    RANDOM_RANGE_MIN_VALUE=1;
+    public static final int    MIN_ACCOUNT_PASS_LEN=4;
+    public static final int    MAX_ACCOUNT_PASS_LEN=8;
+    public static final int    MIN_PAN_PASS_LEN=5;
+    public static final int    MAX_PAN_PASS_LEN=12;
+    public static final int    MIN_PAN_LEN=16;
+    public static final int    MIN_ACCOUNT_LEN=14;
+    public static final int    MAX_ACCOUNT_LEN=15;
+    public static final int    PREFIX_ACTION_CODE=5000;
+    public static final int    MAX_TEL_BANK_MENU_COUNT=3;
+    public static final int    MOBILE_NUMBER_LEN=11;
+    public static final int    ZERO=0;
+    public static final int    SAY_TRANSACTION_COUNT=4;
+    public static final int    FAX_TYPE_ONE=1;
+    public static final int    FAX_TYPE_TWO=2;
+    public static final int    FAX_TYPE_THREE=3;
+    public static final int    FAX_COUNT_30=30;
+    public static final int    FAX_COUNT_MAX=100;
+    public static final int    MAX_DATE_LEN=6;
+    public static final int    MAX_GET_DTMF_MENU_COUNT=2;
+    public static final int    MAX_BILL_LEN=13;
 
 
 

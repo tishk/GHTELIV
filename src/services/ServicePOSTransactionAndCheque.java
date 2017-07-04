@@ -550,9 +550,11 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
     private  String  correctNumberForPlay(String number) {
         return String.valueOf(convertToNumber(number));
     }
+
     private  String  correctDateForPlay(String date) {
         return date.replace ("/","");
     }
+
     private  Long   convertToNumber(String number){
         try{
             Long longNumber=Long.valueOf(number);

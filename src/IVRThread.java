@@ -46,7 +46,7 @@ public    class   IVRThread extends Thread {
         serviceTelBank=new ServiceTelBank(call);
         serviceTelBank.execute();
     }
-    private  void    startBillPaymentOperations(){
+    private  void    startBillPaymentOperations() throws Exception {
         serviceBillPayment=new ServiceBillPayment(call);
         serviceBillPayment.execute();
     }
