@@ -3,6 +3,7 @@ package services;
 
 import model.Call;
 import model.Transaction;
+import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import util.Const;
 
 import java.util.HashSet;
@@ -57,7 +58,7 @@ public class ServicePan {
 
         while ((MainMenuCount< Const.MAX_TEL_BANK_MENU_COUNT)) {
 
-            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(mainMenuOfPan,"CardMenu_");
+            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(mainMenuOfPan,Const.MENU_PREFIX_PAN);
             else {
                 Choice=firstChoice;
                 firstChoice="";
@@ -122,7 +123,7 @@ public class ServicePan {
         String balance="";
         balance=call.getStrUtils().rightString(call.getPan().getBalance(),call.getPan().getBalance().length()-1);
         call.getPlayVoiceTool ().sayPersianDigit(balance);
-        call.getPlayVoiceTool ().sayCurrency("0");
+        call.getPlayVoiceTool ().sayCurrency(Const.CURRENCY_RIAL_SIGN);
         call.getPlayVoiceTool ().bedehkarMibashad();
     }
 
@@ -140,9 +141,9 @@ public class ServicePan {
 
     private void doSuccessTransactionOperations() throws Exception {
         List<Transaction> transactions=call.getPan().getTransactions();
-        int i=4;
-        if (transactions.size()>0){
-            while ( i>=0){
+        int i=Const.SAY_TRANSACTION_COUNT;
+        if (transactions.size()>Const.ZERO){
+            while ( i>=Const.ZERO){
                 if (transactions.get(i).getAmount()!="" ){
                     sayTransaction(transactions, i);
                 }
@@ -155,14 +156,14 @@ public class ServicePan {
 
     private void sayTransaction(List<Transaction> transactions, int i) throws Exception {
         call.getPlayVoiceTool ().gardesheHesabeShoma();
-        if (convertToNumber(transactions.get(i).getAmount())>=0){
+        if (convertToNumber(transactions.get(i).getAmount())>=Const.ZERO){
             call.getPlayVoiceTool ().varize();
         }else{
             call.getPlayVoiceTool ().bardashte();
         }
         call.getPlayVoiceTool ().mablaghe();
         call.getPlayVoiceTool ().sayPersianDigit(correctNumberForPlay(transactions.get(i).getAmount()));
-        call.getPlayVoiceTool ().sayCurrency("0");
+        call.getPlayVoiceTool ().sayCurrency(Const.CURRENCY_RIAL_SIGN);
         call.getPlayVoiceTool ().beTarikhe();
         call.getPlayVoiceTool ().sayDate(transactions.get(i).getfDescription());
         call.getPlayVoiceTool ().mibashad();
@@ -175,7 +176,7 @@ public class ServicePan {
     private void hotCard() throws Exception {
 
         String choice=call.getPlayVoiceTool().cardGheyreFaalMishavadAddade5();
-        if (choice.equals("5")){
+        if (choice.equals(Const.CONFIRMATION_DIGIT)){
            call.getPanFacade().hotCard(call.getPan());
            String actionCode=call.getPan().getActionCode();
             switch (actionCode){

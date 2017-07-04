@@ -65,7 +65,7 @@ public class ServiceFaxReport extends BaseAgiScript{
         String Choice=null;
         while ((MainMenuCount<Const.MAX_TEL_BANK_MENU_COUNT)) {
 
-            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(faxMainMenu,"007_");
+            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(faxMainMenu,Const.MENU_PREFIX_FAX);
             else {
                 Choice=firstChoice;
                 firstChoice="";
@@ -121,22 +121,22 @@ public class ServiceFaxReport extends BaseAgiScript{
     }
 
     private void init30TransactionParameters () {
-        endDate = "13940101";
-        startDate = "13940101";
-        faxType=1;
-        faxCount=30;
+        endDate = Const.FAX_DATE_DEFAULT;
+        startDate = Const.FAX_DATE_DEFAULT;
+        faxType=Const.FAX_TYPE_ONE;
+        faxCount=Const.FAX_COUNT_30;
     }
 
     private void initOneMonthTransactionParameters () {
         endDate = getTodayDate ();
         startDate = getLastMonthsDate ();
-        faxType=2;
-        faxCount=100;
+        faxType=Const.FAX_TYPE_TWO;
+        faxCount=Const.FAX_COUNT_MAX;
     }
 
     private void initDateToDateTransactionParameters () {
-        faxType=3;
-        faxCount=100;
+        faxType=Const.FAX_TYPE_THREE;
+        faxCount=Const.FAX_COUNT_MAX;
     }
 
     private String getLastMonthsDate(){
@@ -154,8 +154,8 @@ public class ServiceFaxReport extends BaseAgiScript{
         while ((!getStartDateIsOK) && (getDateCount<2)){
             startDate=call.getPlayVoiceTool ().tarikheShoroRaVaredNamaeid ();
             if (isNumber(startDate)){
-                if (startDate.length()!=0) {
-                    if (startDate.length()==6) {
+                if (startDate.length()!=Const.ZERO) {
+                    if (startDate.length()==Const.MAX_DATE_LEN) {
                         if (entranceDateIsOK(startDate)) {
                             getStartDateIsOK=true;
                         }
@@ -171,8 +171,8 @@ public class ServiceFaxReport extends BaseAgiScript{
             while ((!getEndDateIsOK) && (getDateCount<2)){
                 endDate=call.getPlayVoiceTool ().tarikheEntehaRaVaredNamaeid ().trim();
                 if (isNumber(endDate)) {
-                    if (endDate.length() != 0) {
-                        if (endDate.length() == 6) {
+                    if (endDate.length() != Const.ZERO) {
+                        if (endDate.length() == Const.MAX_DATE_LEN) {
                             if (entranceDateIsOK(endDate)) {
                                 getEndDateIsOK = true;
                             }
@@ -453,7 +453,7 @@ public class ServiceFaxReport extends BaseAgiScript{
 
         if (FaxFile!=null){
 
-            String command = "/usr/local/bin/wkhtmltopdf --page-size A4 --dpi 2000 "+faxFile_HTML+" "+faxFile_PDF;
+            String command = Const.CONVERT_HTML_TO_PDF_COMMAND+faxFile_HTML+" "+faxFile_PDF;
 
             InputStreamReader isr =null;
             try

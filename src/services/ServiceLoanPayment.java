@@ -50,7 +50,7 @@ public class ServiceLoanPayment {
         String Choice="";
         while ((MainMenuCount<Const.MAX_TEL_BANK_MENU_COUNT)) {
 
-            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(installmentMenu,"PB_");
+            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(installmentMenu,Const.MENU_PREFIX_LOAN_PAYMENT);
             else {
                 Choice=firstChoice;
                 firstChoice="";
@@ -92,9 +92,9 @@ public class ServiceLoanPayment {
     private  boolean getAmountOfLoanIsOK () throws Exception {
         int countOfGetAmount=0;
         boolean amountEntred=false;
-        while (!amountEntred && countOfGetAmount<2){
+        while (!amountEntred && countOfGetAmount<Const.MAX_GET_DTMF_MENU_COUNT){
             amountOfLoan=call.getPlayVoiceTool ().mablagheGhestRaVaredNamaeid ();
-            if (amountOfLoan.trim().length()==0){
+            if (amountOfLoan.trim().length()==Const.ZERO){
                 call.getPlayVoiceTool ().notClear ();
                 countOfGetAmount++;
             }else{
@@ -119,16 +119,16 @@ public class ServiceLoanPayment {
         call.getPlayVoiceTool ().varizKhahadShod();
         confirmation=call.getPlayVoiceTool ().agarSahihAstAdade5 ();
 
-        if (confirmation.trim().equals("5")) return true;
+        if (confirmation.trim().equals(Const.CONFIRMATION_DIGIT)) return true;
         else return false;
     }
 
     private  boolean getDestinationLoanAccountIsOK() throws Exception {
         int countOfGetAcc=0;
         boolean accEntered=false;
-        while (!accEntered && countOfGetAcc<2){
+        while (!accEntered && countOfGetAcc<Const.MAX_GET_DTMF_MENU_COUNT){
             destinationLoanAccount=call.getPlayVoiceTool ().shomareHesabePardakhteGhestRaVaredNamaeid ();
-            if (destinationLoanAccount.length()==0){
+            if (destinationLoanAccount.length()==Const.ZERO){
                 call.getPlayVoiceTool ().notClear ();
                 countOfGetAcc++;
             }else{

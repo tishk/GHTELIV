@@ -120,7 +120,7 @@ public class ShowStatus {
 
 
             //String command = "convert "+FaxFile+".jpg "+FaxFile+".pdf";
-            String command = "/usr/local/bin/wkhtmltopdf --page-size A4 --dpi 2000 "+faxFile_HTML+" "+faxFile_PDF;
+            String command = Const.CONVERT_HTML_TO_PDF_COMMAND+faxFile_HTML+" "+faxFile_PDF;
             // Util.printMessage(command,false);
             InputStreamReader isr =null;
             try

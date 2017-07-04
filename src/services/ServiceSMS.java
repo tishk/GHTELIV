@@ -51,7 +51,7 @@ public class ServiceSMS {
         String Choice="";
         while ((smsMenuCount <Const.MAX_TEL_BANK_MENU_COUNT)) {
 
-            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(smsMenu,"sms_");
+            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(smsMenu,Const.MENU_PREFIX_SMS);
             else {
                 Choice=firstChoice;
                 firstChoice="";
@@ -139,7 +139,7 @@ public class ServiceSMS {
     private void doRegisterPan() throws Exception {
         int getMobileCount=0;
         boolean mobileEnteredIsCorrect=false;
-        while (!mobileEnteredIsCorrect && getMobileCount<3){
+        while (!mobileEnteredIsCorrect && getMobileCount<Const.MAX_GET_DTMF_MENU_COUNT){
             mobileNumber=call.getPlayVoiceTool ().shomareMobileRaVaredKonid ();
             if (mobileIsCorrect (mobileNumber)){
                 mobileEnteredIsCorrect=true;
@@ -162,7 +162,7 @@ public class ServiceSMS {
     private void doRegisterAccount () throws Exception {
         int getMobileCount=0;
         boolean mobileEnteredIsCorrect=false;
-        while (!mobileEnteredIsCorrect && getMobileCount<3){
+        while (!mobileEnteredIsCorrect && getMobileCount<Const.MAX_GET_DTMF_MENU_COUNT){
             mobileNumber=call.getPlayVoiceTool ().shomareMobileRaVaredKonid ();
             if (mobileIsCorrect (mobileNumber)){
                 mobileEnteredIsCorrect=true;

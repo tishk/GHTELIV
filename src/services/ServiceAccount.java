@@ -4,6 +4,7 @@ import model.Call;
 import model.Transaction;
 import util.Const;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,9 +51,9 @@ public class ServiceAccount {
         mainMenu.add("1");
         mainMenu.add("2");
         mainMenu.add("3");
-        if (call.getAccount().getAccountType().equals("01")) mainMenu.add("4");
+        if (call.getAccount().getAccountType().equals(Const.ACCOUNT_TYPE_PERMITTED_SERVICE)) mainMenu.add("4");
         mainMenu.add("5");
-        if (call.getAccount().getAccountType().equals("01")) mainMenu.add("6");
+        if (call.getAccount().getAccountType().equals(Const.ACCOUNT_TYPE_PERMITTED_SERVICE)) mainMenu.add("6");
         mainMenu.add("7");
         mainMenu.add("8");
         mainMenu.add("9");
@@ -66,7 +67,7 @@ public class ServiceAccount {
 
         while ((MainMenuCount<Const.MAX_TEL_BANK_MENU_COUNT)) {
 
-            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(mainMenu,"AccMenu_");
+            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(mainMenu,Const.MENU_PREFIX_ACCOUNT);
             else {
                 Choice=firstChoice;
                 firstChoice="";
@@ -149,7 +150,7 @@ public class ServiceAccount {
         String balance="";
         balance=call.getStrUtils().rightString(call.getAccount().getBalance(),call.getAccount().getBalance().length()-1);
         call.getPlayVoiceTool ().sayPersianDigit(balance);
-        call.getPlayVoiceTool ().sayCurrency("0");
+        call.getPlayVoiceTool ().sayCurrency(Const.CURRENCY_RIAL_SIGN);
         call.getPlayVoiceTool ().bedehkarMibashad();
     }
 
@@ -167,7 +168,7 @@ public class ServiceAccount {
 
     private void doSuccessTransactionOperations() throws Exception {
         List<Transaction> transactions=call.getAccount().getTransactions();
-        int i=4;
+        int i=Const.SAY_TRANSACTION_COUNT;
         if (transactions.size()>0){
             while ( i>=0){
                 if (transactions.get(i).getAmount()!="" ){
@@ -320,10 +321,10 @@ public class ServiceAccount {
         int getPinCount=0;
         boolean getPinIsOk=false;
         String newPinRet="";
-        while (!getPinIsOk && getPinCount<2){
+        while (!getPinIsOk && getPinCount<Const.MAX_GET_DTMF_MENU_COUNT){
             newPinRet=call.getPlayVoiceTool ().ramzeJadidRaVaredNamaeid ();
-            if (newPinRet.length()!=4){
-                if (newPinRet.length ()==0){
+            if (newPinRet.length()!=Const.MIN_ACCOUNT_PASS_LEN){
+                if (newPinRet.length ()==Const.ZERO){
                     entryNotClear();
                 }else{
                     call.getPlayVoiceTool ().shomareOboreMotabarNist ();
@@ -331,8 +332,8 @@ public class ServiceAccount {
                 getPinCount++;
             }else{
                 newPin= call.getPlayVoiceTool ().ramzeJadidRaMojadadanVaredNamaeid ();
-                if (newPin.length()!=4){
-                    if (newPin.length ()==0){
+                if (newPin.length()!=Const.MIN_ACCOUNT_PASS_LEN){
+                    if (newPin.length ()== Const.ZERO){
                         entryNotClear();
                     }else{
                         call.getPlayVoiceTool ().shomareOboreMotabarNist ();
@@ -355,9 +356,9 @@ public class ServiceAccount {
     private  boolean getDestinationAccountIsOK() throws Exception {
         int countOfGetAcc=0;
         boolean accEntered=false;
-        while (!accEntered && countOfGetAcc<2){
+        while (!accEntered && countOfGetAcc<Const.MAX_GET_DTMF_MENU_COUNT){
             destinationAccount=call.getPlayVoiceTool ().shomareHesabeMaghsadRaVaredNamaeid ();
-            if (destinationAccount.length()==0){
+            if (destinationAccount.length()==Const.ZERO){
                 entryNotClear();
                 countOfGetAcc++;
             }else{
@@ -375,9 +376,9 @@ public class ServiceAccount {
     private  boolean getAmountIsOK() throws Exception {
         int countOfGetAmount=0;
         boolean amountEntred=false;
-        while (!amountEntred && countOfGetAmount<2){
+        while (!amountEntred && countOfGetAmount<Const.MAX_GET_DTMF_MENU_COUNT){
             transferAmount=call.getPlayVoiceTool ().lotfanMablaghRaVaredNamaeid ();
-            if (transferAmount.trim().length()==0){
+            if (transferAmount.trim().length()==Const.ZERO){
                 entryNotClear();
                 countOfGetAmount++;
             }else{
@@ -402,7 +403,7 @@ public class ServiceAccount {
         call.getPlayVoiceTool ().varizKhahadShod();
         confirmation=call.getPlayVoiceTool ().agarSahihAstAdade5 ();
 
-        if (confirmation.trim().equals("5")) return true;
+        if (confirmation.trim().equals(Const.CONFIRMATION_DIGIT)) return true;
         else return false;
     }
 

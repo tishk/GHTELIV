@@ -30,7 +30,7 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
     private PersianDateTime persianDateTime=new PersianDateTime ();
     private String startDate="";
     private String endDate="";
-    private String faxType="";
+    private int faxType=0;
     private String chequeSerialNumber ="";
     private int faxCount;
 
@@ -67,7 +67,7 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
         String Choice="";
         while ((posAndChequeMenuCount <Const.MAX_TEL_BANK_MENU_COUNT)) {
 
-            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(posAndChequeMenu,"pos_");
+            if (firstChoice.equals("")) Choice = call.getPlayVoiceTool ().sayMenu(posAndChequeMenu,Const.MENU_PREFIX_POS_TRANSACTION);
             else {
                 Choice=firstChoice;
                 firstChoice="";
@@ -112,12 +112,12 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
     }
 
     private void init30TransactionRequestParameters () {
-        faxType="1";
-        faxCount=30;
+        faxType=Const.FAX_TYPE_ONE;
+        faxCount= Const.FAX_COUNT_30;
     }
 
     private void initDateToDateTransactionParameters () {
-        faxType="2";
+        faxType=Const.FAX_TYPE_TWO;
     }
 
     private void getDateToDatePOSTransactions() throws Exception {
@@ -167,9 +167,9 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
     private boolean getSerialNumberOfChequeOK () throws Exception {
         int count=0;
         boolean serialNumberEntered=false;
-        while (!serialNumberEntered && count<3){
+        while (!serialNumberEntered && count<Const.MAX_GET_DTMF_MENU_COUNT){
             getSerialNumberFromCustomer ();
-            if (chequeSerialNumber.length ()>0){
+            if (chequeSerialNumber.length ()>Const.ZERO){
                 serialNumberEntered=true;
             }else{
                 inputError ();
@@ -208,7 +208,7 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
     private void initAndSendTransactionRequest () {
         call.getAccount ().setStartDateOfFax (startDate);
         call.getAccount ().setEndDateOfFax (endDate);
-        call.getAccount ().setKindOfPOSTransaction (faxType);
+        call.getAccount ().setKindOfPOSTransaction (String.valueOf (faxType));
         call.getAccountFacade ().getTransactionOfPOS (call.getAccount ());
     }
 
@@ -225,18 +225,18 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
     }
 
     private  boolean permittedAccountUseChequeService(){
-        return call.getAccount ().getAccountType ().equals ("01");
+        return call.getAccount ().getAccountType ().equals (Const.ACCOUNT_TYPE_PERMITTED_SERVICE);
     }
 
     private  boolean getDateISOK() throws Exception {
         int getDateCount=0;
         boolean getStartDateIsOK=false;
         boolean getEndDateIsOK=false;
-        while ((!getStartDateIsOK) && (getDateCount<2)){
+        while ((!getStartDateIsOK) && (getDateCount<Const.MAX_GET_DTMF_MENU_COUNT)){
             startDate=call.getPlayVoiceTool ().tarikheShoroRaVaredNamaeid ();
             if (isNumber(startDate)){
-                if (startDate.length()!=0) {
-                    if (startDate.length()==6) {
+                if (startDate.length()!=Const.ZERO) {
+                    if (startDate.length()==Const.MAX_DATE_LEN) {
                         if (entranceDateIsOK(startDate)) {
                             getStartDateIsOK=true;
                         }
@@ -249,11 +249,11 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
         }
         if (getStartDateIsOK){
             getDateCount=0;
-            while ((!getEndDateIsOK) && (getDateCount<2)){
+            while ((!getEndDateIsOK) && (getDateCount<Const.MAX_GET_DTMF_MENU_COUNT)){
                 endDate=call.getPlayVoiceTool ().tarikheEntehaRaVaredNamaeid ().trim();
                 if (isNumber(endDate)) {
-                    if (endDate.length() != 0) {
-                        if (endDate.length() == 6) {
+                    if (endDate.length() != Const.ZERO) {
+                        if (endDate.length() == Const.MAX_DATE_LEN) {
                             if (entranceDateIsOK(endDate)) {
                                 getEndDateIsOK = true;
                             }
@@ -314,9 +314,9 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
     }
 
     private  String getTypeOfReport(){
-        if (faxType.equals ("1")){
+        if (faxType==Const.FAX_TYPE_ONE){
             return "صورتحساب پايانه فروشگاهي 30گردش آخر";
-        }else if (faxType.equals ("2")){
+        }else if (faxType==Const.FAX_TYPE_TWO){
             return "صورتحساب پايانه فروشگاهي در بازه زمانی مشخص";
         }else return "";
     }
@@ -336,7 +336,7 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
         Writer out = null;
         for (int i=countOfTrans-1;i>=0;i--){
 
-            if (faxCount==30){
+            if (faxCount==Const.FAX_COUNT_30){
                 if (i==0) endDate=persianDateTime.getShamsiDateForFax (transactionPOSList.get (i).getLocalDate ());
                 if (i==countOfTrans-1) startDate=persianDateTime.getShamsiDateForFax (transactionPOSList.get (i).getLocalDate ());
             }
@@ -473,7 +473,7 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
 
         if (FaxFile!=null){
 
-            String command = "/usr/local/bin/wkhtmltopdf --page-size A4 --dpi 2000 "+faxFile_HTML+" "+faxFile_PDF;
+            String command = Const.CONVERT_HTML_TO_PDF_COMMAND+faxFile_HTML+" "+faxFile_PDF;
 
             InputStreamReader isr =null;
             try
