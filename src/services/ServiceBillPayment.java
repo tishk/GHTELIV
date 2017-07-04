@@ -15,8 +15,11 @@ public class ServiceBillPayment {
 
     private Call call;
     private Set billPaymentMenu = new HashSet ();
+    private Set billPaymentSubMenu = new HashSet ();
     private int billPaymentMenuCount =0;
+    private int billPaymentSubMenuCount =0;
     private String firstChoice="";
+    private String firstChoice2="";
     private String payID="";
     private String billID="";
     private String pinNumber ="";
@@ -34,7 +37,7 @@ public class ServiceBillPayment {
         sayMainMenu ();
     }
 
-    private  void createMainMenu(){
+    private void createMainMenu(){
         /*
         first say balance
         1:bill payment
@@ -93,6 +96,77 @@ public class ServiceBillPayment {
         }
     }
 
+    private void subMenuOperations() throws Exception {
+        subMenuCreateSubMenu ();
+        subMenuSayMenu ();
+    }
+
+    private void subMenuCreateSubMenu (){
+        /*
+        first say balance
+        1:replay follow up code
+        2:retry bil payment
+        9:exit
+        0:exit
+         */
+        billPaymentSubMenu.add("1");
+        billPaymentSubMenu.add("2");
+        billPaymentSubMenu.add("9");
+        billPaymentSubMenu.add("0");
+
+
+    }
+
+    private void subMenuSayMenu () throws Exception {
+
+        String Choice="";
+        while ((billPaymentSubMenuCount < Const.MAX_TEL_BANK_MENU_COUNT)) {
+
+            if (firstChoice2.equals("")){
+                Choice = call.getPlayVoiceTool ().sayMenu(billPaymentSubMenu,Const.MENU_PREFIX_BILL_PAYMENT_SUB_MENU);
+            }
+            else {
+                Choice=firstChoice2;
+                firstChoice2="";
+            }
+            if (!Choice.equals(Const.INVALID_ENTRY_MENU)){
+                subMenuSelectSubMenu (Choice);
+            }
+            else{
+                inputError ();
+            }
+            billPaymentSubMenuCount++;
+        }
+        exit ();
+    }
+
+    private void subMenuSelectSubMenu (String Choice) throws Exception {
+
+        switch (Choice){
+            case  "1":sayFollowupCode();
+                break;
+            case  "2":billPayment ();
+                break;
+            case  "9":exit ();
+                break;
+            case  "0":exit ();
+                break;
+            case "-1":inputError ();
+                break;
+            default:inputError ();
+                break;
+
+        }
+    }
+
+    private void sayFollowupCode () throws Exception {
+        call.getPlayVoiceTool ().pardakhtAnjamShode ();
+        call.getPlayVoiceTool ().zemnanShomarePeygirieshoma ();
+        String refCode=correctNumberForPlay (call.getPan ().getReferenceCode ());
+        call.getPlayVoiceTool ().sayPersianDigitsSeparate (refCode);
+        call.getPlayVoiceTool ().mibashad ();
+    }
+
     private void billPayment() throws Exception {
         if (getBillIDIsOK ()){
             if (getPaymentIDIsOK ()){
@@ -102,16 +176,77 @@ public class ServiceBillPayment {
             }
         }
     }
+
+    private void doBillPayment() throws Exception {
+        if (getPanNumberIsOK ()){
+            if(getPinOfPanIsOK ()){
+                initAndSendRequest ();
+                processResponse();
+            }
+        }
+    }
+
+    private void processResponse () throws Exception {
+
+        sayResultToCustomer ();
+        subMenuOperations ();
+
+    }
+
+    private void sayResultToCustomer () throws Exception {
+        int acCode=-1;
+        if (isTrueNumber (call.getPan ().getActionCode ())){
+            acCode= Integer.valueOf (call.getPan ().getActionCode ())  ;
+        }
+        switch (acCode){
+            case 0:  sayFollowupCode ();
+                break;
+            case 5055:playActionCode ();
+                break;
+            case 9014:serverConnectionError ();
+                break;
+            case 9999:serverConnectionError ();
+                break;
+            default:playActionCode ();
+        }
+    }
+
+    private void serverConnectionError () throws Exception {
+        call.getPlayVoiceTool ().khataDarErtebatBaServer ();
+    }
+
+    private void playActionCode () throws Exception {
+        call.getPlayVoiceTool ().playActionCode (call.getPan ().getActionCode ());
+    }
+
+    private void initAndSendRequest () {
+        call.setPan (new Pan ());
+        call.getPan ().setCallerID (call.getCallerID ());
+        call.getPan ().setPanNumber (panNumber);
+        call.getPan ().setPin (pinNumber);
+        call.getPan ().setBillID (billID);
+        call.getPan ().setPaymentID (payID);
+        call.getPan ().setAmountOfBill (amount);
+        call.getPanFacade ().billPayment (call.getPan ());
+    }
+
     private void followUp(){
 
     }
+
     private void topUp(){
 
     }
 
+    private void inputError () throws Exception {
+        call.getPlayVoiceTool ().notClear();
+    }
 
+    private void exit () throws Exception {
+        call.getPlayVoiceTool ().byAndHangup ();
+    }
 
-    private  boolean isTrueNumber(String s) {
+    private boolean isTrueNumber(String s) {
 
         try{
             Long.valueOf(s);
@@ -121,7 +256,8 @@ public class ServiceBillPayment {
         }
 
     }
-    private  boolean checkDigit(int Len, String D, int Type) {
+
+    private boolean checkDigit(int Len, String D, int Type) {
         int Sum = 0;
         int j = 2;
 
@@ -160,7 +296,8 @@ public class ServiceBillPayment {
             return false;
         }
     }
-    private  boolean getBillIDIsOK() throws Exception {
+
+    private boolean getBillIDIsOK() throws Exception {
         int getBillIDCount=0;
         boolean getBillIDIsOK=false;
         while ((!getBillIDIsOK) && (getBillIDCount<Const.MAX_GET_DTMF_MENU_COUNT)){
@@ -179,7 +316,8 @@ public class ServiceBillPayment {
         }
         return getBillIDIsOK;
     }
-    private  boolean getPaymentIDIsOK() throws Exception {
+
+    private boolean getPaymentIDIsOK() throws Exception {
         int getPaymentIDCount=0;
         boolean getPaymentIDIsOK=false;
         while ((!getPaymentIDIsOK) && (getPaymentIDCount<Const.MAX_GET_DTMF_MENU_COUNT)){
@@ -199,7 +337,8 @@ public class ServiceBillPayment {
         }
         return getPaymentIDIsOK;
     }
-    private  boolean confirmBillDataIsOK() throws Exception {
+
+    private boolean confirmBillDataIsOK() throws Exception {
         String confirmation="";
 
         call.getPlayVoiceTool ().mablaghe();
@@ -213,21 +352,9 @@ public class ServiceBillPayment {
         if (confirmation.trim().equals("5")) return true;
         else return false;
     }
-    private  void    doBillPayment() throws Exception {
-        if (getPanNumberIsOK ()){
-            if(getPinOfPanIsOK ()){
-                initAndSendRequest ();
-                processResponse();
-            }
-        }
-    }
-
-    private void processResponse () {
-
-    }
-
 
     private boolean getPanNumberIsOK () throws Exception {
+
         int counterOfGetPan=1;
         while (counterOfGetPan<Const.MAX_TEL_BANK_MENU_COUNT){
             panNumber =call.getPlayVoiceTool ().shomareCardRaVaredNamaeid ();
@@ -263,15 +390,17 @@ public class ServiceBillPayment {
         return false;
     }
 
-    private void initAndSendRequest () {
-        call.setPan (new Pan ());
-        call.getPan ().setCallerID (call.getCallerID ());
-        call.getPan ().setPanNumber (panNumber);
-        call.getPan ().setPin (pinNumber);
-        call.getPan ().setBillID (billID);
-        call.getPan ().setPaymentID (payID);
-        call.getPan ().setAmountOfBill (amount);
-        call.getPanFacade ().billPayment (call.getPan ());
+    private  String  correctNumberForPlay(String number) {
+        return String.valueOf(convertToNumber(number));
+    }
+
+    private  Long    convertToNumber(String number){
+        try{
+            Long longNumber=Long.valueOf(number);
+            return longNumber;
+        }catch (Exception e){
+            return -1L;
+        }
     }
 
     private  int     getBillType(){
@@ -280,51 +409,18 @@ public class ServiceBillPayment {
         try{
             intKind=Integer.valueOf(kind);
             if (intKind==9){
-               String  temp= call.getStrUtils ().midString(billID,billID.length()-4,3);
-               if (!(temp.equals ("001") || temp.equals ("002"))){
-                   return -1;
-               }else{
-                   return intKind;
-               }
+                String  temp= call.getStrUtils ().midString(billID,billID.length()-4,3);
+                if (!(temp.equals ("001") || temp.equals ("002"))){
+                    return -1;
+                }else{
+                    return intKind;
+                }
             }else {
                 return intKind;
             }
 
         }catch (Exception e){
             return -1;
-        }
-    }
-
-    private void inputError () throws Exception {
-        call.getPlayVoiceTool ().notClear();
-    }
-
-    private void exit () throws Exception {
-        call.getPlayVoiceTool ().byAndHangup ();
-    }
-
-    private  String   fixLenNumber(String no){
-        try{
-            return String.valueOf(Long.valueOf(no));
-        }catch (Exception e){
-            return "-";
-        }
-    }
-
-    private  String  correctNumberForPlay(String number) {
-        return String.valueOf(convertToNumber(number));
-    }
-
-    private  String  correctDateForPlay(String date) {
-        return date.replace ("/","");
-    }
-
-    private  Long   convertToNumber(String number){
-        try{
-            Long longNumber=Long.valueOf(number);
-            return longNumber;
-        }catch (Exception e){
-            return -1L;
         }
     }
 

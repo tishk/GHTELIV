@@ -75,6 +75,7 @@ public class Const {
     public static final String MENU_PREFIX_FAX="007_";
     public static final String MENU_PREFIX_LOAN_PAYMENT="PB_";
     public static final String MENU_PREFIX_BILL_PAYMENT="MnGhabz_";
+    public static final String MENU_PREFIX_BILL_PAYMENT_SUB_MENU="Ghabz_";
     public static final int    RANDOM_RANGE_MAX_VALUE=999999999;
     public static final int    RANDOM_RANGE_MIN_VALUE=1;
     public static final int    MIN_ACCOUNT_PASS_LEN=4;
