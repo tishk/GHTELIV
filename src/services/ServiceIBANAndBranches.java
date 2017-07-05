@@ -102,7 +102,13 @@ public class ServiceIBANAndBranches {
 
         initAndSendBranchDataToServer ();
 
+        playBranchDataFromDB();
 
+
+
+    }
+
+    private void playBranchDataFromDB () {
 
     }
 
