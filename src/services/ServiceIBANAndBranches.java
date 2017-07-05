@@ -1,6 +1,8 @@
 package services;
 
+import dao.BranchDaoImpl;
 import model.Account;
+import model.Branch;
 import model.Call;
 import util.Const;
 
@@ -17,7 +19,9 @@ public class ServiceIBANAndBranches {
     private String branchCode="";
     private Set menu = new HashSet ();
     private int menuCount =0;
+    Branch branch;
     private String firstChoice;
+
 
     public ServiceIBANAndBranches (Call call) {
         this.call=call;
@@ -96,6 +100,16 @@ public class ServiceIBANAndBranches {
 
     private void doBranchDataPlay () {
 
+        initAndSendBranchDataToServer ();
+
+
+
+    }
+
+    private void initAndSendBranchDataToServer () {
+        branch=new Branch ();
+        branch.setBranchCode (branchCode);
+        BranchDaoImpl.getInstance ().getBranchData (branch);
     }
 
     private boolean getBranchCodeIsOK () throws Exception {

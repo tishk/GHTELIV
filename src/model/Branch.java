@@ -1,13 +1,16 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 7/5/2017.
  */
 public class Branch {
 
     private String branchCode="";
-    private String branchTelephoneNumber="";
-    private String branchFaxNumber="";
+    private List<String> branchTelephoneNumbers=new ArrayList<String> ();
+    private List<String> branchFaxNumbers=new ArrayList<String> ();;
     private String branchAddress="";
 
     public String getBranchCode () {
@@ -18,20 +21,20 @@ public class Branch {
         this.branchCode = branchCode;
     }
 
-    public String getBranchTelephoneNumber () {
-        return branchTelephoneNumber;
+    public List<String> getBranchTelephoneNumbers () {
+        return branchTelephoneNumbers;
     }
 
-    public void setBranchTelephoneNumber (String branchTelephoneNumber) {
-        this.branchTelephoneNumber = branchTelephoneNumber;
+    public void setBranchTelephoneNumbers (List<String> branchTelephoneNumbers) {
+        this.branchTelephoneNumbers = branchTelephoneNumbers;
     }
 
-    public String getBranchFaxNumber () {
-        return branchFaxNumber;
+    public List<String> getBranchFaxNumbers () {
+        return branchFaxNumbers;
     }
 
-    public void setBranchFaxNumber (String branchFaxNumber) {
-        this.branchFaxNumber = branchFaxNumber;
+    public void setBranchFaxNumbers (List<String> branchFaxNumbers) {
+        this.branchFaxNumbers = branchFaxNumbers;
     }
 
     public String getBranchAddress () {
