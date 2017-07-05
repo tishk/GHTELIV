@@ -286,8 +286,8 @@ public class ServiceBillPayment {
     }
 
 
-    private void topUp(){
-
+    private void topUp() throws Exception {
+       new ServiceTopUp ().execute ();
     }
 
     private void inputError () throws Exception {

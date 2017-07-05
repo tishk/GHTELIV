@@ -28,6 +28,7 @@ public  class Call  {
     private ServicePan servicePan;
     private ServiceShebaAndBranches serviceShebaAndBranches;
     private ServiceSMS serviceSMS;
+    private ServiceTopUp serviceTopUp;
     private Account account=null;
     private Pan pan=null;
     public AccountFacadeImpl accountFacade=new AccountFacadeImpl();
@@ -174,6 +175,18 @@ public  class Call  {
 
     public void setServiceSMS(ServiceSMS serviceSMS) {
         this.serviceSMS = serviceSMS;
+    }
+
+    public void setCallUniqueID (String callUniqueID) {
+        CallUniqueID = callUniqueID;
+    }
+
+    public ServiceTopUp getServiceTopUp () {
+        return serviceTopUp;
+    }
+
+    public void setServiceTopUp (ServiceTopUp serviceTopUp) {
+        this.serviceTopUp = serviceTopUp;
     }
 
     public Voices getPlayVoiceTool () {
