@@ -58,45 +58,6 @@ public class ServiceTelBank {
         call.setUserEntrance(entrance);
     }
 
-    private boolean doSwitchPanOrAccountSuccess() throws Exception {
-
-        if (isAccount()){
-            return doAccountOperationsResult();
-        }else if (isPan()){
-            return doPanOperationsResult();
-        }else if (isNotEntranceHappened()){
-            doNotClearOperations();
-            return false;
-        }else if (isIncorrectEntrance()){
-            doIncorrectEntranceOperations();
-            return false;
-        }else{
-            return false;
-        }
-    }
-    private boolean doPanOperationsResult() throws Exception {
-        if (authenticateOfPanISOK()){
-            call.getPlayVoiceTool ().advertisement();
-            call.setAccount(null);
-            servicePan=new ServicePan(call);
-            servicePan.execute();
-            return true;
-        }else{
-            return false;
-        }
-    }
-    private boolean doAccountOperationsResult() throws Exception {
-        if (authenticateOfAccountISOK()){
-            call.getPlayVoiceTool ().advertisement();
-            call.setPan(null);
-            serviceAccount=new ServiceAccount(call);
-            serviceAccount.execute();
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     private void doIncorrectEntranceOperations() throws Exception {
         if (beanNotOK){
             call.getPlayVoiceTool ().panEntryInvalid();
@@ -104,9 +65,11 @@ public class ServiceTelBank {
             call.getPlayVoiceTool ().accountEntryInvalid();
         }
     }
+
     private void doNotClearOperations() throws Exception {
         call.getPlayVoiceTool ().notClear();
     }
+
     private void setKindOfEntrance() throws IOException {
 
         if (call.getUserEntrance().length()==Const.ZERO){
@@ -129,14 +92,57 @@ public class ServiceTelBank {
 
     }
 
+    private boolean doSwitchPanOrAccountSuccess() throws Exception {
+
+        if (isAccount()){
+            return doAccountOperationsResult();
+        }else if (isPan()){
+            return doPanOperationsResult();
+        }else if (isNotEntranceHappened()){
+            doNotClearOperations();
+            return false;
+        }else if (isIncorrectEntrance()){
+            doIncorrectEntranceOperations();
+            return false;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean doPanOperationsResult() throws Exception {
+        if (authenticateOfPanISOK()){
+            call.getPlayVoiceTool ().advertisement();
+            call.setAccount(null);
+            servicePan=new ServicePan(call);
+            servicePan.execute();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean doAccountOperationsResult() throws Exception {
+        if (authenticateOfAccountISOK()){
+            call.getPlayVoiceTool ().advertisement();
+            call.setPan(null);
+            serviceAccount=new ServiceAccount(call);
+            serviceAccount.execute();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     private boolean isNotEntranceHappened(){
 
         return (!maybeIsPan && !maybeIsAccount && isNotEnterAny);
 
     }
+
     private boolean isIncorrectEntrance(){
         return (!maybeIsPan && !maybeIsAccount && !isNotEnterAny);
     }
+
     private boolean isAccount(){
 
         if (maybeIsAccount){
@@ -145,6 +151,7 @@ public class ServiceTelBank {
             return false;
         }
     }
+
     private boolean isPan(){
 
         if (maybeIsPan){
@@ -158,9 +165,11 @@ public class ServiceTelBank {
             return false;
         }
     }
+
     private boolean beanIsOK(){
         return entrance.substring(0,6).equals(Const.BEAN_OF_PAN);
     }
+
     private boolean isNumber(String entrance){
         try{
             Long.parseLong(entrance);
@@ -169,6 +178,7 @@ public class ServiceTelBank {
             return false;
         }
     }
+
     private boolean authenticateOfPanISOK() throws Exception {
         panPass=call.getPlayVoiceTool ().ramzeHesabRaVaredNamaeid ();
         if (panPass.length()<Const.MIN_PAN_PASS_LEN && panPass.length()>Const.MAX_PAN_PASS_LEN){
@@ -183,6 +193,7 @@ public class ServiceTelBank {
             }
         }
     }
+
     private boolean getResultOfPanAuthenticateRequestToServer() throws Exception {
         pan=new Pan();
         pan.setPanNumber(entrance);
@@ -202,6 +213,7 @@ public class ServiceTelBank {
         }
 
     }
+
     private boolean authenticateOfAccountISOK() throws Exception {
 
         accountPass=call.getPlayVoiceTool ().ramzeCardRaVaredNamaeid ();
@@ -218,6 +230,7 @@ public class ServiceTelBank {
         }
 
     }
+
     private boolean getResultOfAccountAuthenticateRequestToServer() throws Exception {
         account=new Account();
         account.setAccountNumber(entrance);
