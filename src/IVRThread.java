@@ -50,7 +50,7 @@ public    class   IVRThread extends Thread {
         serviceBillPayment=new ServiceBillPayment(call);
         serviceBillPayment.execute();
     }
-    private  void    startIBANOperations(){
+    private  void    startIBANOperations() throws Exception {
         serviceIBANAndBranches =new ServiceIBANAndBranches (call);
         serviceIBANAndBranches.execute();
     }

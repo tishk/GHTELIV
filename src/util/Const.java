@@ -72,6 +72,7 @@ public class Const {
     public static final String MENU_PREFIX_ACCOUNT="AccMenu_";
     public static final String MENU_PREFIX_PAN="CardMenu_";
     public static final String MENU_PREFIX_SMS="sms_";
+    public static final String MENU_PREFIX_IBAN_AND_BRANCH="OnMenu3_";
     public static final String MENU_PREFIX_TOP_UP="nMenu_";
     public static final String MENU_PREFIX_TOP_UP_CHARGE_VALUE="nMenu4Amount_";
     public static final String MENU_PREFIX_POS_TRANSACTION="pos_";
@@ -88,6 +89,8 @@ public class Const {
     public static final int    MIN_PAN_LEN=16;
     public static final int    MIN_ACCOUNT_LEN=14;
     public static final int    MAX_ACCOUNT_LEN=15;
+    public static final int    MIN_BRANCH_CODE_LEN=3;
+    public static final int    MAX_BRANCH_CODE_LEN=5;
     public static final int    PREFIX_ACTION_CODE=5000;
     public static final int    MAX_TEL_BANK_MENU_COUNT=3;
     public static final int    MOBILE_NUMBER_LEN=11;

@@ -649,6 +649,9 @@ public class Voices extends BaseAgiScript {
     public String  shomareHesabRaVaredNamaeid() throws Exception {
        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "AccEnter" , 5).trim();
     }
+    public String  codeShobeRaVaredNamaeid() throws Exception {
+       return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "BranchEnter" , 5).trim();
+    }
 
 
 
