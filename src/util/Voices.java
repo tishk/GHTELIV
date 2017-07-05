@@ -87,7 +87,7 @@ public class Voices extends BaseAgiScript {
         else return false;
     }
 
-    public  boolean sayPersianDigitsSeparate(String Digit) throws AgiException{
+    public  boolean saySeparateDigits (String Digit) throws AgiException{
         try{
             int len=Digit.length();
             //util.Util.printMessage("len is:"+String.valueOf(len),false);
@@ -98,7 +98,7 @@ public class Voices extends BaseAgiScript {
                 //util.Util.printMessage("Say now:"+SayNOW,false);
                 //util.Util.printMessage("Say later:"+Digit,false);
                 say3DigitSeparate(SayNOW);
-                sayPersianDigitsSeparate(Digit);
+                saySeparateDigits (Digit);
             }else{
                 if (len==0) return true;
                 else if (len>=1){
@@ -119,14 +119,14 @@ public class Voices extends BaseAgiScript {
             if (Digit.length()==11){
                Digit=Digit.substring(1);
                 say3DigitSeparate("0");
-                sayPersianDigitsSeparate(Digit);
+                saySeparateDigits (Digit);
             }else{
                 int LeftIndex=len %3;
                 if (len>2){
                     String SayNOW=Digit.substring(0,3);
                     Digit=Digit.substring(3);
                     say3DigitSeparate(SayNOW);
-                    sayPersianDigitsSeparate(Digit);
+                    saySeparateDigits (Digit);
                 }else{
                     if (len==0) return true;
                     else if (len>=1){
@@ -235,7 +235,7 @@ public class Voices extends BaseAgiScript {
         return true;
 
     }
-    public  boolean sayPersianDigit(String Digit) throws AgiException{
+    public  boolean sayAmount (String Digit) throws AgiException{
         try{
             if (Integer.valueOf(Digit) ==0) {
 
@@ -256,7 +256,7 @@ public class Voices extends BaseAgiScript {
                     PlayConfFile(setConnectionFile(Digit.length(), 1));
                 }
                 Digit=Digit.substring(LeftIndex);
-                sayPersianDigit(Digit);
+                sayAmount (Digit);
 
             }else{
                 if (len==0) return true;
@@ -914,6 +914,14 @@ public class Voices extends BaseAgiScript {
     }
     public  boolean etelaatYaftNashod () throws IOException, AgiException {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "GhabzNotFound", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean mobileVaredShodeBarabarAstBa () throws IOException, AgiException {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Mobile_Conf", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean mobileChargeKhahadShod () throws IOException, AgiException {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "ShargeTelOK", "0.25").trim().equals("")) return true;
         else return false;
     }
 

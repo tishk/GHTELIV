@@ -32,7 +32,7 @@ public class ServiceLoanPayment {
 
     private  void createMainMenu(){
         /*
-            first say balance
+
             1:facility inquiry
             2:loan Payment
             0:exit
@@ -110,17 +110,14 @@ public class ServiceLoanPayment {
     }
 
     private  boolean confirmLoanPaymentIsOK () throws Exception {
-        String confirmation="";
+
         call.getPlayVoiceTool ().mablaghe();
-        call.getPlayVoiceTool ().sayPersianDigit (amountOfLoan);
+        call.getPlayVoiceTool ().sayAmount (amountOfLoan);
         call.getPlayVoiceTool ().rial();
         call.getPlayVoiceTool ().bardashVaBeHesabe();
-        call.getPlayVoiceTool ().sayPersianDigitsSeparate (destinationLoanAccount);
+        call.getPlayVoiceTool ().saySeparateDigits (destinationLoanAccount);
         call.getPlayVoiceTool ().varizKhahadShod();
-        confirmation=call.getPlayVoiceTool ().agarSahihAstAdade5 ();
-
-        if (confirmation.trim().equals(Const.CONFIRMATION_DIGIT)) return true;
-        else return false;
+        return call.getPlayVoiceTool ().agarSahihAstAdade5 ().equals (Const.CONFIRMATION_DIGIT);
     }
 
     private  boolean getDestinationLoanAccountIsOK() throws Exception {
@@ -169,10 +166,10 @@ public class ServiceLoanPayment {
 
     private  void playLoanStatus () throws Exception {
         call.getPlayVoiceTool ().mablagheGhesteInDore ();
-        call.getPlayVoiceTool ().sayPersianDigit (call.getAccount ().getLoanAmount ());
+        call.getPlayVoiceTool ().sayAmount (call.getAccount ().getLoanAmount ());
         call.getPlayVoiceTool ().rial ();
         call.getPlayVoiceTool ().mandeBedehiShoma ();
-        call.getPlayVoiceTool ().sayPersianDigit (correctNumberForPlay (call.getAccount ().getBalanceOfLoanDebt ()));
+        call.getPlayVoiceTool ().sayAmount (correctNumberForPlay (call.getAccount ().getBalanceOfLoanDebt ()));
         call.getPlayVoiceTool ().rialMibashad ();
     }
 
@@ -234,11 +231,11 @@ public class ServiceLoanPayment {
 
     private  void successOperations () throws Exception {
         call.getPlayVoiceTool ().mablaghe ();
-        call.getPlayVoiceTool ().sayPersianDigit (call.getAccount ().getAmountOfTransfer ());
+        call.getPlayVoiceTool ().sayAmount (call.getAccount ().getAmountOfTransfer ());
         call.getPlayVoiceTool ().rial ();
         call.getPlayVoiceTool ().montaghelKhahadshod ();
         call.getPlayVoiceTool ().zemnanShomarePeygirieshoma ();
-        call.getPlayVoiceTool ().sayPersianDigitsSeparate (call.getAccount ().getReferenceCode ());
+        call.getPlayVoiceTool ().saySeparateDigits (call.getAccount ().getReferenceCode ());
         call.getPlayVoiceTool ().mibashad ();
     }
 

@@ -73,6 +73,7 @@ public class Const {
     public static final String MENU_PREFIX_PAN="CardMenu_";
     public static final String MENU_PREFIX_SMS="sms_";
     public static final String MENU_PREFIX_TOP_UP="nMenu_";
+    public static final String MENU_PREFIX_TOP_UP_CHARGE_VALUE="nMenu4Amount_";
     public static final String MENU_PREFIX_POS_TRANSACTION="pos_";
     public static final String MENU_PREFIX_FAX="007_";
     public static final String MENU_PREFIX_LOAN_PAYMENT="PB_";

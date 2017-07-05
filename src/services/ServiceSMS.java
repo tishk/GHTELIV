@@ -33,7 +33,7 @@ public class ServiceSMS {
 
     private void createMainMenu(){
         /*
-            first say balance
+
             1:register mobile number
             2:delete mobile number
             0:exit

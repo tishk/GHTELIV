@@ -47,7 +47,7 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
 
     private void createMainMenu(){
         /*
-            first say balance
+
             1:pos 30 transactions
             2:pos date to date transactions
             3:cheque transactions
@@ -146,11 +146,11 @@ public class ServicePOSTransactionAndCheque extends BaseAgiScript {
 
     private void playStatus () throws Exception {
         call.getPlayVoiceTool ().chekeShomare ();
-        call.getPlayVoiceTool ().sayPersianDigitsSeparate (call.getAccount ().getChequeSerialNumber ());
+        call.getPlayVoiceTool ().saySeparateDigits (call.getAccount ().getChequeSerialNumber ());
         call.getPlayVoiceTool ().darTarikhe ();
         call.getPlayVoiceTool ().sayDate (correctDateForPlay (call.getAccount ().getChequeDate ()));
         call.getPlayVoiceTool ().chequeBaMablaghe ();
-        call.getPlayVoiceTool ().sayPersianDigit (correctNumberForPlay (call.getAccount ().getChequeAmount ()));
+        call.getPlayVoiceTool ().sayAmount (correctNumberForPlay (call.getAccount ().getChequeAmount ()));
         call.getPlayVoiceTool ().rial ();
         call.getPlayVoiceTool ().sayChequeStatus (call.getAccount ().getChequeStatusCodeChar ());
     }

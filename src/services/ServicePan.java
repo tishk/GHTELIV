@@ -3,7 +3,6 @@ package services;
 
 import model.Call;
 import model.Transaction;
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import util.Const;
 
 import java.util.HashSet;
@@ -114,7 +113,7 @@ public class ServicePan {
         call.getPlayVoiceTool ().mojodieHesabeShoma();
         String balance="";
         balance=call.getPan().getBalance();
-        call.getPlayVoiceTool ().sayPersianDigit(balance);
+        call.getPlayVoiceTool ().sayAmount (balance);
         call.getPlayVoiceTool ().mibashad();
     }
 
@@ -122,7 +121,7 @@ public class ServicePan {
         call.getPlayVoiceTool ().mojodieHesabeShoma();
         String balance="";
         balance=call.getStrUtils().rightString(call.getPan().getBalance(),call.getPan().getBalance().length()-1);
-        call.getPlayVoiceTool ().sayPersianDigit(balance);
+        call.getPlayVoiceTool ().sayAmount (balance);
         call.getPlayVoiceTool ().sayCurrency(Const.CURRENCY_RIAL_SIGN);
         call.getPlayVoiceTool ().bedehkarMibashad();
     }
@@ -162,7 +161,7 @@ public class ServicePan {
             call.getPlayVoiceTool ().bardashte();
         }
         call.getPlayVoiceTool ().mablaghe();
-        call.getPlayVoiceTool ().sayPersianDigit(correctNumberForPlay(transactions.get(i).getAmount()));
+        call.getPlayVoiceTool ().sayAmount (correctNumberForPlay(transactions.get(i).getAmount()));
         call.getPlayVoiceTool ().sayCurrency(Const.CURRENCY_RIAL_SIGN);
         call.getPlayVoiceTool ().beTarikhe();
         call.getPlayVoiceTool ().sayDate(transactions.get(i).getfDescription());

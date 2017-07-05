@@ -45,7 +45,7 @@ public class ServiceFaxReport extends BaseAgiScript{
     }
     private  void createMainMenu(){
         /*
-        first say balance
+
         1:30 transaction
         2:one Month
         3:from date to date

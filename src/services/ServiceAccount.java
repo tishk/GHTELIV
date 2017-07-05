@@ -4,7 +4,6 @@ import model.Call;
 import model.Transaction;
 import util.Const;
 
-import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -141,7 +140,7 @@ public class ServiceAccount {
         call.getPlayVoiceTool ().mojodieHesabeShoma();
         String balance="";
         balance=call.getAccount().getBalance();
-        call.getPlayVoiceTool ().sayPersianDigit(balance);
+        call.getPlayVoiceTool ().sayAmount (balance);
         call.getPlayVoiceTool ().mibashad();
     }
 
@@ -149,7 +148,7 @@ public class ServiceAccount {
         call.getPlayVoiceTool ().mojodieHesabeShoma();
         String balance="";
         balance=call.getStrUtils().rightString(call.getAccount().getBalance(),call.getAccount().getBalance().length()-1);
-        call.getPlayVoiceTool ().sayPersianDigit(balance);
+        call.getPlayVoiceTool ().sayAmount (balance);
         call.getPlayVoiceTool ().sayCurrency(Const.CURRENCY_RIAL_SIGN);
         call.getPlayVoiceTool ().bedehkarMibashad();
     }
@@ -189,7 +188,7 @@ public class ServiceAccount {
             call.getPlayVoiceTool ().bardashte();
         }
         call.getPlayVoiceTool ().mablaghe();
-        call.getPlayVoiceTool ().sayPersianDigit(correctNumberForPlay(transactions.get(i).getAmount()));
+        call.getPlayVoiceTool ().sayAmount (correctNumberForPlay(transactions.get(i).getAmount()));
         call.getPlayVoiceTool ().sayCurrency("0");
         call.getPlayVoiceTool ().beTarikhe();
         call.getPlayVoiceTool ().sayDate(transactions.get(i).getfDescription());
@@ -257,11 +256,11 @@ public class ServiceAccount {
 
     private void successOperations () throws Exception {
         call.getPlayVoiceTool ().mablaghe ();
-        call.getPlayVoiceTool ().sayPersianDigit (call.getAccount ().getAmountOfTransfer ());
+        call.getPlayVoiceTool ().sayAmount (call.getAccount ().getAmountOfTransfer ());
         call.getPlayVoiceTool ().rial ();
         call.getPlayVoiceTool ().montaghelKhahadshod ();
         call.getPlayVoiceTool ().zemnanShomarePeygirieshoma ();
-        call.getPlayVoiceTool ().sayPersianDigitsSeparate (call.getAccount ().getReferenceCode ());
+        call.getPlayVoiceTool ().saySeparateDigits (call.getAccount ().getReferenceCode ());
         call.getPlayVoiceTool ().mibashad ();
     }
 
@@ -394,17 +393,14 @@ public class ServiceAccount {
     }
 
     private  boolean confirmFundTransferIsOK() throws Exception {
-        String confirmation="";
+
         call.getPlayVoiceTool ().mablaghe();
-        call.getPlayVoiceTool ().sayPersianDigit (transferAmount);
+        call.getPlayVoiceTool ().sayAmount (transferAmount);
         call.getPlayVoiceTool ().rial();
         call.getPlayVoiceTool ().bardashVaBeHesabe();
-        call.getPlayVoiceTool ().sayPersianDigitsSeparate (destinationAccount);
+        call.getPlayVoiceTool ().saySeparateDigits (destinationAccount);
         call.getPlayVoiceTool ().varizKhahadShod();
-        confirmation=call.getPlayVoiceTool ().agarSahihAstAdade5 ();
-
-        if (confirmation.trim().equals(Const.CONFIRMATION_DIGIT)) return true;
-        else return false;
+        return call.getPlayVoiceTool ().agarSahihAstAdade5 ().equals (Const.CONFIRMATION_DIGIT);
     }
 
     private  String correctNumberForPlay(String number) {

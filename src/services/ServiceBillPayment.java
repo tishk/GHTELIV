@@ -41,7 +41,7 @@ public class ServiceBillPayment {
 
     private void createMainMenu(){
         /*
-        first say balance
+
         1:bill payment
         2:follow up
         3:top up
@@ -105,7 +105,7 @@ public class ServiceBillPayment {
 
     private void subMenuCreateSubMenu (){
         /*
-        first say balance
+
         1:replay follow up code
         2:retry bil payment
         9:exit
@@ -165,7 +165,7 @@ public class ServiceBillPayment {
         call.getPlayVoiceTool ().pardakhtAnjamShode ();
         call.getPlayVoiceTool ().zemnanShomarePeygirieshoma ();
         String refCode=correctNumberForPlay (call.getPan ().getReferenceCode ());
-        call.getPlayVoiceTool ().sayPersianDigitsSeparate (refCode);
+        call.getPlayVoiceTool ().saySeparateDigits (refCode);
         call.getPlayVoiceTool ().mibashad ();
     }
 
@@ -274,7 +274,7 @@ public class ServiceBillPayment {
         call.getPlayVoiceTool ().sayDate (call.getPan ().getPaymentDate ());
         call.getPlayVoiceTool ().vaBaShomarePeygirie();
         String refCode = correctNumberForPlay (call.getPan ().getReferenceCode ());
-        call.getPlayVoiceTool ().sayPersianDigitsSeparate (refCode);
+        call.getPlayVoiceTool ().saySeparateDigits (refCode);
         call.getPlayVoiceTool ().padakhtShodeAst();
     }
 
@@ -287,7 +287,7 @@ public class ServiceBillPayment {
 
 
     private void topUp() throws Exception {
-       new ServiceTopUp ().execute ();
+       new ServiceTopUp (call).execute ();
     }
 
     private void inputError () throws Exception {
@@ -391,18 +391,16 @@ public class ServiceBillPayment {
     }
 
     private boolean confirmBillDataIsOK() throws Exception {
-        String confirmation="";
+
 
         call.getPlayVoiceTool ().mablaghe();
-        call.getPlayVoiceTool ().sayPersianDigit (amount);
+        call.getPlayVoiceTool ().sayAmount (amount);
         call.getPlayVoiceTool ().rialBabateGhabze();
         call.getPlayVoiceTool ().sayBillKind (getBillType());
         call.getPlayVoiceTool ().vaShenaseGhabze();
-        call.getPlayVoiceTool ().sayPersianDigitsSeparate (billID);
+        call.getPlayVoiceTool ().saySeparateDigits (billID);
         call.getPlayVoiceTool ().bardashtKhahadShod ();
-        confirmation=call.getPlayVoiceTool ().agarSahihAstAdade5 ();
-        if (confirmation.trim().equals("5")) return true;
-        else return false;
+        return call.getPlayVoiceTool ().agarSahihAstAdade5 ().equals (Const.CONFIRMATION_DIGIT);
     }
 
     private boolean getPanNumberIsOK () throws Exception {
