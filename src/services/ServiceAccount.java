@@ -277,7 +277,7 @@ public class ServiceAccount {
         switch (acCode){
             case    0:call.getPlayVoiceTool ().ramzTaghirKard ();
                 break;
-            case 9001:call.getPlayVoiceTool ().accountEntryInvalid ();
+            case 9001:call.getPlayVoiceTool ().shomareHesabSahihNist ();
                 break;
             case 9010:call.getPlayVoiceTool ().ramzTaghirNakard ();
                 break;
@@ -364,7 +364,7 @@ public class ServiceAccount {
                 if (isNumber (destinationAccount)){
                     accEntered=true;
                 }else{
-                    call.getPlayVoiceTool ().accountEntryInvalid ();
+                    call.getPlayVoiceTool ().shomareHesabSahihNist ();
                     countOfGetAcc++;
                 }
             }

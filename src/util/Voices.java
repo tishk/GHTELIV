@@ -646,6 +646,9 @@ public class Voices extends BaseAgiScript {
     public String  shomareCardRaVaredNamaeid() throws Exception {
        return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "sh107-1" , 5).trim();
     }
+    public String  shomareHesabRaVaredNamaeid() throws Exception {
+       return getStringFormASK(Util.VoicePath +"Pmsgs/"  + "AccEnter" , 5).trim();
+    }
 
 
 
@@ -827,7 +830,7 @@ public class Voices extends BaseAgiScript {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh61", "0.25").trim().equals("")) return true;
         else return false;
     }
-    public  boolean accountEntryInvalid() throws Exception {
+    public  boolean shomareHesabSahihNist () throws Exception {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "E002_1", "0.25").trim().equals("")) return true;
         else return false;
 
@@ -922,6 +925,18 @@ public class Voices extends BaseAgiScript {
     }
     public  boolean mobileChargeKhahadShod () throws IOException, AgiException {
         if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "ShargeTelOK", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean shabaDescription () throws IOException, AgiException {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh501", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean shomareShabaieshoma () throws IOException, AgiException {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh502", "0.25").trim().equals("")) return true;
+        else return false;
+    }
+    public  boolean ir () throws IOException, AgiException {
+        if (!getStringFormASKTinyTimeOut(Util.VoicePath + "Pmsgs/" + "Sh503", "0.25").trim().equals("")) return true;
         else return false;
     }
 

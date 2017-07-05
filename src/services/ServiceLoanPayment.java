@@ -132,7 +132,7 @@ public class ServiceLoanPayment {
                 if (isNumber (destinationLoanAccount)){
                     accEntered=true;
                 }else{
-                    call.getPlayVoiceTool ().accountEntryInvalid ();
+                    call.getPlayVoiceTool ().shomareHesabSahihNist ();
                     countOfGetAcc++;
                 }
             }

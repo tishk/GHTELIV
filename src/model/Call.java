@@ -26,7 +26,7 @@ public  class Call  {
     private ServiceFaxReport serviceFaxReport;
     private ServiceLoanPayment serviceLoanPayment;
     private ServicePan servicePan;
-    private ServiceShebaAndBranches serviceShebaAndBranches;
+    private ServiceIBANAndBranches serviceIBANAndBranches;
     private ServiceSMS serviceSMS;
     private ServiceTopUp serviceTopUp;
     private Account account=null;
@@ -161,12 +161,12 @@ public  class Call  {
         this.servicePan = servicePan;
     }
 
-    public ServiceShebaAndBranches getServiceShebaAndBranches() {
-        return serviceShebaAndBranches;
+    public ServiceIBANAndBranches getServiceIBANAndBranches () {
+        return serviceIBANAndBranches;
     }
 
-    public void setServiceShebaAndBranches(ServiceShebaAndBranches serviceShebaAndBranches) {
-        this.serviceShebaAndBranches = serviceShebaAndBranches;
+    public void setServiceIBANAndBranches (ServiceIBANAndBranches serviceIBANAndBranches) {
+        this.serviceIBANAndBranches = serviceIBANAndBranches;
     }
 
     public ServiceSMS getServiceSMS() {

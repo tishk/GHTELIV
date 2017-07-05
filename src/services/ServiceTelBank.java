@@ -62,7 +62,7 @@ public class ServiceTelBank {
         if (beanNotOK){
             call.getPlayVoiceTool ().panEntryInvalid();
         }else {
-            call.getPlayVoiceTool ().accountEntryInvalid();
+            call.getPlayVoiceTool ().shomareHesabSahihNist ();
         }
     }
 

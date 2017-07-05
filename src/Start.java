@@ -3,11 +3,7 @@ import org.asteriskjava.fastagi.AgiChannel;
 import org.asteriskjava.fastagi.AgiException;
 import org.asteriskjava.fastagi.AgiRequest;
 import org.asteriskjava.fastagi.BaseAgiScript;
-import services.ServiceBillPayment;
-import services.ServiceShebaAndBranches;
-import services.ServiceTelBank;
 import util.Util;
-import util.Voices;
 
 
 public class Start extends BaseAgiScript {

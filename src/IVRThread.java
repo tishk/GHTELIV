@@ -1,6 +1,6 @@
 import model.Call;
 import services.ServiceBillPayment;
-import services.ServiceShebaAndBranches;
+import services.ServiceIBANAndBranches;
 import services.ServiceTelBank;
 import util.Voices;
 
@@ -13,7 +13,7 @@ public    class   IVRThread extends Thread {
     public ServiceTelBank serviceTelBank=null;
     public ServiceBillPayment serviceBillPayment;
     public Voices Say=new  Voices();
-    public ServiceShebaAndBranches serviceShebaAndBranches=null;
+    public ServiceIBANAndBranches serviceIBANAndBranches =null;
 
     int counterOfGetMenu=0;
     IVRThread(Call C) throws Exception {
@@ -51,11 +51,11 @@ public    class   IVRThread extends Thread {
         serviceBillPayment.execute();
     }
     private  void    startIBANOperations(){
-        serviceShebaAndBranches=new ServiceShebaAndBranches(call);
-        serviceShebaAndBranches.execute();
+        serviceIBANAndBranches =new ServiceIBANAndBranches (call);
+        serviceIBANAndBranches.execute();
     }
     private void     entryIsInvalid() throws Exception {
-        Say.accountEntryInvalid();
+        Say.shomareHesabSahihNist ();
     }
 
     private  void    byAndHangUp() throws Exception {

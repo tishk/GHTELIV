@@ -176,7 +176,7 @@ public class AccountFacadeImpl implements AccountFacade {
         if (msgSequense.equals(account.getMessageSequence())){
             if (response.length()>24){
                 account.setActionCode(Const.SUCCESS);
-                account.setIBAN(response);
+                account.setIBAN(stringUtils.rightString (response,24));
             }else{
                 account.setActionCode("9001");
             }
